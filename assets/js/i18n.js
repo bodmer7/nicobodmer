@@ -83,7 +83,7 @@ window.NB_I18N = {
 
     "atrega.start": "The existing company website was outdated.",
     "atrega.task": "Rebuild with an AI builder workflow and a contact flow.",
-    "atrega.result": "[add the result in one sentence]",
+    "atrega.result": "The new website is live — clear structure, current copy and a contact flow that delivers enquiries straight to the inbox.",
 
     "geo.title": "Geo quiz — guess places on the map",
     "geo.start": "You know your own region from the bike and the train window — and still cannot find it on a blank map.",
