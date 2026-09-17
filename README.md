@@ -44,8 +44,11 @@ ebenfalls, nur werden dann je nach Browser die Schriften von Google Fonts blocki
   ```bash
   cwebp -q 82 -resize 1600 0 -metadata none input.png -o assets/img/output.webp
   ```
-- **Offene Platzhalter** sind im HTML mit `TODO` markiert (zweite Website-Karte,
-  Ergebnis-Satz Atrega, Lebenslauf-PDF).
+- **Offene Platzhalter** sind im HTML mit `TODO` markiert (Website-Karte unter
+  „Websites", Lebenslauf-PDF).
+- **Vorher-Nachher im Projektteil** zeigt ein neutrales Beispiel-Layout („Muster AG"),
+  keine Kundenscreenshots. Beide Zustände sind in HTML/CSS gebaut (`.mock`), nicht
+  als Bild — sie skalieren über Container-Queries mit der Box mit.
 
 ## Deployment
 

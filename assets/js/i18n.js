@@ -75,15 +75,26 @@ window.NB_I18N = {
 
     "ba.after": "After",
     "ba.before": "Before",
-    "ba.hint": "Drag the slider — before / after",
+    "ba.hint": "Drag the slider — before / after (example layout)",
+    "ba.aria": "Before/after comparison",
 
     "fact.start": "Situation",
     "fact.task": "Task",
     "fact.result": "Result",
 
-    "atrega.start": "The existing company website was outdated.",
-    "atrega.task": "Rebuild with an AI builder workflow and a contact flow.",
-    "atrega.result": "The new website is live — clear structure, current copy and a contact flow that delivers enquiries straight to the inbox.",
+    "relaunch.title": "What a relaunch could look like",
+    "relaunch.start": "Many SME websites feel dated — cluttered, tiny type, unclear structure.",
+    "relaunch.task": "Clear hierarchy, calm typography, one path to getting in touch.",
+    "relaunch.result": "An illustration of the approach — screenshots from a real project to follow.",
+
+    "mock.menu": "Menu",
+    "mock.after.title": "Your partner for fiduciary services",
+    "mock.after.text": "We offer accounting, tax advice and auditing for small and medium-sized businesses. Get in touch for a first conversation.",
+    "mock.after.cta": "Get in touch »",
+    "mock.before.nav": "Muster AG - Welcome",
+    "mock.before.head": "A WARM WELCOME TO OUR WEBSITE!!!",
+    "mock.before.text": "Serving you since 1998. Click below for more info on our services in fiduciary work, accounting and much more.",
+    "mock.before.link": "» Click here for more information «",
 
     "geo.title": "Geo quiz — guess places on the map",
     "geo.start": "You know your own region from the bike and the train window — and still cannot find it on a blank map.",
@@ -97,9 +108,7 @@ window.NB_I18N = {
     "health.result": "A server with 20 read-only operations plus an automatically updated dashboard covering readiness, sleep, achievements and weight goal.",
 
     "websites.hint": "Work samples",
-    "websites.kind.new": "New build",
     "websites.kind.redesign": "Redesign",
-    "websites.atrega": "Fiduciary firm in Zurich and Berikon — new structure, new copy, contact flow.",
     "websites.wip": "In progress",
     "websites.soon": "Preview to follow",
     "websites.w2.name": "[Website 2 — name]",

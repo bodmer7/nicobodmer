@@ -473,8 +473,9 @@
 
     var photo = $("[data-hero-photo]");
     if (photo) {
+      /* Sehr dezent: stärkeres Zoomen würde das 1024px-Bild sichtbar weichzeichnen */
       var p = Math.min(1, y / 400);
-      photo.style.transform = "scale(" + (1.06 - 0.06 * p).toFixed(3) + ")";
+      photo.style.transform = "scale(" + (1.03 - 0.03 * p).toFixed(3) + ")";
     }
 
     var par = $("[data-parallax]");
