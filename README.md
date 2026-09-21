@@ -44,11 +44,11 @@ ebenfalls, nur werden dann je nach Browser die Schriften von Google Fonts blocki
   ```bash
   cwebp -q 82 -resize 1600 0 -metadata none input.png -o assets/img/output.webp
   ```
-- **Offene Platzhalter** sind im HTML mit `TODO` markiert (Website-Karte unter
-  „Websites", Lebenslauf-PDF).
-- **Vorher-Nachher im Projektteil** zeigt ein neutrales Beispiel-Layout („Muster AG"),
-  keine Kundenscreenshots. Beide Zustände sind in HTML/CSS gebaut (`.mock`), nicht
-  als Bild — sie skalieren über Container-Queries mit der Box mit.
+- **Offene Platzhalter** sind im HTML mit `TODO` markiert (Lebenslauf-PDF).
+- **Vorher-Nachher bei ODERA:** rechts der Screenshot von odera.ch, links ein
+  nachgebautes KMU-Layout im Stil der frühen 2010er — kein Kundenprojekt. Das alte
+  Layout ist bei 1280 x 800 gezeichnet (`.retro`) und wird per CSS-Variable `--k`
+  aus `main.js` auf die Breite der Box skaliert.
 
 ## Deployment
 

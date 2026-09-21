@@ -23,11 +23,11 @@
   /* ---------------------------------------------------------------- Sprache */
   var META = {
     de: {
-      title: "Nico Bodmer — Websites & digitale Projekte",
+      title: "Nico Bodmer — Websites und digitale Projekte",
       desc: "Nico Bodmer baut Websites und eigene Anwendungen. Hauptberuflich im Data-&-AI-Umfeld bei IBM Schweiz, Studium Digital Business & AI an der HWZ Zürich."
     },
     en: {
-      title: "Nico Bodmer — Websites & digital projects",
+      title: "Nico Bodmer — Websites and digital projects",
       desc: "Nico Bodmer builds websites and his own applications. Day job in data & AI at IBM Switzerland, studying Digital Business & AI at HWZ Zurich."
     }
   };
@@ -317,50 +317,60 @@
 
   /* ------------------------------------------------------- Vorher/Nachher */
   function initBeforeAfter() {
-    var box = $("[data-ba]");
-    if (!box) return;
-    var before = $("[data-ba-before]", box);
-    var beforeImg = $("[data-ba-img]", box);
-    var handle = $("[data-ba-handle]", box);
-    var knob = $("[data-ba-knob]", box);
-    if (!before || !handle) return;
+    var ba = document.getElementById("ba");
+    var knob = document.getElementById("baHandle");
+    if (!ba || !knob) return;
 
-    var sizeImg = function () { if (beforeImg) beforeImg.style.width = box.getBoundingClientRect().width + "px"; };
-    sizeImg();
-    window.addEventListener("resize", sizeImg);
+    /* Das alte Layout ist bei 1280px Breite gezeichnet und wird auf die
+       tatsächliche Boxbreite heruntergerechnet. */
+    var fit = function () { ba.style.setProperty("--k", String(ba.clientWidth / 1280)); };
+    if (window.ResizeObserver) new ResizeObserver(fit).observe(ba);
+    else window.addEventListener("resize", fit);
+    fit();
 
     var setPct = function (pct) {
-      pct = Math.min(96, Math.max(4, pct));
-      before.style.width = pct + "%";
-      handle.style.left = pct + "%";
-      if (knob) knob.setAttribute("aria-valuenow", Math.round(pct));
+      pct = Math.min(98, Math.max(2, pct));
+      ba.style.setProperty("--pos", pct + "%");
+      knob.setAttribute("aria-valuenow", String(Math.round(pct)));
     };
-    var setFromX = function (clientX) {
-      var r = box.getBoundingClientRect();
-      setPct(((clientX - r.left) / r.width) * 100);
-    };
+    setPct(50);
 
-    var dragging = false;
-    box.addEventListener("pointerdown", function (e) {
-      dragging = true;
-      try { box.setPointerCapture(e.pointerId); } catch (err) {}
-      setFromX(e.clientX);
+    ba.addEventListener("pointerdown", function (e) {
+      try { ba.setPointerCapture(e.pointerId); } catch (err) {}
+      var r = ba.getBoundingClientRect();
+      setPct(((e.clientX - r.left) / r.width) * 100);
     });
-    box.addEventListener("pointermove", function (e) { if (dragging) setFromX(e.clientX); });
-    box.addEventListener("pointerup", function () { dragging = false; });
-    box.addEventListener("pointercancel", function () { dragging = false; });
+    ba.addEventListener("pointermove", function (e) {
+      if (!ba.hasPointerCapture || !ba.hasPointerCapture(e.pointerId)) return;
+      var r = ba.getBoundingClientRect();
+      setPct(((e.clientX - r.left) / r.width) * 100);
+    });
 
-    if (knob) {
-      knob.addEventListener("click", function (e) { e.preventDefault(); });
-      knob.addEventListener("keydown", function (e) {
-        var now = parseFloat(knob.getAttribute("aria-valuenow")) || 50;
-        var step = e.shiftKey ? 10 : 4;
-        if (e.key === "ArrowLeft") { e.preventDefault(); setPct(now - step); }
-        else if (e.key === "ArrowRight") { e.preventDefault(); setPct(now + step); }
-        else if (e.key === "Home") { e.preventDefault(); setPct(4); }
-        else if (e.key === "End") { e.preventDefault(); setPct(96); }
+    knob.addEventListener("click", function (e) { e.preventDefault(); });
+    knob.addEventListener("keydown", function (e) {
+      var now = parseFloat(ba.style.getPropertyValue("--pos")) || 50;
+      var step = e.shiftKey ? 10 : 2;
+      if (e.key === "ArrowLeft") { e.preventDefault(); setPct(now - step); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); setPct(now + step); }
+      else if (e.key === "Home") { e.preventDefault(); setPct(2); }
+      else if (e.key === "End") { e.preventDefault(); setPct(98); }
+    });
+  }
+
+  /* ------------------------------------------------- Unterstrich im Hero */
+  function initUnderline() {
+    var line = $("[data-underline]");
+    if (!line) return;
+    if (reduced()) { line.style.width = "100%"; return; }
+    var head = line.closest("h1");
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        setTimeout(function () { line.style.width = "100%"; }, 300);
+        io.unobserve(entry.target);
       });
-    }
+    }, { threshold: 0.4 });
+    io.observe(head);
   }
 
   /* -------------------------------------------------------- Magnet-Buttons */
@@ -471,11 +481,12 @@
 
     if (reduced()) return;
 
-    var photo = $("[data-hero-photo]");
-    if (photo) {
-      /* Sehr dezent: stärkeres Zoomen würde das 1024px-Bild sichtbar weichzeichnen */
-      var p = Math.min(1, y / 400);
-      photo.style.transform = "scale(" + (1.03 - 0.03 * p).toFixed(3) + ")";
+    var heroWrap = $("[data-hero-img-wrap]");
+    var hero = $("[data-hero]");
+    if (heroWrap && hero) {
+      var r = hero.getBoundingClientRect();
+      var p = Math.max(0, Math.min(1, -r.top / (r.height || 1)));
+      heroWrap.style.transform = "translateY(" + (-24 * p).toFixed(1) + "px)";
     }
 
     var par = $("[data-parallax]");
@@ -495,6 +506,7 @@
     applyLang(savedLang === "en" ? "en" : "de");
 
     initReveal();
+    initUnderline();
     initCounters();
     initRows();
     initSkills();

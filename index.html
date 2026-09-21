@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nico Bodmer — Websites &amp; digitale Projekte</title>
+<title>Nico Bodmer — Websites und digitale Projekte</title>
 <meta name="description" content="Nico Bodmer baut Websites und eigene Anwendungen. Hauptberuflich im Data-&amp;-AI-Umfeld bei IBM Schweiz, Studium Digital Business &amp; AI an der HWZ Zürich.">
 <meta name="author" content="Nico Bodmer">
 <meta name="theme-color" content="#0E1220">
 <link rel="canonical" href="https://bodmer7.github.io/nicobodmer/">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Nico Bodmer — Websites &amp; digitale Projekte">
+<meta property="og:title" content="Nico Bodmer — Websites und digitale Projekte">
 <meta property="og:description" content="Websites und eigene Anwendungen — Zürich / Aargau.">
 <meta property="og:image" content="assets/img/hero-portrait.webp">
 <meta property="og:locale" content="de_CH">
@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=6">
+<link rel="stylesheet" href="assets/css/style.css?v=9">
 
 <script>
   /* Theme vor dem ersten Paint setzen — verhindert Aufblitzen */
@@ -49,7 +49,7 @@
 </head>
 
 <body>
-<a class="skip-link" href="#top" data-i18n="skip">Zum Inhalt springen</a>
+<a class="skip-link" href="#top" data-i18n="skip">Zum Inhalt</a>
 
 <div class="progress" data-progress></div>
 <div class="swipe-line" data-swipe-line></div>
@@ -64,7 +64,6 @@
   <a href="#ueber"      data-nav="ueber"      data-i18n="nav.about">Über</a>
   <a href="#werdegang"  data-nav="werdegang"  data-i18n="nav.career">Werdegang</a>
   <a href="#projekte"   data-nav="projekte"   data-i18n="nav.projects">Projekte</a>
-  <a href="#websites"   data-nav="websites"   data-i18n="nav.websites">Websites</a>
   <a href="#skills"     data-nav="skills"     data-i18n="nav.skills">Skills</a>
   <a href="#ausbildung" data-nav="ausbildung" data-i18n="nav.education">Ausbildung</a>
   <a href="#kontakt"    data-nav="kontakt"    data-i18n="nav.contact">Kontakt</a>
@@ -77,13 +76,12 @@
     <button class="menu__close" type="button" data-menu-close data-i18n="nav.close">Schliessen</button>
   </div>
   <nav class="menu__nav">
-    <a class="menu__link" href="#ueber"      style="animation-delay:0ms"><span class="menu__num">01</span><span data-i18n="menu.about">Über mich</span></a>
-    <a class="menu__link" href="#werdegang"  style="animation-delay:40ms"><span class="menu__num">02</span><span data-i18n="menu.career">Werdegang</span></a>
-    <a class="menu__link" href="#projekte"   style="animation-delay:80ms"><span class="menu__num">03</span><span data-i18n="menu.projects">Projekte</span></a>
-    <a class="menu__link" href="#websites"   style="animation-delay:120ms"><span class="menu__num">04</span><span data-i18n="menu.websites">Websites</span></a>
-    <a class="menu__link" href="#skills"     style="animation-delay:160ms"><span class="menu__num">05</span><span data-i18n="menu.skills">Skills</span></a>
-    <a class="menu__link" href="#ausbildung" style="animation-delay:200ms"><span class="menu__num">06</span><span data-i18n="menu.education">Ausbildung</span></a>
-    <a class="menu__link" href="#kontakt"    style="animation-delay:240ms"><span class="menu__num">07</span><span data-i18n="menu.contact">Kontakt</span></a>
+    <a class="menu__link" href="#ueber" style="animation-delay:0ms"><span class="menu__num">01</span><span data-i18n="menu.about">Über mich</span></a>
+    <a class="menu__link" href="#werdegang" style="animation-delay:40ms"><span class="menu__num">02</span><span data-i18n="menu.career">Werdegang</span></a>
+    <a class="menu__link" href="#projekte" style="animation-delay:80ms"><span class="menu__num">03</span><span data-i18n="menu.projects">Projekte</span></a>
+    <a class="menu__link" href="#skills" style="animation-delay:120ms"><span class="menu__num">04</span><span data-i18n="menu.skills">Skills</span></a>
+    <a class="menu__link" href="#ausbildung" style="animation-delay:160ms"><span class="menu__num">05</span><span data-i18n="menu.education">Ausbildung</span></a>
+    <a class="menu__link" href="#kontakt" style="animation-delay:200ms"><span class="menu__num">06</span><span data-i18n="menu.contact">Kontakt</span></a>
   </nav>
   <a class="menu__mail" href="mailto:nico.bodmer@gmx.ch">nico.bodmer@gmx.ch</a>
   <div class="menu__actions">
@@ -95,18 +93,31 @@
 <main id="top">
 
   <!-- Hero ------------------------------------------------------------- -->
-  <section class="section sec--dark hero" data-section="hero">
-    <div class="hero__media" data-hero-media>
-      <img class="hero__photo" data-hero-photo src="assets/img/hero-portrait.webp" width="1200" height="1226" alt="Porträt von Nico Bodmer" fetchpriority="high">
-    </div>
-    <div class="hero__grain" aria-hidden="true"></div>
-    <div class="hero__inner">
-      <h1 class="hero__name"><span>Nico</span><span>Bodmer</span></h1>
-      <p class="mono hero__kicker" data-i18n="hero.kicker">Websites &amp; digitale Projekte — Zürich / Aargau</p>
-      <p class="hero__text" data-i18n="hero.text">Ich baue Websites und eigene Anwendungen. Hauptberuflich arbeite ich im Data-&amp;-AI-Umfeld und studiere Digital Business &amp; AI.</p>
-      <div class="hero__cta">
-        <a class="btn btn--primary" href="#projekte" data-magnet><span data-i18n="hero.cta1">Arbeiten ansehen</span> <span class="mono" aria-hidden="true">↓</span></a>
-        <a class="btn btn--ghost" href="#kontakt" data-magnet><span data-i18n="hero.cta2">Kontakt</span> <span class="mono" aria-hidden="true">→</span></a>
+  <section class="section sec--dark hero" data-section="hero" data-hero>
+    <div class="wrap hero__row">
+      <div class="hero__text-col">
+        <h1 class="hero__name">
+          <span>Nico</span>
+          <span class="hero__last">Bodmer<span class="hero__underline" data-underline aria-hidden="true"></span></span>
+        </h1>
+        <p class="mono hero__kicker" data-i18n="hero.kicker">Websites &amp; digitale Projekte — Zürich / Aargau</p>
+        <p class="hero__text" data-i18n="hero.text1">Ich baue Websites und eigene Anwendungen.</p>
+        <p class="hero__text" data-i18n="hero.text2">Hauptberuflich arbeite ich im Data-&amp;-AI-Umfeld und studiere Digital Business &amp; AI.</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#projekte" data-magnet><span data-i18n="hero.cta1">Arbeiten ansehen</span> <span class="mono" aria-hidden="true">↓</span></a>
+          <a class="btn btn--ghost" href="#kontakt" data-magnet><span data-i18n="hero.cta2">Kontakt</span> <span class="mono" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <div class="hero__photo-col" data-hero-img-wrap>
+        <div class="hero__frame">
+          <span class="hero__frame-block" aria-hidden="true"></span>
+          <div class="hero__photo-box">
+            <img class="hero__photo" src="assets/img/hero-portrait.webp" width="1024" height="1046" alt="Nico Bodmer, Porträt" fetchpriority="high" decoding="async">
+            <span class="hero__grain" aria-hidden="true"></span>
+          </div>
+        </div>
+        <p class="mono hero__caption">Zürich / Aargau — 2026</p>
       </div>
     </div>
   </section>
@@ -230,7 +241,7 @@
   <!-- Projekte --------------------------------------------------------- -->
   <section class="section sec--paper" id="projekte" data-section="projekte">
     <div class="wrap">
-      <span class="mono eyebrow"><span class="eyebrow__num">03</span> <span data-i18n="nav.projects">Projekte</span></span>
+      <span class="mono eyebrow"><span class="eyebrow__num">03</span> <span data-i18n="projects.eyebrow">Arbeiten</span></span>
       <h2 class="h2" data-reveal style="margin-bottom:32px" data-i18n="projects.title">Arbeiten</h2>
 
       <div class="filters" role="group" aria-label="Projekte filtern">
@@ -241,51 +252,79 @@
       </div>
 
       <div class="cards">
-        <!-- Relaunch-Beispiel: beide Layouts sind gebaut, keine Screenshots -->
+        <!-- ODERA: links das typische alte KMU-Layout (gebaut, kein Kundenprojekt),
+             rechts der heutige Stand von odera.ch -->
         <article class="card card--wide" data-card data-cat="websites">
-          <div class="card__split">
-            <div class="card__col">
-              <div class="ba" data-ba>
-                <div class="mock mock--after">
-                  <div class="mock__bar">
-                    <span class="mock__brand">Muster AG</span>
-                    <span class="mock__menu" data-i18n="mock.menu">Menü</span>
-                  </div>
-                  <h4 class="mock__title" data-i18n="mock.after.title">Ihr Partner für Treuhand-Dienstleistungen</h4>
-                  <p class="mock__text" data-i18n="mock.after.text">Wir bieten Buchhaltung, Steuerberatung und Revision für kleine und mittlere Unternehmen. Kontaktieren Sie uns für ein Erstgespräch.</p>
-                  <span class="mock__cta" data-i18n="mock.after.cta">Kontakt aufnehmen »</span>
-                </div>
-                <span class="ba__badge ba__badge--after" data-i18n="ba.after">Nachher</span>
+          <div class="card__frame">
+            <div class="site__bar">
+              <div class="site__dots"><span></span><span></span><span></span></div>
+              <div class="site__url">odera.ch</div>
+            </div>
 
-                <div class="ba__before" data-ba-before>
-                  <div class="mock mock--before" data-ba-img>
-                    <div class="mock__oldnav" data-i18n="mock.before.nav">Muster AG - Willkommen</div>
-                    <div class="mock__oldhead" data-i18n="mock.before.head">HERZLICH WILLKOMMEN AUF UNSERER WEBSEITE!!!</div>
-                    <p class="mock__oldtext" data-i18n="mock.before.text">Seit 1998 sind wir für Sie da. Klicken Sie unten für mehr Infos zu unseren Dienstleistungen im Bereich Treuhand, Buchhaltung u.v.m.</p>
-                    <span class="mock__oldlink" data-i18n="mock.before.link">» Hier klicken für mehr Informationen «</span>
-                  </div>
-                  <span class="ba__badge ba__badge--before" data-i18n="ba.before">Vorher</span>
-                </div>
+            <div class="ba" id="ba">
+              <div class="ba__after">
+                <img src="assets/img/odera.webp" width="1600" height="864" alt="odera.ch heute" loading="lazy" decoding="async">
+              </div>
 
-                <div class="ba__handle" data-ba-handle>
-                  <button class="ba__knob" type="button" role="slider" aria-label="Vergleich Vorher/Nachher" data-i18n-aria="ba.aria" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" data-ba-knob>↔</button>
+              <div class="ba__before">
+                <div class="retro" id="baScale">
+                  <div class="retro__desktop">
+                    <div class="retro__page">
+                      <div class="retro__header">
+                        <span class="retro__logo">Musterfirma</span>
+                        <span class="retro__phone">Tel. 044 000 00 00</span>
+                      </div>
+                      <div class="retro__nav">
+                        <span data-i18n="retro.nav1">Startseite</span>
+                        <span data-i18n="retro.nav2">Leistungen</span>
+                        <span data-i18n="retro.nav3">Vorgehen</span>
+                        <span data-i18n="retro.nav4">Kontakt</span>
+                        <span class="retro__badge"><span class="retro__neu" data-neu data-i18n="retro.new">NEU</span></span>
+                      </div>
+                      <div class="retro__cols">
+                        <div class="retro__side">
+                          <span data-i18n="retro.link1">»&nbsp;Über uns</span>
+                          <span data-i18n="retro.link2">»&nbsp;Leistungen</span>
+                          <span class="is-visited" data-i18n="retro.link3">»&nbsp;Referenzen</span>
+                          <span data-i18n="retro.link4">»&nbsp;Vorgehen</span>
+                          <span data-i18n="retro.link5">»&nbsp;Kontakt</span>
+                        </div>
+                        <div class="retro__main">
+                          <h4 class="retro__h" data-i18n="retro.head">Herzlich Willkommen</h4>
+                          <span class="retro__img retro__img--r" data-i18n="retro.img">Bild</span>
+                          <p class="retro__p" data-i18n="retro.p1">Willkommen auf unserer Internetseite. Seit vielen Jahren bieten wir unseren Kunden in der Region zuverlässige Dienstleistungen an. Auf den folgenden Seiten erfahren Sie mehr über unser Angebot und unser Vorgehen.</p>
+                          <span class="retro__img retro__img--l" data-i18n="retro.img">Bild</span>
+                          <p class="retro__p" data-i18n="retro.p2">Kontaktieren Sie uns für ein unverbindliches Gespräch. Wir freuen uns, von Ihnen zu hören und gemeinsam die passende Lösung zu finden.</p>
+                          <span class="retro__img retro__img--s" data-i18n="retro.img">Bild</span>
+                        </div>
+                      </div>
+                      <div class="retro__foot">
+                        <span data-i18n="retro.updated">Letzte Aktualisierung: 12.03.2011</span>
+                        <span class="retro__counter">003417</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <p class="mono ba__hint" data-i18n="ba.hint">Regler ziehen — vorher / nachher (Beispiel-Layout)</p>
+
+              <span class="ba__line" aria-hidden="true"></span>
+              <button class="ba__knob" type="button" id="baHandle" role="slider" aria-label="Vorher-Nachher-Vergleich" data-i18n-aria="ba.aria" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">↔</button>
+              <span class="ba__badge ba__badge--before" data-i18n="ba.before">Vorher — Beispiel</span>
+              <span class="ba__badge ba__badge--after" data-i18n="ba.after">Nachher — odera.ch</span>
             </div>
-            <div class="card__col">
-              <h3 class="card__title" data-i18n="relaunch.title">So könnte ein Relaunch aussehen</h3>
-              <div class="facts facts--inline">
-                <div class="fact"><span class="fact__label" data-i18n="fact.start">Ausgangslage</span><p class="fact__value" data-i18n="relaunch.start">Viele KMU-Websites wirken veraltet — überladen, kleine Schrift, unklare Struktur.</p></div>
-                <div class="fact"><span class="fact__label" data-i18n="fact.task">Aufgabe</span><p class="fact__value" data-i18n="relaunch.task">Klare Hierarchie, ruhige Typografie, ein Weg zur Kontaktaufnahme.</p></div>
-                <div class="fact"><span class="fact__label" data-i18n="fact.result">Ergebnis</span><p class="fact__value" data-i18n="relaunch.result">Beispielhafte Darstellung des Vorgehens — Screenshots eines echten Projekts folgen.</p></div>
-              </div>
-            </div>
+          </div>
+
+          <h3 class="card__title" data-i18n="odera.title">ODERA — Websites für kleine Unternehmen</h3>
+          <a class="site__link" href="https://odera.ch" target="_blank" rel="noopener noreferrer">odera.ch ↗</a>
+          <p class="fact__value card__lead" data-i18n="odera.text">Mein eigenes Angebot für Websites — Konzept, Umsetzung und Betrieb aus einer Hand.</p>
+          <p class="card__note" data-i18n="odera.note">Regler oben: illustrative Darstellung zum Vergleich, kein Kundenprojekt.</p>
+          <div class="tags">
+            <span class="tag" data-i18n="odera.tag1">Konzept</span><span class="tag" data-i18n="odera.tag2">Design</span><span class="tag" data-i18n="odera.tag3">Umsetzung</span>
           </div>
         </article>
 
         <!-- Geo-Quiz -->
-        <article class="card card--half" data-card data-cat="apps">
+        <article class="card card--wide" data-card data-cat="apps">
           <div class="card__frame">
             <div class="card__zoom" data-zoom style="background:#1B2A22">
               <img src="assets/img/geo-quiz.webp" width="1600" height="822" alt="Geo-Quiz — Luftbildkarte mit Frage" loading="lazy" style="object-position:50% 40%">
@@ -323,33 +362,17 @@
             <span class="tag">MCP</span><span class="tag">Python</span><span class="tag">SQLite</span><span class="tag">Jinja2</span><span class="tag">Playwright</span><span class="tag">Scheduled Tasks</span>
           </div>
         </article>
-      </div>
-    </div>
-  </section>
 
-  <!-- Websites --------------------------------------------------------- -->
-  <section class="section sec--dark" id="websites" data-section="websites">
-    <div class="wrap">
-      <div class="sec-head" style="margin-bottom:44px">
-        <span class="mono"><span class="eyebrow__num">04</span> <span data-i18n="nav.websites">Websites</span></span>
-        <span class="mono" data-i18n="websites.hint">Arbeitsproben</span>
-      </div>
-      <div class="grid-auto">
-        <!-- TODO: Sobald Website 2 live ist: Platzhalter durch Screenshot + Name + Link ersetzen -->
-        <article class="site">
-          <div class="site__browser">
-            <div class="site__bar"><div class="site__dots"><span></span><span></span><span></span></div><div class="site__url">[domain.ch]</div></div>
+        <!-- Prognose-App: noch ohne Vorschau -->
+        <article class="card card--half" data-card data-cat="apps">
+          <div class="card__frame card__frame--empty">
             <div class="site__placeholder">
-              <span class="site__flag" data-i18n="websites.wip">In Arbeit</span>
               <span class="mono" data-i18n="websites.soon">Vorschau folgt</span>
             </div>
+            <span class="site__flag" data-i18n="websites.wip">In Arbeit</span>
           </div>
-          <div class="site__head">
-            <h3 class="site__title" data-i18n="websites.w2.name">[Website 2 — Name]</h3>
-            <span class="site__kind" data-i18n="websites.kind.redesign">Redesign</span>
-          </div>
-          <p class="site__desc" style="margin-bottom:10px" data-i18n="websites.w2.status">Aktuell in Umsetzung — Livegang [Monat JJJJ]</p>
-          <p class="site__desc" data-i18n="websites.w2.desc">[Ein Satz zu Auftrag und Ergebnis.]</p>
+          <h3 class="card__title" data-i18n="prognose.title">Prognose-App</h3>
+          <p class="fact__value" data-i18n="prognose.text">Aktuell in Entwicklung.</p>
         </article>
       </div>
     </div>
@@ -358,7 +381,7 @@
   <!-- Skills ----------------------------------------------------------- -->
   <section class="section sec--sand" id="skills" data-section="skills">
     <div class="wrap" style="padding-bottom:clamp(48px,6vw,72px)">
-      <span class="mono eyebrow" style="margin-bottom:36px"><span class="eyebrow__num">05</span> <span data-i18n="nav.skills">Skills</span></span>
+      <span class="mono eyebrow" style="margin-bottom:36px"><span class="eyebrow__num">04</span> <span data-i18n="nav.skills">Skills</span></span>
       <h2 class="h2" data-reveal data-i18n="skills.title">Sechs Kernkompetenzen</h2>
       <div class="skills">
         <div class="skill" data-skill data-stations="web,dev">
@@ -427,7 +450,7 @@
   <!-- Ausbildung ------------------------------------------------------- -->
   <section class="section sec--dark" id="ausbildung" data-section="ausbildung">
     <div class="wrap">
-      <span class="mono eyebrow" style="margin-bottom:44px"><span class="eyebrow__num">06</span> <span data-i18n="nav.education">Ausbildung</span></span>
+      <span class="mono eyebrow" style="margin-bottom:44px"><span class="eyebrow__num">05</span> <span data-i18n="nav.education">Ausbildung</span></span>
       <div class="edu">
         <div class="edu__item">
           <div><p class="edu__title">BSc Digital Business &amp; AI</p><p class="edu__org" data-i18n="edu.hwz">HWZ Hochschule für Wirtschaft Zürich — berufsbegleitend</p></div>
@@ -453,7 +476,7 @@
       <div class="contact__tint contact__tint--lighten" aria-hidden="true"></div>
     </div>
     <div class="wrap">
-      <span class="mono eyebrow" style="margin-bottom:36px">07 <span data-i18n="nav.contact">Kontakt</span></span>
+      <span class="mono eyebrow" style="margin-bottom:36px">06 <span data-i18n="nav.contact">Kontakt</span></span>
       <div class="contact__body">
         <p class="mono" style="margin:0 0 16px" data-i18n="contact.kicker">Offen für Projekte und Gespräche</p>
         <h2 class="contact__title" data-i18n-html="contact.title">Schreiben<br>Sie mir</h2>
@@ -464,8 +487,8 @@
           </button>
         </div>
         <div class="contact__links">
-          <a href="https://linkedin.com/in/nico-bodmer" target="_blank" rel="noopener">LinkedIn ↗</a>
-          <a href="https://github.com/bodmer7" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://www.linkedin.com/in/nico-bodmer/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="https://github.com/bodmer7" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
           <!-- TODO: PDF unter assets/Lebenslauf-Nico-Bodmer.pdf ablegen, dann einkommentieren
           <a href="assets/Lebenslauf-Nico-Bodmer.pdf" target="_blank" rel="noopener" data-i18n="contact.cv">Lebenslauf (PDF) ↗</a>
           -->
@@ -486,7 +509,7 @@
   </div>
 </footer>
 
-<script src="assets/js/i18n.js?v=6"></script>
-<script src="assets/js/main.js?v=6"></script>
+<script src="assets/js/i18n.js?v=9"></script>
+<script src="assets/js/main.js?v=9"></script>
 </body>
 </html>
