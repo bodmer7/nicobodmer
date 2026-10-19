@@ -1,0 +1,111 @@
+# Alles, was Netz nach aussen braucht: Geo-Quiz-Screenshots, Lighthouse auf
+# den Live-Seiten, Einbettungstest, externe Links. Geänderte Dateien werden
+# zurück auf main geschrieben, danach startet der Deploy.
+#
+# Pushes mit dem GITHUB_TOKEN lösen keinen neuen Workflow-Lauf aus (Ausnahme:
+# workflow_dispatch und repository_dispatch). Darum startet der letzte
+# Schritt deploy.yml ausdrücklich per workflow_dispatch.
+name: Extern prüfen und messen
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Jeden Montag um 06:00 UTC; der Job «termin» lässt nur den ersten
+    # Montag im Monat weiterlaufen (cron verknüpft Tag und Wochentag mit ODER).
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: extern
+  cancel-in-progress: false
+
+jobs:
+  termin:
+    runs-on: ubuntu-latest
+    outputs:
+      weiter: ${{ steps.pruefen.outputs.weiter }}
+    steps:
+      - name: Erster Montag im Monat?
+        id: pruefen
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$(date -u +%-d)" -gt 7 ]; then
+            echo "weiter=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "weiter=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  extern:
+    needs: termin
+    if: needs.termin.outputs.weiter == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository holen
+        uses: actions/checkout@v7
+
+      - name: Node (LTS) mit npm-Cache
+        uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Chromium für Playwright und Lighthouse
+        run: npx playwright install --with-deps chromium
+
+      - name: Screenshots Geo-Quiz (Desktop und Handy)
+        id: screenshots
+        continue-on-error: true
+        run: npm run screenshots -- --nur geo-quiz
+
+      - name: Lighthouse mobil, je drei Läufe, Median
+        id: messen
+        continue-on-error: true
+        run: node scripts/measure.mjs --extern
+
+      - name: Einbettung prüfen (Header und Klicktest)
+        id: einbettung
+        continue-on-error: true
+        run: node scripts/einbettung.mjs
+
+      - name: Links der Live-Seite, auch externe
+        id: links
+        continue-on-error: true
+        # LinkedIn antwortet automatischen Abrufen mit Status 999; diese
+        # Links werden darum nicht geprüft.
+        run: >-
+          npx linkinator https://nico-bodmer.ch/ --recurse --retry --retry-errors
+          --retry-errors-count 3 --timeout 20000 --skip "linkedin\.com" --verbosity error
+
+      - name: Textprüfung der neuen Daten
+        run: npm run check:text
+
+      - name: Änderungen zurückschreiben und Deploy starten
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add src/assets/screens src/data/messwerte.json src/data/einbettung.json
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Extern: Screenshots und Messwerte aktualisiert" -m "Automatisch aus dem Workflow «Extern prüfen und messen»."
+          git push origin HEAD:main
+          gh workflow run deploy.yml --ref main
+
+      - name: Fehler melden
+        if: >-
+          steps.screenshots.outcome == 'failure' || steps.messen.outcome == 'failure' ||
+          steps.einbettung.outcome == 'failure' || steps.links.outcome == 'failure'
+        run: |
+          echo "Screenshots: ${{ steps.screenshots.outcome }}"
+          echo "Messen: ${{ steps.messen.outcome }}"
+          echo "Einbettung: ${{ steps.einbettung.outcome }}"
+          echo "Links: ${{ steps.links.outcome }} (Details im Schritt «Links der Live-Seite»)"
+          exit 1

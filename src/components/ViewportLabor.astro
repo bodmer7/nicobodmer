@@ -5,6 +5,8 @@
  */
 import Bild from './Bild.astro';
 import Messwerte from './Messwerte.astro';
+import { eigeneWerte } from '../data/messwerte';
+import { istEinbettbar } from '../data/einbettung';
 import { useT, type Lang } from '../i18n/ui';
 import { getEntry } from 'astro:content';
 import type { ImageMetadata } from 'astro';
@@ -114,6 +116,7 @@ const sizes: Record<Geraet, string> = {
         data-panel={s.id}
         data-url={s.url}
         data-name={s.name}
+        data-einbettbar={String(istEinbettbar(s.id))}
       >
         <div class="labor__buehne buehne" data-buehne>
           <div class="labor__rahmen" data-rahmen>
@@ -134,14 +137,20 @@ const sizes: Record<Geraet, string> = {
           </div>
           <p class="labor__breite klein" aria-hidden="true" data-breite hidden />
         </div>
-        <div class="labor__messwerte">
-          <h4 class="label">{t('labor.messwerte')}: {s.name}</h4>
-          {messwerteFuer(s.id).length > 0 ? (
-            <Messwerte lang={lang} werte={messwerteFuer(s.id)} id={`labor-${s.id}`} kompakt />
-          ) : (
-            <p class="klein neben">{t('labor.keineMesswerte')}</p>
-          )}
-        </div>
+        {(messwerteFuer(s.id).length > 0 || eigeneWerte(s.id, lang).length > 0) && (
+          <div class="labor__messwerte">
+            <h4 class="label">
+              {t('labor.messwerte')}: {s.name}
+            </h4>
+            {messwerteFuer(s.id).length > 0 && <Messwerte lang={lang} werte={messwerteFuer(s.id)} id={`labor-${s.id}`} kompakt />}
+            {eigeneWerte(s.id, lang).length > 0 && (
+              <>
+                <p class="label neben">{t('labor.eigeneMessung')}</p>
+                <Messwerte lang={lang} werte={eigeneWerte(s.id, lang)} id={`labor-eigen-${s.id}`} kompakt />
+              </>
+            )}
+          </div>
+        )}
       </div>
     ))
   }

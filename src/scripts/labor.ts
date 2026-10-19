@@ -21,7 +21,8 @@ if (labor) {
 
   const liveSichtbarkeit = () => {
     const istLive = aktivesPanel().classList.contains('ist-live');
-    liveBtn.hidden = !gross.matches || istLive;
+    const erlaubt = aktivesPanel().dataset.einbettbar !== 'false';
+    liveBtn.hidden = !gross.matches || istLive || !erlaubt;
     ausBtn.hidden = !istLive;
   };
 

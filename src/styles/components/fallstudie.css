@@ -409,3 +409,7 @@ h2:hover > .anker,
   background: none;
   cursor: zoom-in;
 }
+
+.fall__eigene { margin-top: var(--s7); }
+
+.fall__eigene h3 { margin-bottom: var(--s4); }

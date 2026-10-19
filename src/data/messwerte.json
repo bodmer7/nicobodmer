@@ -1,47 +1,78 @@
 {
-  "datum": "2026-10-19",
-  "seiten": {
-    "start": {
-      "leistung": 100,
-      "barrierefreiheit": 100,
-      "bestPractices": 100,
-      "seo": 100,
-      "kb": 148
-    },
-    "start-en": {
-      "leistung": 100,
-      "barrierefreiheit": 100,
-      "bestPractices": 100,
-      "seo": 100,
-      "kb": 148
-    },
-    "fall-odera": {
-      "leistung": 100,
-      "barrierefreiheit": 100,
-      "bestPractices": 100,
-      "seo": 100,
-      "kb": 79
-    },
-    "fall-odera-en": {
-      "leistung": 100,
-      "barrierefreiheit": 100,
-      "bestPractices": 100,
-      "seo": 100,
-      "kb": 79
-    },
-    "cv": {
-      "leistung": 100,
-      "barrierefreiheit": 100,
-      "bestPractices": 100,
-      "seo": 100,
-      "kb": 67
-    },
-    "cv-en": {
-      "leistung": 100,
-      "barrierefreiheit": 100,
-      "bestPractices": 100,
-      "seo": 100,
-      "kb": 66
+  "lokal": {
+    "datum": "2026-10-19",
+    "methode": "Lighthouse mobil, astro preview",
+    "seiten": {
+      "start": {
+        "leistung": 100,
+        "barrierefreiheit": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "kb": 148,
+        "lcpMs": 1734,
+        "cls": 0,
+        "tbtMs": 0
+      },
+      "start-en": {
+        "leistung": 100,
+        "barrierefreiheit": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "kb": 148,
+        "lcpMs": 1740,
+        "cls": 0,
+        "tbtMs": 0
+      },
+      "fall-odera": {
+        "leistung": 100,
+        "barrierefreiheit": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "kb": 79,
+        "lcpMs": 1509,
+        "cls": 0,
+        "tbtMs": 0
+      },
+      "fall-odera-en": {
+        "leistung": 100,
+        "barrierefreiheit": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "kb": 79,
+        "lcpMs": 1513,
+        "cls": 0,
+        "tbtMs": 0
+      },
+      "cv": {
+        "leistung": 100,
+        "barrierefreiheit": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "kb": 67,
+        "lcpMs": 1282,
+        "cls": 0,
+        "tbtMs": 0
+      },
+      "cv-en": {
+        "leistung": 100,
+        "barrierefreiheit": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "kb": 66,
+        "lcpMs": 1279,
+        "cls": 0,
+        "tbtMs": 0
+      }
     }
+  },
+  "website": {
+    "datum": null,
+    "methode": "Lighthouse mobil, Median aus drei Läufen",
+    "seiten": {}
+  },
+  "projekte": {
+    "datum": null,
+    "methode": "Lighthouse mobil, Median aus drei Läufen",
+    "seiten": {}
   }
 }

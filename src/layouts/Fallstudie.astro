@@ -18,6 +18,8 @@ import { useT, type Lang } from '../i18n/ui';
 import { ankerPfad, projektPfad, seiten } from '../i18n/routes';
 import { fallstudien, istExtern, trennbar, type Projekt } from '../data/projekte';
 import type { ProjektId } from '../data/profil';
+import { eigeneWerte } from '../data/messwerte';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   lang: Lang;
@@ -38,13 +40,41 @@ const alternate = seiten[`projekt:${id}`];
 const hero = d.bilder[d.vorschau] ?? d.bilder[0];
 // Die Galerie zeigt alle Bilder ausser dem Hero-Bild.
 const galerie = d.bilder.filter((b) => b !== hero);
+
+// Handy-Screenshot des Geo-Quiz: entsteht in extern.yml (Netz nötig) und
+// erscheint automatisch, sobald die Datei existiert.
+const optional = import.meta.glob<{ default: ImageMetadata }>('../assets/screens/geo-quiz-handy.webp', { eager: true });
+const geoHandy = Object.values(optional)[0]?.default;
+if (id === 'geo-quiz' && geoHandy) {
+  galerie.push({
+    datei: geoHandy,
+    alt:
+      lang === 'de'
+        ? 'Geo-Quiz auf dem Handy, Luftbildkarte ohne Beschriftung mit einer Frage unten'
+        : 'Geo quiz on a phone, an unlabelled aerial map with a question at the bottom',
+    unterschrift: lang === 'de' ? 'bodmer7.github.io/segberike auf dem Handy' : 'bodmer7.github.io/segberike on a phone',
+    geraet: 'handy',
+  });
+}
 const extra = id === 'geo-quiz' ? 'demo' : id === 'morgen-check-in' ? 'dashboard' : null;
+
+// Eigene Live-Messungen (extern.yml), getrennt von veröffentlichten Werten
+const messKeys: Record<string, { key: string; name: string }[]> = {
+  odera: [{ key: 'odera', name: 'odera.ch' }],
+  musterprojekte: [
+    { key: 'doppelmeter', name: 'Schreinerei Doppelmeter' },
+    { key: 'firstlicht', name: 'Firstlicht Solartechnik' },
+  ],
+  'geo-quiz': [{ key: 'geo-quiz', name: lang === 'de' ? 'Geo-Quiz' : 'Geo quiz' }],
+};
+const eigene = (messKeys[id] ?? []).map((m) => ({ ...m, werte: eigeneWerte(m.key, lang) })).filter((m) => m.werte.length > 0);
+const hatMesswerte = d.messwerte.length > 0 || eigene.length > 0;
 
 const kapitel = [
   ...headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug, text: h.text })),
   ...(extra === 'demo' ? [{ id: 'live-demo', text: t('demo.titel') }] : []),
   ...(extra === 'dashboard' ? [{ id: 'beispiel', text: t('dashboard.titel') }] : []),
-  ...(d.messwerte.length ? [{ id: 'messwerte', text: t('fall.messwerte') }] : []),
+  ...(hatMesswerte ? [{ id: 'messwerte', text: t('fall.messwerte') }] : []),
   ...(galerie.length > 0 ? [{ id: 'bilder', text: t('fall.bilder') }] : []),
   ...(d.technik.length ? [{ id: 'technik', text: t('fall.technik') }] : []),
 ];
@@ -151,10 +181,18 @@ const titel = `${d.title} | Nico Bodmer`;
         {extra === 'dashboard' && <MiniDashboard lang={lang} />}
 
         {
-          d.messwerte.length > 0 && (
+          hatMesswerte && (
             <section class="fall__abschnitt" aria-labelledby="messwerte">
               <h2 id="messwerte">{t('fall.messwerte')}</h2>
-              <Messwerte lang={lang} werte={d.messwerte} id={`fall-${id}`} />
+              {d.messwerte.length > 0 && <Messwerte lang={lang} werte={d.messwerte} id={`fall-${id}`} />}
+              {eigene.map((m) => (
+                <div class="fall__eigene">
+                  <h3>
+                    {t('labor.eigeneMessung')}: {m.name}
+                  </h3>
+                  <Messwerte lang={lang} werte={m.werte} id={`fall-eigen-${m.key}`} />
+                </div>
+              ))}
             </section>
           )
         }

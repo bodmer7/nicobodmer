@@ -1,8 +1,12 @@
 /**
  * Screenshots der Projekte neu erstellen (Abschnitt 8 des Auftrags).
  *
- *   npm run screenshots                 alle Seiten live
- *   npm run screenshots -- odera-start  nur bestimmte Namen
+ *   npm run screenshots -- --nur geo-quiz            nur bestimmte Ziele
+ *   npm run screenshots -- --nur doppelmeter firstlicht
+ *   npm run screenshots -- --alle                    alle Ziele
+ * Ohne Angabe passiert nichts (die ODERA-Screenshots sollen nicht aus
+ * Versehen ersetzt werden). Ziele: odera-start, odera-projekt-check,
+ * odera-angebot, doppelmeter, firstlicht, firstlicht-erklaert, geo-quiz.
  *
  * Quellen umleiten (z. B. wenn die Live-Seite nicht erreichbar ist):
  *   ODERA_BASE=http://localhost:8801 npm run screenshots
@@ -39,7 +43,8 @@ const liste = [
   { name: 'doppelmeter', url: `${ODERA}/musterprojekte/doppelmeter/`, ansichten: ['desktop', 'tablet', 'handy'] },
   { name: 'firstlicht', url: `${ODERA}/musterprojekte/firstlicht/`, ansichten: ['desktop', 'tablet', 'handy'] },
   { name: 'firstlicht-erklaert', url: `${ODERA}/musterprojekte/firstlicht/?erklaeren=1`, ansichten: ['desktop'] },
-  { name: 'geo-quiz', url: GEO, ansichten: ['desktop', 'handy'] },
+  // Die Luftbild-Kacheln laden nach; darum länger warten.
+  { name: 'geo-quiz', url: GEO, ansichten: ['desktop', 'handy'], warten: 3000 },
 ];
 
 /*
@@ -54,8 +59,20 @@ const CSS = `
   ::-webkit-scrollbar { display: none !important; }
 `;
 
-const filter = process.argv.slice(2);
-const auswahl = filter.length ? liste.filter((e) => filter.includes(e.name)) : liste;
+const argumente = process.argv.slice(2);
+const alle = argumente.includes('--alle');
+const namen = argumente.filter((a) => !a.startsWith('--'));
+if (!alle && namen.length === 0) {
+  console.error('Bitte Ziele angeben: --nur <name ...> oder --alle');
+  console.error(`Ziele: ${liste.map((e) => e.name).join(', ')}`);
+  process.exit(1);
+}
+const unbekannt = namen.filter((n) => !liste.some((e) => e.name === n));
+if (unbekannt.length) {
+  console.error(`Unbekannte Ziele: ${unbekannt.join(', ')}`);
+  process.exit(1);
+}
+const auswahl = alle ? liste : liste.filter((e) => namen.includes(e.name));
 
 await mkdir(cache, { recursive: true });
 await mkdir(ziel, { recursive: true });
@@ -83,7 +100,7 @@ for (const eintrag of auswahl) {
       if (!antwort || !antwort.ok()) throw new Error(`HTTP ${antwort?.status()}`);
       await page.addStyleTag({ content: CSS });
       await page.evaluate(() => document.fonts.ready);
-      await page.waitForTimeout(800);
+      await page.waitForTimeout(eintrag.warten ?? 800);
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.waitForTimeout(200);
       const roh = path.join(cache, `${datei}.png`);

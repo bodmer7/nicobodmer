@@ -28,7 +28,8 @@ const de = {
   'footer.recht': 'Impressum und Datenschutz',
   'footer.cookies': 'Keine Cookies, kein Tracking.',
   'footer.stand': 'Stand der Inhalte: Oktober 2026',
-  'footer.messung': 'Diese Seite: {kb} KB beim ersten Aufruf, Lighthouse mobil {lh}, gemessen am {datum}.',
+  'footer.messung': 'Diese Seite: {kb} KB beim ersten Aufruf, Lighthouse mobil {lh}, gemessen auf nico-bodmer.ch am {datum}.',
+  'footer.messungLokal': 'Diese Seite: {kb} KB beim ersten Aufruf, Lighthouse mobil {lh}, lokal gemessen am {datum}.',
   'footer.messungLabel': 'Leistung, Barrierefreiheit, Best Practices, SEO',
 
   'hero.frage': 'Was führt Sie her?',
@@ -68,7 +69,7 @@ const de = {
   'labor.breite': 'Breite',
   'labor.griff': 'Breite der Vorschau',
   'labor.messwerte': 'Messwerte',
-  'labor.keineMesswerte': 'Für diese Seite habe ich keine eigenen Messwerte veröffentlicht.',
+  'labor.eigeneMessung': 'Eigene Messung',
   'labor.iframeTitel': 'Live-Vorschau von {name}',
 
   'laufbahn.titel': 'Laufbahn',
@@ -205,7 +206,8 @@ const en: Record<UiKey, string> = {
   'footer.recht': 'Legal notice and privacy',
   'footer.cookies': 'No cookies, no tracking.',
   'footer.stand': 'Content as of October 2026',
-  'footer.messung': 'This page: {kb} KB on first load, Lighthouse mobile {lh}, measured on {datum}.',
+  'footer.messung': 'This page: {kb} KB on first load, Lighthouse mobile {lh}, measured on nico-bodmer.ch on {datum}.',
+  'footer.messungLokal': 'This page: {kb} KB on first load, Lighthouse mobile {lh}, measured locally on {datum}.',
   'footer.messungLabel': 'performance, accessibility, best practices, SEO',
 
   'hero.frage': 'What brings you here?',
@@ -245,7 +247,7 @@ const en: Record<UiKey, string> = {
   'labor.breite': 'Width',
   'labor.griff': 'Preview width',
   'labor.messwerte': 'Measurements',
-  'labor.keineMesswerte': 'I have not published my own measurements for this page.',
+  'labor.eigeneMessung': 'Own measurement',
   'labor.iframeTitel': 'Live preview of {name}',
 
   'laufbahn.titel': 'Career',
