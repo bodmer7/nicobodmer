@@ -439,6 +439,26 @@ export const koennen: KoennenGruppe[] = [
     ],
     nachweise: [],
   },
+  {
+    id: 'studium',
+    titel: { de: 'Im Studium', en: 'In my studies' },
+    unterzeile: { de: 'BSc Digital Business & AI, HWZ, seit 09/2026', en: 'BSc Digital Business & AI, HWZ, since 09/2026' },
+    fusszeile: {
+      de: 'Der Studiengang verbindet Software Engineering, AI & Data Science, Business und Leadership.',
+      en: 'The programme combines Software Engineering, AI & Data Science, Business and Leadership.',
+    },
+    // Nur Themen, die gerade laufen (HWZ-Factsheet, Stand August 2025).
+    // Jedes Semester ersetzen und `semester` hochzählen, siehe CONTENT.md.
+    begriffe: [
+      { de: 'Software Engineering (mit Python-Grundlagen)', en: 'Software Engineering (with Python basics)', semester: 1 },
+      { de: 'Introduction to AI', en: 'Introduction to AI', semester: 1 },
+      { de: 'Math for Business', en: 'Math for Business', semester: 1 },
+      { de: 'Strategic Management', en: 'Strategic Management', semester: 1 },
+      { de: 'Finance', en: 'Finance', semester: 1 },
+      { de: 'Study Skills', en: 'Study Skills', semester: 1 },
+    ],
+    nachweise: [{ art: 'ausbildung', id: 'bsc-hwz' }],
+  },
 ];
 
 /** Werkzeuge ohne Niveau: «In meinen Projekten eingesetzt», keine eigene Fähigkeit */
@@ -493,6 +513,15 @@ export const nachweiseVon = (g: KoennenGruppe, b: Begriff): NachweisRef[] => b.n
 
 /** Alle Nachweise einer Gruppe, auch die der einzelnen Begriffe */
 export const alleNachweise = (g: KoennenGruppe): NachweisRef[] => [...g.nachweise, ...g.begriffe.flatMap((b) => b.nachweise ?? [])];
+
+/** Gruppe «Im Studium» */
+export const studium = koennen.find((g) => g.id === 'studium')!;
+
+/** «Software Engineering (mit Python-Grundlagen), Introduction to AI, ...» */
+export const studienThemen = (lang: Lang): string => studium.begriffe.map((b) => b[lang]).join(', ');
+
+/** Laufendes Semester laut den Themen */
+export const studienSemester = Math.max(...studium.begriffe.map((b) => b.semester ?? 1));
 
 /** «Deutsch (Muttersprache), Englisch (fliessend), ...» */
 export const sprachenText = (lang: Lang): string =>

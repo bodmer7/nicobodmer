@@ -33,6 +33,7 @@ const zuordnung: Record<string, Farbe> = {
   vertrieb: 'orange',
   support: 'gelb',
   arbeitsweise: 'neutral',
+  studium: 'gelb',
   sprachen: 'neutral',
 };
 

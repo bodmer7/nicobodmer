@@ -12,7 +12,7 @@ import '../styles/components/lebenslauf.css';
 import portrait from '../assets/fotos/contact-portrait.webp';
 import { useT, type Lang } from '../i18n/ui';
 import { seiten, projektPfad } from '../i18n/routes';
-import { person, stationen, ausbildung, koennen, inProjekten, sprachenText, hobbies, ziel, zeitraumKurz, ausbildungZeitraum, ausbildungOrt } from '../data/profil';
+import { person, stationen, ausbildung, koennen, inProjekten, sprachenText, studienThemen, studienSemester, hobbies, ziel, zeitraumKurz, ausbildungZeitraum, ausbildungOrt } from '../data/profil';
 import { projekte } from '../data/projekte';
 import type { ProjektId } from '../data/profil';
 
@@ -89,6 +89,11 @@ const beschreibung =
               <div>
                 <h3>{a.titel[lang]}</h3>
                 {ausbildungOrt(a, lang) && <p class="neben">{ausbildungOrt(a, lang)}</p>}
+                {a.id === 'bsc-hwz' && (
+                  <p class="cv__themen">
+                    {t('cv.themen', { n: studienSemester })}: {studienThemen(lang)}
+                  </p>
+                )}
               </div>
             </li>
           ))

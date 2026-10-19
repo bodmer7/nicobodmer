@@ -186,3 +186,5 @@
 }
 
 .linkliste a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
+
+.cv__themen { margin-top: var(--s1); max-width: 68ch; }

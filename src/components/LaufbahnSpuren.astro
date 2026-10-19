@@ -106,7 +106,7 @@ const ausbildungZeile: Record<string, number> = { efz: 3, 'bsc-hwz': 3, bm: 4 };
     unter: ausbildungOrt(a, lang),
     zeit,
     punkte: [],
-    gruppen: [],
+    gruppen: gruppenFuer('ausbildung', a.id),
     farbe: farbe('ausbildung'),
   });
 });

@@ -91,6 +91,21 @@ In `src/data/profil.ts` bei `hobbies` Einträge hinzufügen, zum Beispiel
 `{ de: 'Velofahren', en: 'Cycling' }`. Der Block «Ausserhalb der Arbeit»
 erscheint, sobald etwas drinsteht.
 
+## Studium nachführen
+
+Die Themen des laufenden Semesters stehen in `src/data/profil.ts` in der
+Können-Gruppe `studium` («Im Studium»). Jedes Semester:
+
+1. Die Liste `begriffe` durch die Module des neuen Semesters ersetzen
+   (Deutsch und Englisch).
+2. Bei jedem Begriff `semester` auf die neue Zahl setzen.
+3. Nur Themen eintragen, die gerade laufen: keine späteren Module, keine
+   Noten.
+
+Die Gruppe in «Können» und die Zeile «Themen im … Semester» beim BSc im
+Lebenslauf zeigen die neuen Themen danach automatisch. Auch «Gerade» in
+derselben Datei prüfen.
+
 ## Lebenslauf als PDF
 
 Die Seite `/lebenslauf/` hat den Knopf «Als PDF speichern». Im Druckdialog

@@ -176,6 +176,7 @@ const de = {
   'cv.kontakt': 'Kontakt',
   'cv.fotoAlt': 'Nico Bodmer',
   'cv.referenzen': 'Referenzen auf Anfrage.',
+  'cv.themen': 'Themen im {n}. Semester',
 
   'recht.titel': 'Impressum und Datenschutz',
 
@@ -357,6 +358,7 @@ const en: Record<UiKey, string> = {
   'cv.kontakt': 'Contact',
   'cv.fotoAlt': 'Nico Bodmer',
   'cv.referenzen': 'References available on request.',
+  'cv.themen': 'Topics in semester {n}',
 
   'recht.titel': 'Legal notice and privacy',
 
