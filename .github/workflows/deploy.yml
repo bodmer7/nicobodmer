@@ -1,0 +1,69 @@
+# Baut, prüft und veröffentlicht die Seite auf GitHub Pages.
+# Nach der offiziellen Astro-Anleitung (docs.astro.build, Deploy to GitHub
+# Pages), erweitert um Prüfungen und Playwright-Tests vor dem Deploy.
+# Externe Seiten (Lighthouse, Links nach aussen) prüft extern.yml, damit der
+# Deploy nie an fremden Servern scheitert.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository holen
+        uses: actions/checkout@v7
+
+      - name: Node (LTS) mit npm-Cache
+        uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: astro check
+        run: npm run check
+
+      - name: Bauen (mit Grössenprüfung)
+        run: npm run build
+
+      - name: Textprüfung
+        run: npm run check:text
+
+      - name: Chromium für Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Playwright-Tests gegen astro preview
+        run: npm test
+        env:
+          CI: 'true'
+
+      - name: Pages-Artefakt hochladen
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Auf GitHub Pages veröffentlichen
+        id: deployment
+        uses: actions/deploy-pages@v5
