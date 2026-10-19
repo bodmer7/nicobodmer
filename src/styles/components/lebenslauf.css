@@ -94,6 +94,8 @@
 
 .cv__projekte li + li { margin-top: var(--s2); }
 
+.cv__projekte .marke { padding-left: 1.07em; text-indent: -1.07em; }
+
 .cv__koennen {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));

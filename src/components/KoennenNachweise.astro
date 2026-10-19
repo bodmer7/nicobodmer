@@ -107,7 +107,7 @@ const gruppen = await Promise.all(
       </div>
     ))
   }
-  <div class="koennen__gruppe">
+  <div class="koennen__gruppe" data-farbe="neutral">
     <h3>{t('koennen.sprachen')}</h3>
     <p>{person.sprachen.map((s) => s[lang]).join(', ')}</p>
   </div>

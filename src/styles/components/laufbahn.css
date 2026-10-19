@@ -107,6 +107,7 @@
 .balken--arbeit {
   background: var(--akzent);
   border-color: var(--akzent);
+  border-right: 2px solid var(--paper);
   color: var(--auf-akzent);
 }
 
@@ -140,6 +141,7 @@
 .balken--arbeit:hover {
   background: color-mix(in srgb, var(--akzent) 80%, #000);
   border-color: color-mix(in srgb, var(--akzent) 80%, #000);
+  border-right-color: var(--paper);
   color: var(--auf-akzent);
 }
 

@@ -3,7 +3,7 @@
 .fall__kopf { padding-top: clamp(32px, 5vw, 72px); }
 
 /* Kopf und Hero-Bild im Band in der Tönung der Projektfarbe */
-.fall__band { padding-top: 0; }
+.fall__band { padding-top: 0; padding-bottom: clamp(48px, 6vw, 88px); }
 
 .fall__band .fall__hero-buehne {
   padding: 0;
