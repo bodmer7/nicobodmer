@@ -10,7 +10,8 @@ main:focus { outline: none; }
   z-index: 50;
   background: var(--paper);
   border-bottom: 1px solid transparent;
-  transition: border-color var(--t-ui) var(--ease);
+  color: var(--ink);
+  transition: border-color var(--t-ui) var(--ease), background-color var(--t-ui) var(--ease), color var(--t-ui) var(--ease);
 }
 
 .kopf__innen {

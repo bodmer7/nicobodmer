@@ -9,6 +9,7 @@ import { useT, type Lang } from '../i18n/ui';
 import { anker, projektPfad } from '../i18n/routes';
 import { koennen, stationen, ausbildung, person, weitereWerkzeuge, type NachweisRef, type Begriff } from '../data/profil';
 import { getEntry } from 'astro:content';
+import { farbe } from '../data/farben';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -64,7 +65,7 @@ const gruppen = await Promise.all(
 <div class="koennen" data-koennen>
   {
     gruppen.map((g) => (
-      <div class="koennen__gruppe" id={`${anker.koennen[lang]}-${g.id}`}>
+      <div class="koennen__gruppe" id={`${anker.koennen[lang]}-${g.id}`} data-farbe={farbe(g.id)}>
         <h3>{g.titel[lang]}</h3>
         <ul class="begriffe">
           {g.begriffe.map((b) => (

@@ -4,6 +4,7 @@ import { useT, type Lang } from '../i18n/ui';
 import { projekte } from '../data/projekte';
 import { projektPfad } from '../i18n/routes';
 import type { ProjektId } from '../data/profil';
+import { farbe } from '../data/farben';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -34,7 +35,7 @@ const sizesVorschau = '(min-width: 1024px) 40vw, 100vw';
               </span>
             )}
             <span class="projekt__kopf">
-              <span class="projekt__titel" style={live ? `view-transition-name:vt-titel-${id}` : undefined}>
+              <span class="projekt__titel marke" style={live ? `view-transition-name:vt-titel-${id}` : undefined}>
                 {p.data.title}
               </span>
               <span class="projekt__jahr">{live ? p.data.jahr : t('arbeiten.inArbeit')}</span>
@@ -44,7 +45,7 @@ const sizesVorschau = '(min-width: 1024px) 40vw, 100vw';
           </>
         );
         return (
-          <li class="projekt" data-projekt={id} data-reihenfolge={p.data.reihenfolge}>
+          <li class="projekt" data-projekt={id} data-reihenfolge={p.data.reihenfolge} data-farbe={farbe(id)}>
             <h3 class="projekt__h">
               {live ? (
                 <a class="projekt__link" href={projektPfad(id as ProjektId, lang)} data-vorschau-fuer={id}>
@@ -73,6 +74,7 @@ const sizesVorschau = '(min-width: 1024px) 40vw, 100vw';
               sizes={sizesVorschau}
               class:list={['projekte__bild', { 'ist-aktiv': i === 0 }]}
               data-vorschau={p.data.projekt}
+              data-farbe={farbe(p.data.projekt)}
               style={`object-position:${p.data.position};view-transition-name:vt-bild-${p.data.projekt}`}
             />
           );

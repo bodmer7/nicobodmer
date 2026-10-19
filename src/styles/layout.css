@@ -233,7 +233,7 @@ main { display: block; }
 
 .tab[aria-selected="true"] { color: var(--ink); }
 
-.tab[aria-selected="true"]::after { background: var(--signal); }
+.tab[aria-selected="true"]::after { background: var(--akzent); }
 
 /* Bühne für Screenshots */
 

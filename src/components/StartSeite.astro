@@ -77,28 +77,30 @@ const jsonLd = [
     <KoennenNachweise lang={lang} />
   </section>
 
-  <section class="sektion wrap" id={anker.ueber[lang]} aria-labelledby="ueber-titel">
-    <div class="raster">
-      <figure class="ueber__foto">
-        <Bild src={aboutPortrait} alt={t('ueber.fotoAlt')} widths={[400, 640, 900]} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 30vw, 100vw" />
-      </figure>
-      <div class="ueber__text silben">
-        <h2 id="ueber-titel">{t('ueber.titel')}</h2>
-        <p>{t('ueber.p1')}</p>
-        <p>{t('ueber.p2')}</p>
-        <p>{t('ueber.p3')}</p>
-        {
-          hobbies.length > 0 && (
-            <div class="ueber__hobbies">
-              <h3>{t('ueber.hobbies')}</h3>
-              <ul>
-                {hobbies.map((h) => (
-                  <li>{h[lang]}</li>
-                ))}
-              </ul>
-            </div>
-          )
-        }
+  <section class="sektion ueber band band--hell" data-farbe="gelb" id={anker.ueber[lang]} aria-labelledby="ueber-titel">
+    <div class="wrap">
+      <div class="raster">
+        <figure class="ueber__foto">
+          <Bild src={aboutPortrait} alt={t('ueber.fotoAlt')} widths={[400, 640, 900]} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 30vw, 100vw" />
+        </figure>
+        <div class="ueber__text silben">
+          <h2 id="ueber-titel">{t('ueber.titel')}</h2>
+          <p>{t('ueber.p1')}</p>
+          <p>{t('ueber.p2')}</p>
+          <p>{t('ueber.p3')}</p>
+          {
+            hobbies.length > 0 && (
+              <div class="ueber__hobbies">
+                <h3>{t('ueber.hobbies')}</h3>
+                <ul>
+                  {hobbies.map((h) => (
+                    <li>{h[lang]}</li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </div>
       </div>
     </div>
   </section>

@@ -33,7 +33,17 @@ jobs:
           npx astro preview --port 4330 --ignore-lock > preview.log 2>&1 &
           for i in $(seq 1 60); do curl -sf http://localhost:4330/ >/dev/null && break; sleep 1; done
           node scripts/vorschau-screenshots.mjs
+      - name: Prüfungen (Ergebnis in die Vorschau)
+        if: always()
+        env:
+          CI: 'true'
+        run: |
+          mkdir -p vorschau-bilder
+          (npx astro check 2>&1 | tail -40) > vorschau-bilder/check.log || true
+          (npm run check:text 2>&1 | tail -40) > vorschau-bilder/text.log || true
+          (npx playwright test --reporter=line 2>&1 | tail -150) > vorschau-bilder/tests.log || true
       - name: Bilder in Branch vorschau-bilder ablegen
+        if: always()
         run: |
           cd vorschau-bilder
           git init -q -b vorschau-bilder

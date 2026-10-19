@@ -30,7 +30,17 @@ Beispieldaten; den MCP-Server hat Nico eingerichtet, nicht programmiert.
 - Farben hell: paper #F2F2EF, surface #E7E7E3, ink #141619, ink-2 #5C6066,
   line #D5D5D0, signal #C8261C (Flächen), signal-text #B3241B (Text).
   Dunkel nach Systemeinstellung oder Schalter (`data-theme`).
-- Rot sparsam: Kontakt-Bereich, ein Signal-Button, Heute-Linie, aktive Tabs.
+- Farben mit Bedeutung (Werte in tokens.css, Zuordnung in
+  `src/data/farben.ts`, Variablen über `data-farbe` in `src/styles/farbe.css`):
+  blau #2B45D4, gruen #0F7B5F, orange #E8641E, rosa #C42F5C, gelb #FFC53D,
+  je mit `-text` (lesbar auf paper) und `-hell` (Tönung, dunkel im Dark Mode).
+  Projekte tragen die Farbe ihres Auftritts (ODERA blau, Musterprojekte
+  orange, Geo-Quiz gruen, Morgen-Check-in rosa). Laufbahn: Arbeit blau,
+  Ausbildung gelb. Jede Können-Gruppe hat eine feste Farbe.
+- Bänder über die volle Breite: Hero blau (`band--blau` stellt die Tokens
+  um, Kopfzeile oben ebenfalls blau), Über mich und Fallstudien-Kopf in der
+  Tönung (`band--hell`), Kontakt rot. Keine weiteren Bänder.
+- Rot bleibt Handlung: Kontakt-Bereich, Signal-Button, Heute-Linie.
 - Eine Schrift: Schibsted Grotesk (variabel 400 bis 900), selbst gehostet.
   `font-variant-numeric: tabular-nums` nur über `.ziffern` oder gezielt:
   die tnum-Funktion dieser Schrift macht auch Punkt und Komma breit.

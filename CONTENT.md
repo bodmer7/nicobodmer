@@ -73,6 +73,8 @@ status: entwurf
   `src/content.config.ts` (Liste bei `projekt`), in `src/i18n/routes.ts`
   (Pfade) und in `src/data/profil.ts` (Typ `ProjektId`) ergänzt werden.
   Das ist eine kleine Programmieraufgabe, am einfachsten mit Claude Code.
+- Die Farbe des Projekts steht in `src/data/farben.ts` (zum Beispiel
+  `'neue-website': 'gruen'`). Ohne Eintrag ist das Projekt neutral.
 - «Was ich gelernt habe»: Feld `gelernt:` im Kopf der Projektdatei. Der
   Abschnitt steht am Ende der Fallstudie und im Inhaltsverzeichnis. Ohne
   das Feld (oder mit `#` davor) fällt er weg.

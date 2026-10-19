@@ -2,6 +2,20 @@
 
 .fall__kopf { padding-top: clamp(32px, 5vw, 72px); }
 
+/* Kopf und Hero-Bild im Band in der Tönung der Projektfarbe */
+.fall__band { padding-top: 0; }
+
+.fall__band .fall__hero-buehne {
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+/* Links, Hover und Fokus in der Projektfarbe (Rot ist schon Standard) */
+.fall:not([data-farbe="rot"]) { --signal-text: var(--akzent-text); }
+
+.fall .messwert { border-top: 3px solid var(--akzent); }
+
 .fall__zurueck { margin-bottom: var(--s5); }
 
 .fall__titel {
@@ -20,7 +34,7 @@
   gap: var(--s5) var(--gap);
   margin-top: var(--s7);
   padding-top: var(--s4);
-  border-top: 1px solid var(--line);
+  border-top: 3px solid var(--akzent);
 }
 
 .fall__eckdaten dt { font-size: var(--label); font-weight: 600; color: var(--ink-2); }
@@ -93,7 +107,7 @@
 
 .toc__liste a[aria-current="true"] {
   color: var(--ink);
-  border-left-color: var(--signal);
+  border-left-color: var(--akzent);
   font-weight: 600;
 }
 
@@ -363,7 +377,8 @@ h2:hover > .anker,
   max-width: 640px;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border: 1px solid var(--line);
+  padding: clamp(12px, 2vw, 24px);
+  background: var(--akzent-hell);
 }
 
 .naechstes__titel {
@@ -378,7 +393,7 @@ h2:hover > .anker,
   transition: color var(--t-klein) var(--ease), text-decoration-color var(--t-klein) var(--ease);
 }
 
-.naechstes:hover .naechstes__titel { color: var(--signal-text); text-decoration-color: currentColor; }
+.naechstes:hover .naechstes__titel { color: var(--akzent-text); text-decoration-color: currentColor; }
 
 .naechstes__kurz { max-width: 56ch; color: var(--ink-2); }
 
@@ -390,8 +405,7 @@ h2:hover > .anker,
   align-items: flex-start;
   gap: var(--gap);
   padding: clamp(12px, 2vw, 24px);
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: var(--akzent-hell);
 }
 
 .prosa p > img,

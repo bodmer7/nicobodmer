@@ -3,6 +3,7 @@
  * Viewport-Labor: drei Websites, drei Bildschirmgrössen. Screenshots
  * standardmässig; «Live laden» ersetzt sie erst nach Klick durch ein iframe.
  */
+import { farbe } from '../data/farben';
 import Bild from './Bild.astro';
 import Messwerte from './Messwerte.astro';
 import { eigeneWerte } from '../data/messwerte';
@@ -72,6 +73,7 @@ const sizes: Record<Geraet, string> = {
           aria-selected={i === 0 ? 'true' : 'false'}
           tabindex={i === 0 ? 0 : -1}
           data-tab={s.id}
+          data-farbe={farbe(s.id)}
         >
           {s.name}
         </button>
@@ -114,6 +116,7 @@ const sizes: Record<Geraet, string> = {
         aria-labelledby={`labor-tab-${s.id}`}
         hidden={i !== 0}
         data-panel={s.id}
+        data-farbe={farbe(s.id)}
         data-url={s.url}
         data-name={s.name}
         data-einbettbar={String(istEinbettbar(s.id))}

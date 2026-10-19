@@ -39,65 +39,67 @@ const varianten = [
 ] as const;
 ---
 
-<section class="hero wrap" aria-labelledby="hero-name" data-hero data-param={param.name} data-wert-stelle={param.stelle} data-wert-website={param.website}>
-  <div class="hero__name" id="hero-name">
-    <NameDisplay />
-  </div>
-  <p class="hero__rolle lead">{person.rollenzeile[lang]}</p>
+<section class="hero band band--blau" aria-labelledby="hero-name" data-hero data-param={param.name} data-wert-stelle={param.stelle} data-wert-website={param.website}>
+  <div class="wrap">
+    <div class="hero__name" id="hero-name">
+      <NameDisplay />
+    </div>
+    <p class="hero__rolle lead">{person.rollenzeile[lang]}</p>
 
-  <div class="hero__raster raster">
-    <figure class="hero__foto">
-      <Bild
-        src={portrait}
-        alt={t('hero.fotoAlt')}
-        widths={[400, 640, 880, 1100]}
-        sizes="(min-width: 1024px) 40vw, (min-width: 640px) 90vw, 100vw"
-        prioritaet
-        quality={68}
-      />
-    </figure>
+    <div class="hero__raster raster">
+      <figure class="hero__foto">
+        <Bild
+          src={portrait}
+          alt={t('hero.fotoAlt')}
+          widths={[400, 640, 880, 1100]}
+          sizes="(min-width: 1024px) 40vw, (min-width: 640px) 90vw, 100vw"
+          prioritaet
+          quality={68}
+        />
+      </figure>
 
-    <div class="hero__text">
-      <fieldset class="segment hero__schalter" data-zielgruppe>
-        <legend>{t('hero.frage')}</legend>
-        <div class="segment__optionen">
-          <label class="segment__option">
-            <input type="radio" name="zielgruppe" value="stelle" id="fuer-stelle" />
-            <span>{t('hero.option.stelle')}</span>
-          </label>
-          <label class="segment__option">
-            <input type="radio" name="zielgruppe" value="website" id="fuer-website" />
-            <span>{t('hero.option.website')}</span>
-          </label>
+      <div class="hero__text">
+        <fieldset class="segment hero__schalter" data-zielgruppe>
+          <legend>{t('hero.frage')}</legend>
+          <div class="segment__optionen">
+            <label class="segment__option">
+              <input type="radio" name="zielgruppe" value="stelle" id="fuer-stelle" />
+              <span>{t('hero.option.stelle')}</span>
+            </label>
+            <label class="segment__option">
+              <input type="radio" name="zielgruppe" value="website" id="fuer-website" />
+              <span>{t('hero.option.website')}</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="hero__varianten">
+          {
+            varianten.map((v) => (
+              <div class="hero__variante" data-variante={v.id}>
+                <p class="hero__intro">{v.text}</p>
+                <p class="btn-reihe">
+                  {v.buttons.map((b) => (
+                    <a
+                      class:list={['btn', { 'btn--signal': b.art === 'signal', 'btn--sekundaer': b.art === 'sekundaer' }]}
+                      href={b.href}
+                    >
+                      {b.text}
+                    </a>
+                  ))}
+                </p>
+              </div>
+            ))
+          }
         </div>
-      </fieldset>
+        <p class="sr-only" aria-live="polite" data-ansage></p>
 
-      <div class="hero__varianten">
-        {
-          varianten.map((v) => (
-            <div class="hero__variante" data-variante={v.id}>
-              <p class="hero__intro">{v.text}</p>
-              <p class="btn-reihe">
-                {v.buttons.map((b) => (
-                  <a
-                    class:list={['btn', { 'btn--signal': b.art === 'signal', 'btn--sekundaer': b.art === 'sekundaer' }]}
-                    href={b.href}
-                  >
-                    {b.text}
-                  </a>
-                ))}
-              </p>
-            </div>
-          ))
-        }
-      </div>
-      <p class="sr-only" aria-live="polite" data-ansage></p>
-
-      <div class="hero__gerade">
-        <h2 class="label">{t('hero.gerade')}</h2>
-        <ul>
-          {gerade.map((g) => <li>{g[lang]}</li>)}
-        </ul>
+        <div class="hero__gerade">
+          <h2 class="label">{t('hero.gerade')}</h2>
+          <ul>
+            {gerade.map((g) => <li>{g[lang]}</li>)}
+          </ul>
+        </div>
       </div>
     </div>
   </div>

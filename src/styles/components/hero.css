@@ -2,6 +2,26 @@
 
 .hero { padding-top: clamp(24px, 4vw, 56px); }
 
+/* Hero als blaues Band (Tokens in src/styles/farbe.css) */
+.hero.band {
+  padding-top: clamp(28px, 4.5vw, 64px);
+  padding-bottom: clamp(56px, 8vw, 112px);
+}
+
+/* Kopfzeile über dem blauen Hero in derselben Farbe, bis sie beim
+   Scrollen kompakt wird. */
+:root:has(.hero.band--blau) .kopf:not(.ist-kompakt) {
+  --paper: #2B45D4;
+  --surface: #3D56DE;
+  --ink: #FFFFFF;
+  --ink-2: #DDE3FF;
+  --line: #7A8CEB;
+  --signal-text: #FFFFFF;
+  color: var(--ink);
+}
+
+.hero__foto img { background: #B4B5B0; }
+
 .hero__name { container-type: inline-size; }
 
 /* Der Name füllt die Inhaltsbreite. Gemessen in Chromium bei Gewicht 900

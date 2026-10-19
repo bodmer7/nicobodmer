@@ -3,6 +3,7 @@
  * Lebenslauf aus src/data/profil.ts (gleiche Quelle wie die Laufbahn).
  * Druckansicht: A4, höchstens zwei Seiten, schwarz auf weiss.
  */
+import { farbe } from '../data/farben';
 import Base from '../layouts/Base.astro';
 import Bild from './Bild.astro';
 import '../styles/components/lebenslauf.css';
@@ -49,12 +50,12 @@ const beschreibung =
       </div>
     </header>
 
-    <section class="cv__block" aria-labelledby="cv-profil">
+    <section class="cv__block" aria-labelledby="cv-profil" data-farbe={'neutral'}>
       <h2 id="cv-profil">{t('cv.profil')}</h2>
       <p class="cv__profil">{t('cv.profilText')} {ziel[lang]}</p>
     </section>
 
-    <section class="cv__block" aria-labelledby="cv-erfahrung">
+    <section class="cv__block" aria-labelledby="cv-erfahrung" data-farbe={farbe('arbeit')}>
       <h2 id="cv-erfahrung">{t('cv.erfahrung')}</h2>
       <ol class="cv__liste">
         {
@@ -76,7 +77,7 @@ const beschreibung =
       </ol>
     </section>
 
-    <section class="cv__block" aria-labelledby="cv-ausbildung">
+    <section class="cv__block" aria-labelledby="cv-ausbildung" data-farbe={farbe('ausbildung')}>
       <h2 id="cv-ausbildung">{t('cv.ausbildung')}</h2>
       <ol class="cv__liste">
         {
@@ -93,12 +94,12 @@ const beschreibung =
       </ol>
     </section>
 
-    <section class="cv__block" aria-labelledby="cv-projekte">
+    <section class="cv__block" aria-labelledby="cv-projekte" data-farbe={'neutral'}>
       <h2 id="cv-projekte">{t('cv.projekte')}</h2>
       <ul class="cv__projekte">
         {
           liste.map((p) => (
-            <li>
+            <li class="marke" data-farbe={farbe(p.data.projekt)}>
               {p.data.status === 'live' ? (<a href={`${site}${projektPfad(p.data.projekt as ProjektId, lang)}`}>{p.data.title}</a>) : (<span>{p.data.title}</span>)}<span class="neben">{`, ${p.data.typ}, ${p.data.jahr}: `}</span>
               {p.data.kurz}
             </li>
@@ -107,7 +108,7 @@ const beschreibung =
       </ul>
     </section>
 
-    <section class="cv__block" aria-labelledby="cv-koennen">
+    <section class="cv__block" aria-labelledby="cv-koennen" data-farbe={'neutral'}>
       <h2 id="cv-koennen">{t('cv.koennen')}</h2>
       <dl class="cv__koennen">
         {
