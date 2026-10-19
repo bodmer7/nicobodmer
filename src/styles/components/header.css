@@ -158,6 +158,8 @@ main:focus { outline: none; }
 
   .js .kopf__werkzeuge { justify-content: space-between; }
 
+  .js .kopf__werkzeuge .icon-link { margin-left: auto; }
+
   html:not(.js) .kopf__innen { flex-wrap: wrap; }
   html:not(.js) .kopf__panel { flex-wrap: wrap; gap: var(--s3) var(--s5); }
   html:not(.js) .kopf__links { flex-wrap: wrap; gap: 0 var(--s4); }

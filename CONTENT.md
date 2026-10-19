@@ -19,6 +19,25 @@ README, Abschnitt Deployment).
 - **Stationen, Ausbildung, Können, Sprachen:** `src/data/profil.ts`. Die
   Startseite, das Laufbahn-Diagramm und der Lebenslauf lesen alle von dort.
 - **Projekte:** `src/content/projekte/de/*.md` und `src/content/projekte/en/*.md`.
+
+## Können pflegen
+
+In `src/data/profil.ts` unter `koennen`. Jeder Begriff hat:
+
+- `niveau`: `'sicher'` (setze ich selbständig im Alltag ein), `'erfahrung'`
+  (im Beruf oder in Projekten eingesetzt) oder `'grundlagen'` (kenne ich und
+  arbeite mich ein). Immer als Text, nie als Balken oder Prozent. Die
+  Gruppen «Arbeitsweise» und «Im Studium» haben kein Niveau.
+- `nachweise`: wo die Fähigkeit eingesetzt wurde, zum Beispiel
+  `station('help-desk')`, `projekt('geo-quiz')` oder `website()`. Ein
+  Zusatz in Klammern geht als zweites Argument: `station('tech-seller',
+  { de: 'Kundenanlässe', en: 'customer events' })`.
+
+Die Startseite sortiert jede Tabelle nach Niveau (Sicher, Erfahrung,
+Grundlagen), der Lebenslauf schreibt das Niveau in Klammern dahinter.
+Werkzeuge ohne eigenes Niveau stehen in `inProjekten` («In meinen Projekten
+eingesetzt»). Eine neue Gruppe braucht eine Farbe in `src/data/farben.ts`.
+Sprachen stehen bei `person.sprachen` mit Sprache und Niveau.
 - **Impressum und Datenschutz:** `src/components/RechtSeite.astro`.
 
 ## Projekt hinzufügen

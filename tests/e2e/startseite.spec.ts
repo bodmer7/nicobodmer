@@ -137,23 +137,6 @@ test('Laufbahn startet mobil als Liste', async ({ page }) => {
   await expect(page.locator('[data-laufbahn-liste]')).toBeVisible();
 });
 
-test('Können: Nachweis öffnet, markiert und schliesst', async ({ page }) => {
-  await beobachten(page);
-  await page.goto('/');
-  const begriff = page.locator('[data-begriff="support"]').nth(3);
-  await begriff.click();
-  await expect(begriff).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('#nachweis-support-3')).toBeVisible();
-  await expect(page.locator('[data-balken="support-lenovo"]')).toHaveClass(/ist-markiert/);
-  await page.keyboard.press('Escape');
-  await expect(page.locator('#nachweis-support-3')).toBeHidden();
-  await expect(begriff).toBeFocused();
-  await expect(page.locator('.ist-markiert')).toHaveCount(0);
-  await begriff.click();
-  await page.mouse.click(5, 5);
-  await expect(page.locator('#nachweis-support-3')).toBeHidden();
-});
-
 test('Composer: mailto korrekt kodiert, Website zeigt Projekt-Check', async ({ page }) => {
   await beobachten(page);
   await page.goto('/');
@@ -239,25 +222,6 @@ test('Hero-Auftritt nur einmal pro Sitzung, ohne Layoutverschiebung', async ({ p
   await page.goto('/lebenslauf/');
   await page.goto('/');
   await expect(page.locator('html')).not.toHaveAttribute('data-auftritt', '');
-});
-
-test('Können: Arbeitsweise mit eigenen Nachweisen, Zeitmanagement markiert parallele Spuren', async ({ page }) => {
-  await beobachten(page);
-  await page.goto('/');
-  const zeit = page.locator('.begriff', { hasText: 'Zeitmanagement' });
-  await zeit.click();
-  const panel = page.locator(`#${await zeit.getAttribute('aria-controls')}`);
-  await expect(panel).toBeVisible();
-  await expect(panel).toContainText('Lehre und Berufsmaturität parallel');
-  for (const id of ['efz', 'bm', 'tech-seller', 'bsc-hwz', 'projekt-odera']) {
-    await expect(page.locator(`[data-balken="${id}"]`)).toHaveClass(/ist-markiert/);
-  }
-  await page.keyboard.press('Escape');
-  const prozess = page.locator('.begriff', { hasText: 'Prozessoptimierung' });
-  await prozess.click();
-  await expect(page.locator(`#${await prozess.getAttribute('aria-controls')}`)).toContainText('Web Development & Deployment');
-  await expect(page.locator('[data-balken="web-dev"]')).toHaveClass(/ist-markiert/);
-  await expect(page.locator('[data-balken="help-desk"]')).not.toHaveClass(/ist-markiert/);
 });
 
 test('Über mich zeigt die Hobbys, Hero die neue Rollenzeile', async ({ page }) => {
