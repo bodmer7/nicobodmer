@@ -1,0 +1,172 @@
+/* Lebenslauf und einfache Textseiten */
+
+.seitentitel {
+  font-size: var(--h1);
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+
+.cv { padding-top: clamp(32px, 5vw, 72px); }
+
+.cv__titelzeile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s5);
+}
+
+.cv__person {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: var(--s5);
+  margin-top: var(--s7);
+  padding-top: var(--s5);
+  border-top: 1px solid var(--line);
+}
+
+.cv__foto {
+  width: 112px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 15%;
+}
+
+.cv__name { font-size: var(--h3); font-weight: 750; line-height: 1.15; }
+
+.cv__rolle { margin-top: var(--s1); max-width: 60ch; }
+
+.cv__kontakt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s5);
+  margin-top: var(--s3);
+  padding: 0;
+  list-style: none;
+  color: var(--ink-2);
+}
+
+.cv__kontakt a { color: var(--ink); }
+
+.cv__kontakt li { min-height: 44px; display: flex; align-items: center; }
+
+.cv__block { margin-top: var(--s8); }
+
+.cv__block > h2 {
+  font-size: clamp(26px, 3vw, 40px);
+  margin-bottom: var(--s4);
+  padding-bottom: var(--s3);
+  border-bottom: 1px solid var(--line);
+}
+
+.cv__profil { max-width: 68ch; font-size: var(--lead); line-height: 1.45; }
+
+.cv__liste { padding: 0; list-style: none; }
+
+.cv__eintrag {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s1) var(--gap);
+  padding-block: var(--s4);
+  break-inside: avoid;
+}
+
+.cv__eintrag + .cv__eintrag { border-top: 1px solid var(--line); }
+
+.cv__eintrag h3 { font-size: 20px; }
+
+.cv__eintrag ul { margin-top: var(--s2); padding-left: 1.2em; list-style: disc; max-width: 68ch; }
+
+.cv__zeit { color: var(--ink-2); }
+
+@media (min-width: 640px) {
+  .cv__eintrag { grid-template-columns: 200px minmax(0, 1fr); }
+  .cv__person { grid-template-columns: 140px minmax(0, 1fr); }
+  .cv__foto { width: 140px; }
+}
+
+.cv__projekte { padding-left: 1.2em; list-style: disc; max-width: 80ch; }
+
+.cv__projekte li + li { margin-top: var(--s2); }
+
+.cv__koennen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: var(--s4) var(--gap);
+}
+
+.cv__koennen dt { font-weight: 600; }
+
+@media print {
+  .seite-cv .cv { padding: 0; max-width: none; }
+
+  .seite-cv .seitentitel { font-size: 26pt; }
+
+  .seite-cv .cv__person { margin-top: 8pt; padding-top: 8pt; grid-template-columns: 70pt 1fr; gap: 12pt; }
+
+  .seite-cv .cv__foto { width: 70pt; }
+
+  .seite-cv .cv__name { font-size: 15pt; }
+
+  .seite-cv .cv__kontakt li { min-height: 0; }
+
+  .seite-cv .cv__kontakt { gap: 0 12pt; }
+
+  .seite-cv .cv__block { margin-top: 12pt; }
+
+  .seite-cv .cv__block:not(:has(#cv-erfahrung)) { break-inside: avoid; }
+
+  .seite-cv .cv__block > h2 { font-size: 13pt; margin-bottom: 4pt; padding-bottom: 2pt; break-after: avoid; }
+
+  .seite-cv .cv__profil { font-size: 10.5pt; }
+
+  .seite-cv .cv__eintrag { grid-template-columns: 95pt 1fr; padding-block: 5pt; }
+
+  .seite-cv .cv__eintrag h3 { font-size: 11pt; }
+
+  .seite-cv .cv__eintrag ul { margin-top: 2pt; }
+
+  .seite-cv .cv__projekte li + li { margin-top: 2pt; }
+
+  /* Adressen hinter Links ausschreiben */
+  .seite-cv .cv__projekte a[href^="http"]::after,
+  .seite-cv .cv__block a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #333;
+  }
+
+  .seite-cv .cv__koennen { grid-template-columns: 1fr 1fr; gap: 4pt 12pt; }
+}
+
+/* Textseiten (Impressum und Datenschutz, 404) */
+
+.textseite { padding-top: clamp(32px, 5vw, 72px); }
+
+.textseite .prosa { margin-top: var(--s7); }
+
+.textseite .prosa h2 { font-size: clamp(26px, 3vw, 40px); }
+
+.hinweis-404 { margin-top: var(--s6); display: grid; gap: var(--s4); max-width: 60ch; }
+
+.linkliste {
+  margin-top: var(--s7);
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--line);
+  max-width: 640px;
+}
+
+.linkliste li { border-top: 1px solid var(--line); }
+
+.linkliste a {
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  font-size: var(--h3);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.linkliste a:hover { text-decoration: underline; text-decoration-thickness: 2px; }

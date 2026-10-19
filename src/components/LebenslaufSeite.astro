@@ -1,0 +1,139 @@
+---
+/**
+ * Lebenslauf aus src/data/profil.ts (gleiche Quelle wie die Laufbahn).
+ * Druckansicht: A4, höchstens zwei Seiten, schwarz auf weiss.
+ */
+import Base from '../layouts/Base.astro';
+import Bild from './Bild.astro';
+import '../styles/components/lebenslauf.css';
+import portrait from '../assets/fotos/contact-portrait.webp';
+import { useT, type Lang } from '../i18n/ui';
+import { seiten, projektPfad } from '../i18n/routes';
+import { person, stationen, ausbildung, koennen, weitereWerkzeuge, zeitraumKurz, ausbildungZeitraum } from '../data/profil';
+import { projekte } from '../data/projekte';
+import type { ProjektId } from '../data/profil';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const liste = await projekte(lang);
+const site = 'https://nico-bodmer.ch';
+const titel = lang === 'de' ? 'Lebenslauf | Nico Bodmer' : 'CV | Nico Bodmer';
+const beschreibung =
+  lang === 'de'
+    ? 'Lebenslauf von Nico Bodmer, Raum Zürich: Berufserfahrung, Ausbildung, Projekte und Können. Druckbar als PDF.'
+    : 'CV of Nico Bodmer, Zurich area: work experience, education, projects and skills. Printable as a PDF.';
+---
+
+<Base lang={lang} title={titel} description={beschreibung} alternate={seiten.lebenslauf} messKey={lang === 'de' ? 'cv' : 'cv-en'} bodyClass="seite-cv">
+  <article class="cv wrap">
+    <header class="cv__kopf">
+      <div class="cv__titelzeile">
+        <h1 class="seitentitel">{t('cv.titel')}</h1>
+        <button class="btn btn--sekundaer nicht-drucken" type="button" data-drucken hidden>{t('cv.pdf')}</button>
+      </div>
+      <div class="cv__person">
+        <Bild src={portrait} alt={t('cv.fotoAlt')} widths={[240, 400]} sizes="160px" class="cv__foto" />
+        <div class="cv__angaben">
+          <p class="cv__name">{person.name}</p>
+          <p class="cv__rolle">{person.rollenzeile[lang]}</p>
+          <ul class="cv__kontakt">
+            <li><a href={`mailto:${person.email}`}>{person.email}</a></li>
+            <li><a href={person.linkedin}>linkedin.com/in/nico-bodmer</a></li>
+            <li><a href={person.github}>github.com/bodmer7</a></li>
+            <li><a href={`${site}${seiten.start[lang]}`}>nico-bodmer.ch</a></li>
+            <li>{person.ort[lang]}</li>
+            <li>{person.sprachen.map((s) => s[lang]).join(', ')}</li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <section class="cv__block" aria-labelledby="cv-profil">
+      <h2 id="cv-profil">{t('cv.profil')}</h2>
+      <p class="cv__profil">{t('cv.profilText')}</p>
+    </section>
+
+    <section class="cv__block" aria-labelledby="cv-erfahrung">
+      <h2 id="cv-erfahrung">{t('cv.erfahrung')}</h2>
+      <ol class="cv__liste">
+        {
+          stationen.map((s) => (
+            <li class="cv__eintrag">
+              <p class="cv__zeit ziffern">{zeitraumKurz(s.von, s.bis, lang)}</p>
+              <div>
+                <h3>{s.rolle}</h3>
+                <p class="neben">{s.organisation[lang]}</p>
+                <ul>
+                  {s.punkte.map((p) => (
+                    <li>{p[lang]}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="cv__block" aria-labelledby="cv-ausbildung">
+      <h2 id="cv-ausbildung">{t('cv.ausbildung')}</h2>
+      <ol class="cv__liste">
+        {
+          ausbildung.map((a) => (
+            <li class="cv__eintrag">
+              <p class="cv__zeit ziffern">{ausbildungZeitraum(a, lang)}</p>
+              <div>
+                <h3>{a.titel[lang]}</h3>
+                <p class="neben">{`${a.schule[lang]}${a.zusatz ? `, ${a.zusatz[lang]}` : ''}`}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="cv__block" aria-labelledby="cv-projekte">
+      <h2 id="cv-projekte">{t('cv.projekte')}</h2>
+      <ul class="cv__projekte">
+        {
+          liste.map((p) => (
+            <li>
+              {p.data.status === 'live' ? (<a href={`${site}${projektPfad(p.data.projekt as ProjektId, lang)}`}>{p.data.title}</a>) : (<span>{p.data.title}</span>)}<span class="neben">{`, ${p.data.typ}, ${p.data.jahr}: `}</span>
+              {p.data.kurz}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="cv__block" aria-labelledby="cv-koennen">
+      <h2 id="cv-koennen">{t('cv.koennen')}</h2>
+      <dl class="cv__koennen">
+        {
+          koennen.map((g) => (
+            <div>
+              <dt>{g.titel[lang]}</dt>
+              <dd>{g.begriffe.map((b) => b[lang]).join(', ')}</dd>
+            </div>
+          ))
+        }
+        <div>
+          <dt>{t('koennen.weitere')}</dt>
+          <dd>{weitereWerkzeuge.join(', ')}</dd>
+        </div>
+        <div>
+          <dt>{t('cv.sprachen')}</dt>
+          <dd>{person.sprachen.map((s) => s[lang]).join(', ')}</dd>
+        </div>
+      </dl>
+    </section>
+  </article>
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-drucken]').forEach((b) => {
+    b.hidden = false;
+    b.addEventListener('click', () => window.print());
+  });
+</script>

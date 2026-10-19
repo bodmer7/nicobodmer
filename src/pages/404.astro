@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import '../styles/components/lebenslauf.css';
+import { useT } from '../i18n/ui';
+import { ankerPfad, pfad } from '../i18n/routes';
+
+const t = useT('de');
+const quiz = 'https://bodmer7.github.io/segberike/';
+const [vor, nach] = t('404.quiz').split('{link}');
+---
+
+<Base lang="de" title="Seite nicht gefunden | Nico Bodmer" description="Diese Seite gibt es auf nico-bodmer.ch nicht." alternate={null} pfad="/404.html" noindex>
+  <article class="textseite wrap">
+    <h1 class="seitentitel">{t('404.titel')}</h1>
+    <div class="hinweis-404">
+      <p class="btn-reihe">
+        <a class="btn" href={pfad('start', 'de')}>{t('404.start')}</a>
+        <a class="btn btn--sekundaer" href={ankerPfad('arbeiten', 'de')}>{t('404.arbeiten')}</a>
+      </p>
+      <p class="lead">{vor}<a href={quiz}>{t('404.quizLink')}</a>{nach}</p>
+      <p lang="en-GB" class="neben">This page is not on the map. <a href={pfad('start', 'en')}>Go to the English home page</a>.</p>
+    </div>
+  </article>
+</Base>

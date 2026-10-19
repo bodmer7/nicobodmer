@@ -1,0 +1,31 @@
+---
+/** Schlanke Linkseite für Social-Media-Profile. Nicht in der Navigation, noindex. */
+import Base from '../layouts/Base.astro';
+import '../styles/components/lebenslauf.css';
+import { person } from '../data/profil';
+import { pfad } from '../i18n/routes';
+
+const links = [
+  { href: pfad('start', 'de'), text: 'Portfolio' },
+  { href: person.odera, text: 'ODERA Design, Websites für kleine Unternehmen' },
+  { href: pfad('lebenslauf', 'de'), text: 'Lebenslauf' },
+  { href: person.linkedin, text: 'LinkedIn' },
+  { href: person.github, text: 'GitHub' },
+  { href: 'https://bodmer7.github.io/segberike/', text: 'Geo-Quiz' },
+];
+---
+
+<Base lang="de" title="Links | Nico Bodmer" description="Links von Nico Bodmer: Portfolio, ODERA Design, Lebenslauf, LinkedIn, GitHub und Geo-Quiz." alternate={null} pfad="/links/" noindex>
+  <article class="textseite wrap">
+    <h1 class="seitentitel">Links</h1>
+    <ul class="linkliste">
+      {
+        links.map((l) => (
+          <li>
+            <a href={l.href}>{l.text}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </article>
+</Base>

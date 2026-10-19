@@ -1,0 +1,107 @@
+---
+/**
+ * Impressum und Datenschutz. Entwurf, vom Inhaber zu prüfen (siehe CONTENT.md).
+ * Hoster: Infomaniak (Variante B im README). Bei einem Wechsel auf
+ * GitHub Pages den Abschnitt «Hosting» anpassen.
+ */
+import Base from '../layouts/Base.astro';
+import '../styles/components/lebenslauf.css';
+import { type Lang } from '../i18n/ui';
+import { seiten } from '../i18n/routes';
+import { person } from '../data/profil';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const titel = de ? 'Impressum und Datenschutz | Nico Bodmer' : 'Legal notice and privacy | Nico Bodmer';
+const beschreibung = de
+  ? 'Impressum und Datenschutz von nico-bodmer.ch: keine Cookies, kein Tracking, externe Inhalte nur auf Klick.'
+  : 'Legal notice and privacy for nico-bodmer.ch: no cookies, no tracking, external content only on click.';
+---
+
+<Base lang={lang} title={titel} description={beschreibung} alternate={seiten.recht}>
+  <article class="textseite wrap">
+    <h1 class="seitentitel">{de ? 'Impressum und Datenschutz' : 'Legal notice and privacy'}</h1>
+    <div class="prosa silben">
+      {
+        de ? (
+          <>
+            <h2 id="impressum">Impressum</h2>
+            <p>
+              Verantwortlich für diese Website: Nico Bodmer, Schweiz.
+              <br />
+              E-Mail: <a href={`mailto:${person.email}`}>{person.email}</a>
+            </p>
+
+            <h2 id="datenschutz">Datenschutz</h2>
+            <p>Diese Website setzt keine Cookies und kein Tracking ein und lädt beim Aufruf keine Inhalte von Dritten.</p>
+
+            <h3>Hosting</h3>
+            <p>
+              Die Website liegt bei Infomaniak in der Schweiz. Der Hoster verarbeitet beim Aufruf technisch nötige Daten wie die IP-Adresse in
+              Server-Logs.
+            </p>
+
+            <h3>In Ihrem Browser gespeichert</h3>
+            <p>
+              Ihre Wahl zwischen Hell und Dunkel (localStorage) sowie für die Dauer des Besuchs die Auswahl «Was führt Sie her?» und ob der
+              Auftritt der Startseite schon gezeigt wurde (sessionStorage). Diese Angaben verlassen Ihr Gerät nicht.
+            </p>
+
+            <h3>Externe Inhalte nur auf Klick</h3>
+            <p>
+              Die Live-Vorschauen von odera.ch und dem Geo-Quiz werden erst geladen, wenn Sie darauf klicken. Dann wird Ihre IP-Adresse an den
+              jeweiligen Hoster übermittelt.
+            </p>
+
+            <h3>Kontakt</h3>
+            <p>
+              Wenn Sie mir schreiben, verwende ich Ihre Angaben nur, um zu antworten. Das Formular auf dieser Seite speichert und überträgt
+              nichts, es öffnet nur Ihr E-Mail-Programm.
+            </p>
+
+            <p class="neben">Stand: Oktober 2026</p>
+          </>
+        ) : (
+          <>
+            <h2 id="impressum">Legal notice</h2>
+            <p>
+              Responsible for this website: Nico Bodmer, Switzerland.
+              <br />
+              Email: <a href={`mailto:${person.email}`}>{person.email}</a>
+            </p>
+
+            <h2 id="datenschutz">Privacy</h2>
+            <p>This website sets no cookies, uses no tracking and loads no third-party content when you visit.</p>
+
+            <h3>Hosting</h3>
+            <p>
+              The website is hosted by Infomaniak in Switzerland. The host processes technically necessary data such as your IP address in
+              server logs when you visit.
+            </p>
+
+            <h3>Stored in your browser</h3>
+            <p>
+              Your choice of light or dark theme (localStorage) and, for the length of your visit, your answer to «What brings you here?» and
+              whether the home page intro has already been shown (sessionStorage). This information does not leave your device.
+            </p>
+
+            <h3>External content only on click</h3>
+            <p>
+              The live previews of odera.ch and the geo quiz only load when you click on them. Your IP address is then sent to the respective
+              host.
+            </p>
+
+            <h3>Contact</h3>
+            <p>
+              If you write to me, I use your details only to reply. The form on this site stores and sends nothing; it only opens your email
+              program.
+            </p>
+
+            <p class="neben">As of October 2026</p>
+          </>
+        )
+      }
+    </div>
+  </article>
+</Base>
