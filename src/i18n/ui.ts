@@ -23,6 +23,7 @@ const de = {
   'theme.toLight': 'Helles Design',
   'lang.switch': 'EN',
   'lang.switchLabel': 'English version',
+  'kopf.linkedin': 'LinkedIn-Profil von Nico Bodmer (externe Seite)',
 
   'footer.copy': '© 2026 Nico Bodmer, Raum Zürich',
   'footer.recht': 'Impressum und Datenschutz',
@@ -202,6 +203,7 @@ const en: Record<UiKey, string> = {
   'theme.toLight': 'Light theme',
   'lang.switch': 'DE',
   'lang.switchLabel': 'Deutsche Version',
+  'kopf.linkedin': 'Nico Bodmer on LinkedIn (external site)',
 
   'footer.copy': '© 2026 Nico Bodmer, Zurich area',
   'footer.recht': 'Legal notice and privacy',

@@ -1,7 +1,26 @@
 ---
-/** Eigene Inline-Icons mit 1.5px Strich, nur wo sie eine Funktion tragen. */
+/**
+ * Eigene Inline-Icons mit 1.5px Strich, nur wo sie eine Funktion tragen.
+ * Raster 20 × 20 (wie die bestehenden Icons), currentColor, immer dekorativ:
+ * Der Text daneben bleibt sichtbar. Marken von LinkedIn und GitHub stehen
+ * in Marke.astro.
+ */
 interface Props {
-  name: 'sonne' | 'mond' | 'kopieren' | 'download' | 'extern' | 'schliessen' | 'links' | 'rechts' | 'anker';
+  name:
+    | 'sonne'
+    | 'mond'
+    | 'kopieren'
+    | 'download'
+    | 'extern'
+    | 'schliessen'
+    | 'links'
+    | 'rechts'
+    | 'anker'
+    | 'mail'
+    | 'dokument'
+    | 'standort'
+    | 'sprache'
+    | 'studium';
   class?: string;
 }
 const { name, class: klasse } = Astro.props;
@@ -15,6 +34,12 @@ const pfade: Record<Props['name'], string> = {
   schliessen: '<path d="m4.5 4.5 11 11M15.5 4.5l-11 11"/>',
   links: '<path d="M12.5 4 6.5 10l6 6"/>',
   rechts: '<path d="m7.5 4 6 6-6 6"/>',
+  mail: '<rect x="2.5" y="4.5" width="15" height="11"/><path d="m2.5 5.5 7.5 5.5 7.5-5.5"/>',
+  dokument: '<path d="M4.5 2.5h7l4 4v11h-11Z"/><path d="M11.5 2.5v4h4M7.5 10.5h5M7.5 13.5h5"/>',
+  standort: '<path d="M10 17.5s5.5-5 5.5-9.5a5.5 5.5 0 0 0-11 0c0 4.5 5.5 9.5 5.5 9.5Z"/><circle cx="10" cy="8" r="2"/>',
+  sprache:
+    '<circle cx="10" cy="10" r="7.5"/><path d="M2.5 10h15M10 2.5c-2 2.1-3 4.6-3 7.5s1 5.4 3 7.5M10 2.5c2 2.1 3 4.6 3 7.5s-1 5.4-3 7.5"/>',
+  studium: '<path d="M1.5 7.5 10 3.5l8.5 4-8.5 4Z"/><path d="M5 9.5v3.8c1.4 1.2 3.1 1.7 5 1.7s3.6-.5 5-1.7V9.5M18.5 7.5v5"/>',
   anker: '<path d="M8.5 11.5a3 3 0 0 0 4.2 0l2.6-2.6a3 3 0 0 0-4.2-4.2L10 5.8M11.5 8.5a3 3 0 0 0-4.2 0L4.7 11.1a3 3 0 0 0 4.2 4.2l1.1-1.1"/>',
 };
 ---

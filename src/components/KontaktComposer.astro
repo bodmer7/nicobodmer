@@ -5,6 +5,7 @@
  * Ohne JavaScript schickt das Formular per GET an mailto: (Betreff und Text).
  */
 import Icon from './Icon.astro';
+import Marke from './Marke.astro';
 import { useT, type Lang } from '../i18n/ui';
 import { person } from '../data/profil';
 
@@ -67,7 +68,7 @@ const themen = [
 
   <div class="kontakt__direkt">
     <p class="label">{t('kontakt.direkt')}</p>
-    <p><a class="kontakt__mail" href={`mailto:${person.email}`}>{person.email}</a></p>
+    <p class="kontakt__mailzeile"><Icon name="mail" class="kontakt__mailicon" /><a class="kontakt__mail" href={`mailto:${person.email}`}>{person.email}</a></p>
     <ul class="kontakt__aktionen">
       <li>
         <button class="textknopf" type="button" data-kopieren={person.email} data-ok={t('kontakt.kopiert')} data-fehler={t('kontakt.kopierFehler')} hidden>
@@ -81,8 +82,8 @@ const themen = [
           {t('kontakt.vcard')}
         </a>
       </li>
-      <li><a class="textlink" href={person.linkedin}>LinkedIn</a></li>
-      <li><a class="textlink" href={person.github}>GitHub</a></li>
+      <li><a class="textlink" href={person.linkedin}><Marke name="linkedin" />LinkedIn</a></li>
+      <li><a class="textlink" href={person.github}><Marke name="github" />GitHub</a></li>
     </ul>
   </div>
 </div>

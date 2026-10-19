@@ -1,6 +1,8 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
 import LanguageSwitch from './LanguageSwitch.astro';
+import Marke from './Marke.astro';
+import { person } from '../data/profil';
 import { useT, type Lang } from '../i18n/ui';
 import { ankerPfad, pfad } from '../i18n/routes';
 interface Props { lang: Lang; alternate: Record<Lang, string> | null }
@@ -36,6 +38,9 @@ const aktuell = Astro.url.pathname;
         </ul>
         <div class="kopf__werkzeuge">
           <LanguageSwitch lang={lang} alternate={alternate} />
+          <a class="icon-link" href={person.linkedin} aria-label={t('kopf.linkedin')} data-kopf-linkedin>
+            <Marke name="linkedin" />
+          </a>
           <ThemeToggle lang={lang} />
         </div>
       </div>

@@ -6,6 +6,7 @@
  */
 import Base from './Base.astro';
 import Bild from '../components/Bild.astro';
+import Icon from '../components/Icon.astro';
 import Messwerte from '../components/Messwerte.astro';
 import Galerie from '../components/Galerie.astro';
 import Lightbox from '../components/Lightbox.astro';
@@ -141,9 +142,10 @@ const titel = `${d.title} | Nico Bodmer`;
                   <ul class="fall__links">
                     {d.links.map((l) => (
                       <li>
-                        <a href={l.url}>
+                        <a class="mit-icon" href={l.url}>
                           {l.label}
                           {istExtern(l.url) && <span class="sr-only"> {t('fall.extern')}</span>}
+                          {istExtern(l.url) && <Icon name="extern" />}
                         </a>
                       </li>
                     ))}

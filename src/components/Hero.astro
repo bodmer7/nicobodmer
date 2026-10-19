@@ -1,6 +1,7 @@
 ---
 import NameDisplay from './NameDisplay.astro';
 import Bild from './Bild.astro';
+import Icon from './Icon.astro';
 import portrait from '../assets/fotos/contact-portrait.webp';
 import { useT, type Lang } from '../i18n/ui';
 import { ankerPfad, pfad, projektPfad } from '../i18n/routes';
@@ -84,6 +85,7 @@ const varianten = [
                       class:list={['btn', { 'btn--signal': b.art === 'signal', 'btn--sekundaer': b.art === 'sekundaer' }]}
                       href={b.href}
                     >
+                      {b.href === pfad('lebenslauf', lang) && <Icon name="dokument" />}
                       {b.text}
                     </a>
                   ))}

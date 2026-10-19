@@ -6,6 +6,8 @@
 import { farbe } from '../data/farben';
 import Base from '../layouts/Base.astro';
 import Bild from './Bild.astro';
+import Icon from './Icon.astro';
+import Marke from './Marke.astro';
 import '../styles/components/lebenslauf.css';
 import portrait from '../assets/fotos/contact-portrait.webp';
 import { useT, type Lang } from '../i18n/ui';
@@ -39,12 +41,12 @@ const beschreibung =
           <p class="cv__name">{person.name}</p>
           <p class="cv__rolle">{person.rollenzeile[lang]}</p>
           <ul class="cv__kontakt">
-            <li><a href={`mailto:${person.email}`}>{person.email}</a></li>
-            <li><a href={person.linkedin}>linkedin.com/in/nico-bodmer</a></li>
-            <li><a href={person.github}>github.com/bodmer7</a></li>
-            <li><a href={`${site}${seiten.start[lang]}`}>nico-bodmer.ch</a></li>
-            <li>{person.ort[lang]}</li>
-            <li>{person.sprachen.map((s) => s[lang]).join(', ')}</li>
+            <li><Icon name="mail" /><a href={`mailto:${person.email}`}>{person.email}</a></li>
+            <li><Marke name="linkedin" /><a href={person.linkedin}>linkedin.com/in/nico-bodmer</a></li>
+            <li><Marke name="github" /><a href={person.github}>github.com/bodmer7</a></li>
+            <li><Icon name="extern" /><a href={`${site}${seiten.start[lang]}`}>nico-bodmer.ch</a></li>
+            <li><Icon name="standort" />{person.ort[lang]}</li>
+            <li><Icon name="sprache" />{person.sprachen.map((s) => s[lang]).join(', ')}</li>
           </ul>
         </div>
       </div>

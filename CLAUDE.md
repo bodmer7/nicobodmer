@@ -59,10 +59,16 @@ Laufband, Zähler-Animationen, Kennzahlen ohne Quelle, Magnet-Buttons,
 eigene Mauszeiger, Partikel, 3D-Kippen, Glas, Verläufe, Glow, Grain,
 Einblenden jeder Sektion beim Scrollen, Wort-für-Wort-Text,
 Schreibmaschinen-Effekt, Scroll-Jacking, Bento-Raster, Karten mit Schatten,
-Pillen-Tags, Emoji, Icon-Sets, «Verfügbar»-Badges, nummerierte Abschnitte,
-Versalien-Labels, Mono-Schrift, Mittelpunkte als Trenner, Pfeile an Links,
+Pillen-Tags, Emoji, «Verfügbar»-Badges, nummerierte Abschnitte,
+Versalien-Labels, Mono-Schrift, Mittelpunkte als Trenner,
 Dark Mode per Taste, Wisch-Gesten, Vorher-Nachher-Regler, erfundene
 Browserleisten, KI-Bilder, Stockfotos.
+
+Icons nur mit Funktion: eigene Inline-SVGs (1.5px Strich, currentColor) und
+die Markenzeichen von LinkedIn und GitHub. Kein Icon-Paket im Build.
+Externe Links mit dem Icon «extern», nie mit Pfeilzeichen im Text.
+Icons in `src/components/Icon.astro`, Marken mit Quelle und Lizenz in
+`src/components/Marke.astro`.
 
 ## Technik
 

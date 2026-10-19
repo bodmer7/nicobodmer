@@ -1,6 +1,8 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
 import LanguageSwitch from './LanguageSwitch.astro';
+import Icon from './Icon.astro';
+import Marke from './Marke.astro';
 import { useT, datum, type Lang } from '../i18n/ui';
 import { pfad } from '../i18n/routes';
 import { person } from '../data/profil';
@@ -15,10 +17,10 @@ const fm = footerMessung(messKey);
   <div class="wrap fuss__innen">
     <p class="fuss__copy">{t('footer.copy')}</p>
     <ul class="fuss__links">
-      <li><a href={pfad('lebenslauf', lang)}>{t('nav.lebenslauf')}</a></li>
+      <li><a class="mit-icon" href={pfad('lebenslauf', lang)}><Icon name="dokument" />{t('nav.lebenslauf')}</a></li>
       <li><a href={pfad('recht', lang)}>{t('footer.recht')}</a></li>
-      <li><a href={person.linkedin}>LinkedIn</a></li>
-      <li><a href={person.github}>GitHub</a></li>
+      <li><a class="mit-icon" href={person.linkedin}><Marke name="linkedin" />LinkedIn</a></li>
+      <li><a class="mit-icon" href={person.github}><Marke name="github" />GitHub</a></li>
       <li><LanguageSwitch lang={lang} alternate={alternate} /></li>
       <li><ThemeToggle lang={lang} /></li>
     </ul>

@@ -134,6 +134,34 @@ main { display: block; }
   stroke-linecap: square;
 }
 
+/* Markenzeichen (Marke.astro): gefüllt statt Strich, sonst wie .icon */
+.marke-icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: currentColor;
+}
+
+/* Icon hinter oder vor Text: ausgerichtet an der Schrift */
+.mit-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+}
+
+/* Icon ohne sichtbaren Text, Rahmen wie der Hell/Dunkel-Schalter */
+.icon-link {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  transition: border-color var(--t-klein) var(--ease), color var(--t-klein) var(--ease);
+}
+
+.icon-link:hover { border-color: var(--ink); color: var(--signal-text); }
+
 /* Segment-Schalter (Radiogroup aus nativen Radios) */
 
 .segment {
