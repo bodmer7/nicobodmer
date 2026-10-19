@@ -1,0 +1,27 @@
+.fuss {
+  margin-top: var(--sektion);
+  padding-block: var(--s7) var(--s8);
+  border-top: 1px solid var(--line);
+}
+
+.fuss__innen {
+  display: grid;
+  gap: var(--s5);
+}
+
+.fuss__copy { font-weight: 600; }
+
+.fuss__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--s5);
+  padding: 0;
+  list-style: none;
+}
+
+.fuss__links a { display: inline-flex; align-items: center; min-height: 44px; }
+
+.fuss__info { display: grid; gap: var(--s1); max-width: 68ch; }
+
+.fuss .sprache { text-decoration: underline; font-weight: 400; }

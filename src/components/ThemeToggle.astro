@@ -1,0 +1,20 @@
+---
+import Icon from './Icon.astro';
+import { useT, type Lang } from '../i18n/ui';
+interface Props { lang: Lang; class?: string }
+const { lang, class: klasse } = Astro.props;
+const t = useT(lang);
+---
+
+<button
+  type="button"
+  class:list={['theme-toggle', klasse]}
+  data-theme-toggle
+  data-to-dark={t('theme.toDark')}
+  data-to-light={t('theme.toLight')}
+  hidden
+>
+  <Icon name="mond" class="theme-toggle__mond" />
+  <Icon name="sonne" class="theme-toggle__sonne" />
+  <span class="sr-only" data-theme-label>{t('theme.toDark')}</span>
+</button>

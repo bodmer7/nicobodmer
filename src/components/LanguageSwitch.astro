@@ -1,0 +1,14 @@
+---
+import { useT, htmlLang, type Lang } from '../i18n/ui';
+import { andereSprache, pfad } from '../i18n/routes';
+interface Props { lang: Lang; alternate: Record<Lang, string> | null; class?: string }
+const { lang, alternate, class: klasse } = Astro.props;
+const t = useT(lang);
+const ziel = andereSprache(lang);
+const href = alternate ? alternate[ziel] : pfad('start', ziel);
+---
+
+<a class:list={['sprache', klasse]} href={href} hreflang={ziel} lang={htmlLang[ziel]} data-sprache>
+  <span aria-hidden="true">{t('lang.switch')}</span>
+  <span class="sr-only">{t('lang.switchLabel')}</span>
+</a>

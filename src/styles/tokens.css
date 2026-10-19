@@ -1,0 +1,91 @@
+/* Designsystem «Signal»: Farben, Schrift, Raster, Bewegung.
+   Hell ist Standard, Dunkel folgt der Systemeinstellung oder der Wahl
+   im Schalter (data-theme auf <html>). */
+
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("/fonts/schibsted-grotesk-latin.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --paper: #F2F2EF;
+  --surface: #E7E7E3;
+  --ink: #141619;
+  --ink-2: #5C6066;
+  --line: #D5D5D0;
+  --signal: #C8261C;
+  --signal-text: #B3241B;
+  --on-signal: #FFFFFF;
+
+  --font: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+
+  --max: 1360px;
+  --rand: clamp(20px, 4vw, 48px);
+  --gap: clamp(16px, 2vw, 24px);
+  --sektion: clamp(96px, 12vw, 176px);
+  --header-h: 72px;
+
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+  --s9: 96px;
+  --s10: 128px;
+
+  --text: 18px;
+  --klein: 15px;
+  --label: 14px;
+  --lead: clamp(19px, 1.6vw, 24px);
+  --h1: clamp(44px, 7vw, 112px);
+  --h2: clamp(34px, 5vw, 72px);
+  --h3: clamp(22px, 2vw, 28px);
+  --zahl: clamp(28px, 3vw, 44px);
+
+  --ease-in: cubic-bezier(.2, .7, .2, 1);
+  --ease: cubic-bezier(.4, 0, .2, 1);
+  --t-klein: 120ms;
+  --t-ui: 200ms;
+  --t-panel: 400ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #111214;
+    --surface: #1A1B1E;
+    --ink: #EDEDE9;
+    --ink-2: #A2A6AC;
+    --line: #2B2E33;
+    --signal-text: #FF6B5E;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #111214;
+  --surface: #1A1B1E;
+  --ink: #EDEDE9;
+  --ink-2: #A2A6AC;
+  --line: #2B2E33;
+  --signal-text: #FF6B5E;
+}
+
+@media (max-width: 639.98px) {
+  :root { --text: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-klein: 0ms;
+    --t-ui: 0ms;
+    --t-panel: 0ms;
+  }
+}

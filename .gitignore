@@ -1,6 +1,13 @@
 .DS_Store
 Thumbs.db
 node_modules/
+dist/
+.astro/
 *.log
 .vscode/
 .idea/
+qa-screenshots/
+scripts/.cache/
+test-results/
+playwright-report/
+lighthouse-reports/

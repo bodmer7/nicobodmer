@@ -1,0 +1,22 @@
+---
+/** Eigene Inline-Icons mit 1.5px Strich, nur wo sie eine Funktion tragen. */
+interface Props {
+  name: 'sonne' | 'mond' | 'kopieren' | 'download' | 'extern' | 'schliessen' | 'links' | 'rechts' | 'anker';
+  class?: string;
+}
+const { name, class: klasse } = Astro.props;
+const pfade: Record<Props['name'], string> = {
+  sonne:
+    '<circle cx="10" cy="10" r="3.5"/><path d="M10 1.5v2.5M10 16v2.5M1.5 10H4M16 10h2.5M4 4l1.8 1.8M14.2 14.2 16 16M4 16l1.8-1.8M14.2 5.8 16 4"/>',
+  mond: '<path d="M15.5 12.5A7 7 0 0 1 7.5 4.5a7 7 0 1 0 8 8Z"/>',
+  kopieren: '<rect x="6.5" y="6.5" width="10" height="10"/><path d="M13.5 3.5h-10v10"/>',
+  download: '<path d="M10 3v10M5.5 8.5 10 13l4.5-4.5M3.5 16.5h13"/>',
+  extern: '<path d="M8 4.5H4.5v11h11V12M11 3.5h5.5V9M16.5 3.5 9 11"/>',
+  schliessen: '<path d="m4.5 4.5 11 11M15.5 4.5l-11 11"/>',
+  links: '<path d="M12.5 4 6.5 10l6 6"/>',
+  rechts: '<path d="m7.5 4 6 6-6 6"/>',
+  anker: '<path d="M8.5 11.5a3 3 0 0 0 4.2 0l2.6-2.6a3 3 0 0 0-4.2-4.2L10 5.8M11.5 8.5a3 3 0 0 0-4.2 0L4.7 11.1a3 3 0 0 0 4.2 4.2l1.1-1.1"/>',
+};
+---
+
+<svg class:list={['icon', klasse]} viewBox="0 0 20 20" aria-hidden="true" focusable="false" set:html={pfade[name]} />

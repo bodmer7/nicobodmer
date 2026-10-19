@@ -1,0 +1,30 @@
+/* Druck: schwarz auf weiss, ohne Navigation, Footer und Bedienelemente.
+   Der Lebenslauf hat zusätzliche Regeln in components/lebenslauf.css. */
+
+@media print {
+  @page { size: A4; margin: 16mm 16mm 18mm; }
+
+  :root,
+  :root[data-theme="dark"] {
+    --paper: #fff;
+    --surface: #fff;
+    --ink: #000;
+    --ink-2: #333;
+    --line: #999;
+    --signal: #000;
+    --signal-text: #000;
+    color-scheme: light;
+  }
+
+  html, body { background: #fff !important; color: #000; }
+
+  body { padding-top: 0; font-size: 10.5pt; line-height: 1.45; }
+
+  .kopf, .fuss, .skip-link, .toast, .nicht-drucken, button, .btn { display: none !important; }
+
+  a { color: #000; text-decoration: underline; }
+
+  .sektion { margin-top: 24pt; }
+
+  img { break-inside: avoid; }
+}

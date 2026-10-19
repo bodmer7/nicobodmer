@@ -1,0 +1,42 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageSwitch from './LanguageSwitch.astro';
+import { useT, datum, type Lang } from '../i18n/ui';
+import { pfad } from '../i18n/routes';
+import { person } from '../data/profil';
+import { messwerte } from '../data/messwerte';
+interface Props { lang: Lang; alternate: Record<Lang, string> | null; messKey?: string }
+const { lang, alternate, messKey } = Astro.props;
+const t = useT(lang);
+const messung = messKey && messwerte.datum ? messwerte.seiten[messKey] : undefined;
+---
+
+<footer class="fuss">
+  <div class="wrap fuss__innen">
+    <p class="fuss__copy">{t('footer.copy')}</p>
+    <ul class="fuss__links">
+      <li><a href={pfad('lebenslauf', lang)}>{t('nav.lebenslauf')}</a></li>
+      <li><a href={pfad('recht', lang)}>{t('footer.recht')}</a></li>
+      <li><a href={person.linkedin}>LinkedIn</a></li>
+      <li><a href={person.github}>GitHub</a></li>
+      <li><LanguageSwitch lang={lang} alternate={alternate} /></li>
+      <li><ThemeToggle lang={lang} /></li>
+    </ul>
+    <div class="fuss__info klein neben">
+      <p>{t('footer.cookies')}</p>
+      {
+        messung && messwerte.datum && (
+          <p data-messung>
+            {t('footer.messung', {
+              kb: messung.kb,
+              lh: `${messung.leistung} / ${messung.barrierefreiheit} / ${messung.bestPractices} / ${messung.seo}`,
+              datum: datum(messwerte.datum, lang),
+            })}{' '}
+            <span class="sr-only">({t('footer.messungLabel')})</span>
+          </p>
+        )
+      }
+      <p>{t('footer.stand')}</p>
+    </div>
+  </div>
+</footer>
