@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:4.0
+FN:Nico Bodmer
+N:Bodmer;Nico;;;
+EMAIL;TYPE=work:nico.bodmer@gmx.ch
+URL:https://nico-bodmer.ch/
+URL;TYPE=linkedin:https://www.linkedin.com/in/nico-bodmer/
+END:VCARD
