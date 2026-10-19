@@ -12,15 +12,22 @@ import '../styles/components/lebenslauf.css';
 import portrait from '../assets/fotos/contact-portrait.webp';
 import { useT, type Lang } from '../i18n/ui';
 import { seiten, projektPfad } from '../i18n/routes';
-import { person, stationen, ausbildung, koennen, inProjekten, sprachenText, studienThemen, studienSemester, hobbies, ziel, zeitraumKurz, ausbildungZeitraum, ausbildungOrt } from '../data/profil';
+import { person, stationen, ausbildung, koennen, inProjekten, niveaus, sprachenText, studienThemen, studienSemester, hobbies, ziel, zeitraumKurz, ausbildungZeitraum, ausbildungOrt } from '../data/profil';
 import { projekte } from '../data/projekte';
-import type { ProjektId } from '../data/profil';
+import type { ProjektId, Niveau, KoennenGruppe } from '../data/profil';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = useT(lang);
 const liste = await projekte(lang);
 const site = 'https://nico-bodmer.ch';
+const rang = (n?: Niveau) => (n ? niveaus.indexOf(n) : 0);
+/** «HTML und CSS (Grundlagen), KI-gestützte Entwicklung (Erfahrung)», sortiert nach Niveau */
+const koennenZeile = (g: KoennenGruppe) =>
+  [...g.begriffe]
+    .sort((a, b) => rang(a.niveau) - rang(b.niveau))
+    .map((b) => (b.niveau ? `${b[lang]} (${t(`koennen.niveauKlein.${b.niveau}`)})` : b[lang]))
+    .join(', ');
 const titel = lang === 'de' ? 'Lebenslauf | Nico Bodmer' : 'CV | Nico Bodmer';
 const beschreibung =
   lang === 'de'
@@ -122,7 +129,7 @@ const beschreibung =
           koennen.map((g) => (
             <div>
               <dt>{g.titel[lang]}</dt>
-              <dd>{g.begriffe.map((b) => b[lang]).join(', ')}</dd>
+              <dd>{koennenZeile(g)}</dd>
             </div>
           ))
         }
@@ -130,7 +137,7 @@ const beschreibung =
           <dt>{t('koennen.inProjekten')}</dt>
           <dd>{inProjekten.join(', ')}</dd>
         </div>
-        <div>
+        <div class="cv__sprachen">
           <dt>{t('cv.sprachen')}</dt>
           <dd>{sprachenText(lang)}</dd>
         </div>

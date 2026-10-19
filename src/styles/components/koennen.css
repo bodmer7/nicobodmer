@@ -1,79 +1,218 @@
-/* Können mit Nachweis */
+/* Können: ein Datenblatt pro Gruppe. Ohne Skript stehen alle Gruppen
+   untereinander; ab 1024px macht koennen.ts daraus vertikale Tabs
+   (.ist-tabs), darunter Akkordeons (<details>). */
 
-.koennen {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-  gap: var(--s7) var(--gap);
-}
-
-.koennen__gruppe {
-  position: relative;
-  padding-top: var(--s4);
-  border-top: 4px solid var(--akzent);
-  scroll-margin-top: calc(var(--header-h) + var(--s5));
-}
-
-.koennen__gruppe > p { margin-top: var(--s3); }
-
-.begriffe {
+.koennen__legende {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 var(--s4);
-  margin-top: var(--s3);
-  padding: 0;
-  list-style: none;
+  gap: var(--s2) var(--s6);
+  margin: 0 0 var(--s7);
+  font-size: var(--klein);
+  line-height: 1.4;
 }
 
-.begriff {
-  min-height: 44px;
-  padding: 0;
+.koennen__legende div { display: flex; flex-wrap: wrap; gap: 0 var(--s1); }
+
+.koennen__legende dt { font-weight: 600; }
+
+.koennen__legende dd { margin: 0; color: var(--ink-2); }
+
+.koennen__gruppen {
+  display: grid;
+  gap: var(--s5);
+}
+
+.koennen__gruppe { scroll-margin-top: calc(var(--header-h) + var(--s5)); }
+
+/* Kopf der Gruppe als Akkordeon */
+.koennen__gruppe summary {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  min-height: 56px;
+  padding-block: var(--s3);
+  border-top: 4px solid var(--akzent);
+  font-size: var(--h3);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  list-style: none;
+  cursor: pointer;
+}
+
+.koennen__gruppe summary::-webkit-details-marker { display: none; }
+
+.koennen__gruppe summary::after {
+  content: "";
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-right: 4px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  rotate: 45deg;
+  translate: 0 -3px;
+}
+
+.koennen__gruppe details[open] > summary::after { rotate: -135deg; translate: 0 3px; }
+
+.koennen__anzahl {
+  margin-left: auto;
+  font-size: var(--klein);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* Im Akkordeon steht der Name schon im summary; die H3 bleibt für
+   Screenreader und die Überschriften-Navigation. */
+.koennen:not(.ist-tabs) .koennen__titel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.koennen__titel { font-size: var(--h3); }
+
+.koennen__unterzeile { margin-top: var(--s1); }
+
+.koennen__fusszeile { margin-top: var(--s4); font-size: var(--klein); max-width: 68ch; }
+
+/* Tabelle wie ein Datenblatt */
+.koennen__tabelle {
+  width: 100%;
+  margin-top: var(--s4);
+  border-collapse: collapse;
+}
+
+.koennen__tabelle thead th {
+  padding: 0 var(--s4) var(--s2) 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.koennen__tabelle tbody th,
+.koennen__tabelle td {
+  padding: var(--s4) var(--s4) var(--s4) 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.koennen__tabelle tbody th {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.koennen__niveau { color: var(--ink-2); }
+
+.koennen__nachweise { line-height: 1.5; }
+
+.koennen__zelllabel { display: none; }
+
+@media (min-width: 1024px) {
+  .koennen__tabelle tbody th { width: 34%; }
+  .koennen__tabelle .koennen__niveau { width: 16%; white-space: nowrap; }
+}
+
+/* Unter 1024px: gestapelte Zeilen statt Spalten */
+@media (max-width: 1023.98px) {
+  .koennen__tabelle,
+  .koennen__tabelle tbody,
+  .koennen__tabelle tr,
+  .koennen__tabelle th,
+  .koennen__tabelle td { display: block; }
+
+  .koennen__tabelle thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .koennen__tabelle tr {
+    padding-block: var(--s4);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .koennen__tabelle tr:first-child { border-top: 1px solid var(--line); }
+
+  .koennen__tabelle tbody th,
+  .koennen__tabelle td {
+    padding: 0;
+    border: 0;
+  }
+
+  .koennen__tabelle td { margin-top: var(--s1); }
+
+  .koennen__zelllabel { display: inline; color: var(--ink-2); font-weight: 600; }
+}
+
+/* Tabs ab 1024px (nur mit Skript) */
+@media (min-width: 1024px) {
+  .koennen.ist-tabs .koennen__ansicht {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--gap);
+    align-items: start;
+  }
+
+  .koennen.ist-tabs .koennen__tabs {
+    grid-column: 1 / span 4;
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+
+  .koennen.ist-tabs .koennen__gruppen { grid-column: 5 / -1; gap: 0; }
+
+  .koennen.ist-tabs summary { display: none; }
+
+  .koennen.ist-tabs .koennen__panel {
+    padding-top: var(--s4);
+    border-top: 4px solid var(--akzent);
+  }
+
+  .koennen.ist-tabs .koennen__gruppe:focus-visible { outline-offset: 6px; }
+}
+
+.koennen__tab {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  min-height: 52px;
+  padding: var(--s3) var(--s4) var(--s3) var(--s4);
   border: 0;
+  border-left: 4px solid transparent;
+  border-bottom: 1px solid var(--line);
   background: none;
   color: var(--ink);
+  font: inherit;
+  font-weight: 500;
   text-align: left;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-decoration-color: var(--akzent-text);
-  text-underline-offset: 0.22em;
   cursor: pointer;
-  transition: color var(--t-klein) var(--ease), text-decoration-color var(--t-klein) var(--ease);
+  transition: background-color var(--t-klein) var(--ease);
 }
 
-.begriff:hover { color: var(--akzent-text); text-decoration-color: currentColor; text-decoration-thickness: 2px; }
+.koennen__tab:hover .marke { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
 
-.begriff[aria-expanded="true"] {
-  color: var(--ink);
-  text-decoration-color: var(--akzent);
-  text-decoration-thickness: 3px;
-}
-
-.nachweis {
-  margin-top: var(--s3);
-  padding: var(--s4);
+.koennen__tab[aria-selected="true"] {
   background: var(--akzent-hell);
-  border-top: 3px solid var(--akzent);
+  border-left-color: var(--akzent);
+  font-weight: 700;
 }
 
-.nachweis ul { margin-top: var(--s2); padding-left: 1.2em; }
-
-.nachweis li + li { margin-top: var(--s1); }
-
-.js .nachweis:not(.ist-offen) { display: none; }
-
-@media (min-width: 900px) {
-  .js .nachweis.ist-offen {
-    position: absolute;
-    z-index: 5;
-    left: var(--x, 0px);
-    top: var(--y, 100%);
-    width: min(380px, 90vw);
-    margin-top: var(--s2);
-    border: 1px solid var(--ink);
-    border-top: 3px solid var(--akzent);
-  }
+@media (prefers-reduced-motion: no-preference) {
+  .koennen.ist-tabs .koennen__gruppe.ist-neu { animation: koennen-ein var(--t-ui) var(--ease); }
 }
 
-.koennen__weitere { margin-top: var(--s6); }
-
-/* Markierungen aus dem Können in Projektliste und Laufbahn */
-.projekt.ist-markiert { box-shadow: inset 4px 0 0 var(--signal); }
+@keyframes koennen-ein {
+  from { opacity: 0; }
+}

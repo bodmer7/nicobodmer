@@ -1,85 +1,91 @@
 /*
- * Können: Begriff öffnet «Eingesetzt in:». Esc oder Klick ausserhalb
- * schliesst. Betroffene Balken und Projekte werden markiert.
+ * Können: ab 1024px vertikale Tabs nach WAI-ARIA (Pfeiltasten hoch und
+ * runter, Home, End), darunter Akkordeons mit der ersten Gruppe offen.
+ * Links auf eine Gruppe (#koennen-…) wählen den Tab bzw. öffnen die Gruppe.
  */
 const box = document.querySelector<HTMLElement>('[data-koennen]');
 
 if (box) {
-  const buttons = Array.from(box.querySelectorAll<HTMLButtonElement>('[data-begriff]'));
-  let offen: { btn: HTMLButtonElement; panel: HTMLElement } | null = null;
+  const liste = box.querySelector<HTMLElement>('[data-koennen-tabs]')!;
+  const tabs = Array.from(box.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+  const gruppen = Array.from(box.querySelectorAll<HTMLElement>('[data-gruppe]'));
+  const details = gruppen.map((g) => g.querySelector('details')!);
+  const breit = window.matchMedia('(min-width: 1024px)');
+  let aktiv = 0;
+  let istTabs = false;
 
-  const markierungenLoeschen = () =>
-    document.querySelectorAll('.ist-markiert').forEach((el) => el.classList.remove('ist-markiert'));
-
-  const markieren = (panel: HTMLElement) => {
-    markierungenLoeschen();
-    panel.querySelectorAll<HTMLElement>('[data-ziel]').forEach((li) => {
-      const [art, id] = (li.dataset.ziel ?? '').split(':');
-      if (art === 'station' || art === 'ausbildung') {
-        document.querySelector(`[data-balken="${id}"]`)?.classList.add('ist-markiert');
-        document.querySelector(`[data-eintrag="${id}"]`)?.classList.add('ist-markiert');
-      } else if (art === 'laufbahn') {
-        // Mehrere Balken zugleich, z. B. parallele Spuren beim Zeitmanagement
-        id.split(',').forEach((b) => {
-          document.querySelector(`[data-balken="${b}"]`)?.classList.add('ist-markiert');
-          document.querySelector(`[data-eintrag="${b}"]`)?.classList.add('ist-markiert');
-        });
-      } else if (art === 'projekt') {
-        document.querySelector(`[data-projekt="${id}"]`)?.classList.add('ist-markiert');
-        document.querySelector(`[data-balken="projekt-${id}"]`)?.classList.add('ist-markiert');
-        document.querySelector(`[data-eintrag="projekt-${id}"]`)?.classList.add('ist-markiert');
-      } else if (art === 'website') {
-        document.querySelector('[data-balken="projekt-website"]')?.classList.add('ist-markiert');
-        document.querySelector('[data-eintrag="projekt-website"]')?.classList.add('ist-markiert');
-      }
+  const zeigen = (i: number, uebergang = true) => {
+    aktiv = i;
+    tabs.forEach((t, k) => {
+      t.setAttribute('aria-selected', String(k === i));
+      t.tabIndex = k === i ? 0 : -1;
+    });
+    gruppen.forEach((g, k) => {
+      g.hidden = k !== i;
+      g.classList.toggle('ist-neu', uebergang && k === i);
     });
   };
 
-  const schliessen = (fokus = false) => {
-    if (!offen) return;
-    offen.btn.setAttribute('aria-expanded', 'false');
-    offen.panel.classList.remove('ist-offen');
-    if (fokus) offen.btn.focus();
-    offen = null;
-    markierungenLoeschen();
+  const modus = () => {
+    istTabs = breit.matches;
+    box.classList.toggle('ist-tabs', istTabs);
+    liste.hidden = !istTabs;
+    gruppen.forEach((g, k) => {
+      if (istTabs) {
+        g.setAttribute('role', 'tabpanel');
+        g.setAttribute('aria-labelledby', tabs[k].id);
+        g.tabIndex = 0;
+        details[k].open = true;
+      } else {
+        g.removeAttribute('role');
+        g.setAttribute('aria-labelledby', `titel-${g.id}`);
+        g.removeAttribute('tabindex');
+        g.hidden = false;
+        details[k].open = k === aktiv;
+      }
+    });
+    if (istTabs) zeigen(aktiv, false);
   };
 
-  const oeffnen = (btn: HTMLButtonElement) => {
-    const panel = document.getElementById(btn.getAttribute('aria-controls') ?? '');
-    if (!panel) return;
-    schliessen();
-    const gruppe = btn.closest<HTMLElement>('.koennen__gruppe')!;
-    const g = gruppe.getBoundingClientRect();
-    const b = btn.getBoundingClientRect();
-    const breite = Math.min(380, window.innerWidth * 0.9);
-    const x = Math.max(0, Math.min(b.left - g.left, window.innerWidth - g.left - breite - 16));
-    panel.style.setProperty('--x', `${x}px`);
-    panel.style.setProperty('--y', `${b.bottom - g.top}px`);
-    btn.setAttribute('aria-expanded', 'true');
-    panel.classList.add('ist-offen');
-    offen = { btn, panel };
-    markieren(panel);
-  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => zeigen(i));
+    tab.addEventListener('keydown', (e) => {
+      let ziel = -1;
+      if (e.key === 'ArrowDown') ziel = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowUp') ziel = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') ziel = 0;
+      else if (e.key === 'End') ziel = tabs.length - 1;
+      if (ziel < 0) return;
+      e.preventDefault();
+      zeigen(ziel);
+      tabs[ziel].focus();
+    });
+  });
 
-  buttons.forEach((btn) =>
-    btn.addEventListener('click', () => {
-      if (offen?.btn === btn) schliessen();
-      else oeffnen(btn);
+  // Im Akkordeon merkt sich «aktiv» die zuletzt geöffnete Gruppe.
+  details.forEach((d, k) =>
+    d.addEventListener('toggle', () => {
+      if (!istTabs && d.open) aktiv = k;
     }),
   );
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && offen) {
-      e.preventDefault();
-      schliessen(true);
-    }
-  });
+  /** Gruppe zu einem Anker wählen, bevor der Browser dorthin springt */
+  const oeffnen = (hash: string) => {
+    const i = gruppen.findIndex((g) => `#${g.id}` === hash);
+    if (i < 0) return;
+    if (istTabs) zeigen(i, false);
+    else details[i].open = true;
+  };
 
-  document.addEventListener('pointerdown', (e) => {
-    if (!offen) return;
-    const ziel = e.target as Node;
-    if (!offen.panel.contains(ziel) && !offen.btn.contains(ziel)) schliessen();
+  document.addEventListener('click', (e) => {
+    const link = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href*="#"]');
+    if (link && link.pathname === location.pathname) oeffnen(link.hash);
   });
+  window.addEventListener('hashchange', () => oeffnen(location.hash));
+
+  modus();
+  oeffnen(location.hash);
+  breit.addEventListener('change', modus);
 }
 
 export {};

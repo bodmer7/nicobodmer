@@ -125,15 +125,20 @@
 
   .seite-cv .cv__kontakt { gap: 0 12pt; }
 
-  .seite-cv .cv__block { margin-top: 12pt; }
+  .seite-cv .cv__block { margin-top: 10pt; }
 
-  .seite-cv .cv__block:not(:has(#cv-erfahrung)) { break-inside: avoid; }
+  .seite-cv .cv__block:not(:has(#cv-erfahrung, #cv-koennen)) { break-inside: avoid; }
+
+  .seite-cv .cv__koennen > div { break-inside: avoid; }
+
+  /* Sprachen stehen im Druck schon in der Kontaktzeile oben */
+  .seite-cv .cv__sprachen { display: none; }
 
   .seite-cv .cv__block > h2 { font-size: 13pt; margin-bottom: 4pt; padding-bottom: 2pt; break-after: avoid; }
 
   .seite-cv .cv__profil { font-size: 10.5pt; }
 
-  .seite-cv .cv__eintrag { grid-template-columns: 95pt 1fr; padding-block: 5pt; }
+  .seite-cv .cv__eintrag { grid-template-columns: 95pt 1fr; padding-block: 4pt; }
 
   .seite-cv .cv__eintrag h3 { font-size: 11pt; }
 
@@ -149,11 +154,11 @@
     color: #333;
   }
 
-  .seite-cv .cv__koennen { grid-template-columns: 1fr 1fr; gap: 4pt 12pt; }
+  .seite-cv .cv__koennen { grid-template-columns: 1fr 1fr; gap: 3pt 12pt; }
 
-  .seite-cv .cv__zeile { margin-top: 6pt; }
+  .seite-cv .cv__zeile { margin-top: 4pt; }
 
-  .seite-cv .cv__referenzen { margin-top: 10pt; color: #000; }
+  .seite-cv .cv__referenzen { margin-top: 4pt; color: #000; }
 }
 
 /* Textseiten (Impressum und Datenschutz, 404) */

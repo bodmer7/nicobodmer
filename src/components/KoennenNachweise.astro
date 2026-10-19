@@ -1,15 +1,26 @@
 ---
 /**
- * Können mit Nachweis: Jeder Begriff ist ein Button und öffnet «Eingesetzt in:»
- * mit Links zu Stationen, Ausbildung, Laufbahn und Fallstudien. Begriffe mit
- * eigenen Nachweisen haben ein eigenes Feld, die übrigen teilen sich das Feld
- * der Gruppe. Ohne JavaScript stehen die Nachweise direkt unter den Begriffen.
+ * Können als ruhige Übersicht: pro Gruppe eine Tabelle mit Fähigkeit,
+ * Niveau und «Eingesetzt in». Ohne JavaScript stehen alle Gruppen
+ * untereinander (alle <details> offen). Das Skript macht daraus ab 1024px
+ * vertikale Tabs (WAI-ARIA), darunter Akkordeons mit der ersten Gruppe offen.
  */
+import Icon from './Icon.astro';
 import { useT, type Lang } from '../i18n/ui';
 import { anker, projektPfad } from '../i18n/routes';
-import { koennen, stationen, ausbildung, sprachenText, inProjekten, type NachweisRef, type Begriff } from '../data/profil';
+import {
+  koennen,
+  stationen,
+  ausbildung,
+  person,
+  inProjekten,
+  niveaus,
+  nachweiseVon,
+  type NachweisRef,
+  type Begriff,
+  type KoennenGruppe,
+} from '../data/profil';
 import { getEntry } from 'astro:content';
-import Icon from './Icon.astro';
 import { farbe } from '../data/farben';
 
 interface Props { lang: Lang }
@@ -19,9 +30,7 @@ const t = useT(lang);
 const projektTitel = async (id: string) => (await getEntry('projekte', `${lang}/${id}`))?.data.title ?? id;
 
 interface Eintrag {
-  ziel: string;
   text: string;
-  unter?: string;
   href?: string;
   zusatz?: string;
 }
@@ -29,99 +38,182 @@ interface Eintrag {
 const eintrag = async (n: NachweisRef): Promise<Eintrag> => {
   const zusatz = n.zusatz?.[lang];
   switch (n.art) {
-    case 'station': {
-      const s = stationen.find((x) => x.id === n.id)!;
-      return { ziel: `station:${n.id}`, text: s.rolle, unter: s.organisation[lang], href: `#lb-${n.id}`, zusatz };
-    }
-    case 'ausbildung': {
-      const a = ausbildung.find((x) => x.id === n.id)!;
-      return { ziel: `ausbildung:${n.id}`, text: a.titel[lang], href: `#lb-${n.id}`, zusatz };
-    }
+    case 'station':
+      return { text: stationen.find((x) => x.id === n.id)!.rolle, href: `#lb-${n.id}`, zusatz };
+    case 'ausbildung':
+      return { text: ausbildung.find((x) => x.id === n.id)!.titel[lang], href: `#lb-${n.id}`, zusatz };
     case 'projekt':
-      return { ziel: `projekt:${n.id}`, text: await projektTitel(n.id), href: projektPfad(n.id, lang), zusatz };
+      return { text: await projektTitel(n.id), href: projektPfad(n.id, lang), zusatz };
     case 'laufbahn':
-      return { ziel: `laufbahn:${n.ids.join(',')}`, text: n.text[lang], href: `#${anker.laufbahn[lang]}`, zusatz };
+      return { text: n.text[lang], href: `#${anker.laufbahn[lang]}`, zusatz };
     case 'website':
-      return { ziel: 'website', text: t('koennen.website'), zusatz };
+      return { text: t('koennen.website'), zusatz };
   }
 };
 
-const liste = (refs: NachweisRef[]) => Promise.all(refs.map(eintrag));
+/** Art der Tabelle: mit Niveau, ohne Niveau (Arbeitsweise) oder Studium */
+type Art = 'niveau' | 'ohne' | 'studium';
+const art = (g: KoennenGruppe): Art =>
+  g.begriffe.some((b) => b.semester) ? 'studium' : g.begriffe.some((b) => b.niveau) ? 'niveau' : 'ohne';
+
+const rang = (b: Begriff) => (b.niveau ? niveaus.indexOf(b.niveau) : 0);
 
 const gruppen = await Promise.all(
   koennen.map(async (g) => ({
-    ...g,
-    liste: await liste(g.nachweise),
-    begriffe: await Promise.all(
-      g.begriffe.map(async (b: Begriff, i) => ({
-        ...b,
-        panel: b.nachweise ? `nachweis-${g.id}-${i}` : `nachweis-${g.id}`,
-        eigene: b.nachweise ? await liste(b.nachweise) : null,
-      })),
+    id: g.id,
+    titel: g.titel[lang],
+    unterzeile: g.unterzeile?.[lang],
+    fusszeile: g.fusszeile?.[lang],
+    art: art(g),
+    zeilen: await Promise.all(
+      [...g.begriffe]
+        .sort((a, b) => rang(a) - rang(b))
+        .map(async (b) => ({
+          text: b[lang],
+          zweite: b.semester ? t('koennen.semester', { n: b.semester }) : b.niveau ? t(`koennen.niveau.${b.niveau}`) : '',
+          nachweise: await Promise.all(nachweiseVon(g, b).map(eintrag)),
+        })),
     ),
   })),
 );
+
+const spalten: Record<Art, string[]> = {
+  niveau: [t('koennen.spalte.faehigkeit'), t('koennen.spalte.niveau'), t('koennen.spalte.eingesetzt')],
+  ohne: [t('koennen.spalte.faehigkeit'), t('koennen.spalte.eingesetzt')],
+  studium: [t('koennen.spalte.thema'), t('koennen.spalte.stand'), t('koennen.spalte.nachweis')],
+};
+
+const alle = [
+  ...gruppen.map((g) => ({ ...g, farbe: farbe(g.id), anzahl: g.zeilen.length })),
+  {
+    id: 'sprachen',
+    titel: t('koennen.sprachen'),
+    unterzeile: undefined,
+    fusszeile: undefined,
+    art: 'sprachen' as const,
+    zeilen: [],
+    farbe: farbe('sprachen'),
+    anzahl: person.sprachen.length,
+  },
+];
+const gruppenId = (id: string) => `${anker.koennen[lang]}-${id}`;
 ---
 
 <div class="koennen" data-koennen>
-  {
-    gruppen.map((g) => (
-      <div class="koennen__gruppe" id={`${anker.koennen[lang]}-${g.id}`} data-farbe={farbe(g.id)}>
-        <h3 class:list={{ 'mit-icon': g.id === 'studium' }}>
-          {g.id === 'studium' && <Icon name="studium" />}
-          {g.titel[lang]}
-        </h3>
-        {g.unterzeile && <p class="neben">{g.unterzeile[lang]}</p>}
-        <ul class="begriffe">
-          {g.begriffe.map((b) => (
-            <li>
-              <button class="begriff" type="button" aria-expanded="false" aria-controls={b.panel} data-begriff={g.id}>
-                {b[lang]}
-              </button>
-            </li>
-          ))}
-        </ul>
-        {g.liste.length > 0 && (
-          <div class="nachweis" id={`nachweis-${g.id}`} data-nachweis={g.id}>
-            <p class="label">{t('koennen.eingesetzt')}</p>
-            <ul>
-              {g.liste.map((n) => (
-                <li data-ziel={n.ziel}>
-                  {n.href ? <a href={n.href}>{n.text}</a> : <span>{n.text}</span>}{n.unter && <span class="neben">, {n.unter}</span>}{n.zusatz && <span class="neben"> ({n.zusatz})</span>}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {g.begriffe
-          .filter((b) => b.eigene)
-          .map((b) => (
-            <div class="nachweis" id={b.panel} data-nachweis={b.panel}>
-              <p class="label">
-                {b[lang]}. {t('koennen.eingesetzt')}
-              </p>
-              <ul>
-                {b.eigene!.map((n) => (
-                  <li data-ziel={n.ziel}>
-                    {n.href ? <a href={n.href}>{n.text}</a> : <span>{n.text}</span>}{n.unter && <span class="neben">, {n.unter}</span>}{n.zusatz && <span class="neben"> ({n.zusatz})</span>}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        {g.fusszeile && <p class="klein neben">{g.fusszeile[lang]}</p>}
-      </div>
-    ))
-  }
-  <div class="koennen__gruppe" data-farbe="neutral">
-    <h3>{t('koennen.sprachen')}</h3>
-    <p>{sprachenText(lang)}</p>
+  <dl class="koennen__legende">
+    {
+      niveaus.map((n) => (
+        <div>
+          <dt>{t(`koennen.niveau.${n}`)}:</dt>
+          <dd>{t(`koennen.bedeutung.${n}`)}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <div class="koennen__ansicht">
+    <div class="koennen__tabs" role="tablist" aria-orientation="vertical" aria-label={t('koennen.titel')} data-koennen-tabs hidden>
+      {
+        alle.map((g, i) => (
+          <button
+            class="koennen__tab"
+            type="button"
+            role="tab"
+            id={`tab-${gruppenId(g.id)}`}
+            aria-controls={gruppenId(g.id)}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+            data-farbe={g.farbe}
+            data-tab={g.id}
+          >
+            <span class="marke">{g.titel}</span>
+            <span class="koennen__anzahl ziffern">{g.anzahl}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="koennen__gruppen">
+      {
+        alle.map((g) => (
+          <section class="koennen__gruppe" id={gruppenId(g.id)} data-farbe={g.farbe} data-gruppe={g.id} aria-labelledby={`titel-${gruppenId(g.id)}`}>
+            <details open>
+              <summary>
+                <span class="marke">{g.titel}</span>
+                <span class="koennen__anzahl ziffern">{g.anzahl}</span>
+              </summary>
+              <div class="koennen__panel">
+                <h3 class:list={['koennen__titel', { 'mit-icon': g.id === 'studium' }]} id={`titel-${gruppenId(g.id)}`}>
+                  {g.id === 'studium' && <Icon name="studium" />}
+                  {g.titel}
+                </h3>
+                {g.unterzeile && <p class="koennen__unterzeile neben">{g.unterzeile}</p>}
+
+                {g.art === 'sprachen' ? (
+                  <table class="koennen__tabelle">
+                    <thead>
+                      <tr>
+                        <th scope="col">{t('koennen.spalte.sprache')}</th>
+                        <th scope="col">{t('koennen.spalte.niveau')}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {person.sprachen.map((s) => (
+                        <tr>
+                          <th scope="row">{s.sprache[lang]}</th>
+                          <td class="koennen__niveau">
+                            <span class="koennen__zelllabel">{t('koennen.spalte.niveau')}: </span>
+                            {s.niveau[lang]}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <table class:list={['koennen__tabelle', `koennen__tabelle--${g.art}`]}>
+                    <thead>
+                      <tr>
+                        {spalten[g.art].map((s) => (
+                          <th scope="col">{s}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {g.zeilen.map((z) => (
+                        <tr>
+                          <th scope="row">{z.text}</th>
+                          {g.art !== 'ohne' && (
+                            <td class="koennen__niveau" data-niveau>
+                              <span class="koennen__zelllabel">{spalten[g.art][1]}: </span>
+                              {z.zweite}
+                            </td>
+                          )}
+                          <td class="koennen__nachweise">
+                            <span class="koennen__zelllabel">{spalten[g.art].at(-1)}: </span>
+                            {z.nachweise.map((n, i) => (
+                              <span class="koennen__nachweis">{i > 0 && ', '}{n.href ? <a href={n.href}>{n.text}</a> : n.text}{n.zusatz && <span class="neben">{` (${n.zusatz})`}</span>}</span>
+                            ))}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+
+                {g.fusszeile && <p class="koennen__fusszeile neben">{g.fusszeile}</p>}
+                {g.id === 'web' && (
+                  <p class="koennen__fusszeile">
+                    <span class="label">{t('koennen.inProjekten')}:</span> {inProjekten.join(', ')}
+                  </p>
+                )}
+              </div>
+            </details>
+          </section>
+        ))
+      }
+    </div>
   </div>
 </div>
-<p class="koennen__weitere klein">
-  <span class="label">{t('koennen.inProjekten')}:</span>
-  {inProjekten.join(', ')}
-</p>
 
 <script>
   import '../scripts/koennen';

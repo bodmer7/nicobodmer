@@ -159,8 +159,6 @@
 
 .balken:focus-visible { outline: 2px solid var(--signal-text); outline-offset: 3px; }
 
-.balken.ist-markiert { box-shadow: inset 0 -4px 0 var(--signal); }
-
 .laufbahn__detail {
   min-height: 120px;
   padding-top: var(--s4);
@@ -215,8 +213,6 @@
 .eintrag ul { margin-top: var(--s2); padding-left: 1.2em; list-style: disc; }
 
 .eintrag li + li { margin-top: var(--s1); }
-
-.eintrag.ist-markiert { box-shadow: inset 4px 0 0 var(--signal); padding-left: var(--s4); }
 
 @media (min-width: 640px) {
   .eintrag { grid-template-columns: 180px minmax(0, 1fr); }
