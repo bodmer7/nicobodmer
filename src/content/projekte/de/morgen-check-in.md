@@ -24,7 +24,7 @@ featured: true
 status: live
 position: 50% 0%
 seo: "Morgen-Check-in, ein privates Werkzeug von Nico Bodmer. Daten der Sportuhr lokal und nur lesend als Morgen-Seite. Mit Beispieldaten."
-# gelernt: ""
+gelernt: "Bei persönlichen Daten lege ich zuerst die Rechte fest: nur lesen, lokal bleiben. Erst dann baue ich."
 ---
 
 ## Ausgangslage

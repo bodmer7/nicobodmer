@@ -49,7 +49,7 @@ featured: true
 status: live
 position: 50% 0%
 seo: "Two ODERA Design sample projects, the joinery Doppelmeter and Firstlicht Solartechnik, both fictitious. Goals, design and measurements."
-# gelernt: ""
+gelernt: "Two businesses with different goals need two different sites, not one template in different colours. Fast pages come mostly from leaving things out: little JavaScript, optimised images, no third-party services."
 ---
 
 So that businesses can see how an ODERA site works, I built two fictitious businesses with complete websites.

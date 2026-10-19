@@ -60,3 +60,14 @@ test('Lebenslauf: Daten aus profil.ts, PDF-Knopf', async ({ page }) => {
   await expect(page.locator('.cv__referenzen')).toHaveText('Referenzen auf Anfrage.');
   await expect(page.locator('main')).not.toContainText(/Platform Developer/i);
 });
+
+test('Was ich gelernt habe erscheint auf allen Fallstudien', async ({ page }) => {
+  await beobachten(page);
+  for (const pfad of ['/arbeiten/odera/', '/arbeiten/musterprojekte/', '/arbeiten/geo-quiz/', '/arbeiten/morgen-check-in/']) {
+    await page.goto(pfad);
+    await expect(page.locator('#gelernt')).toHaveText(/Was ich gelernt habe/);
+    await expect(page.locator('[data-toc-link="gelernt"]')).toHaveCount(1);
+  }
+  await page.goto('/en/work/geo-quiz/');
+  await expect(page.locator('#gelernt')).toHaveText(/What I learned/);
+});

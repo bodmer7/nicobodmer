@@ -22,7 +22,7 @@ featured: true
 status: live
 position: 0% 0%
 seo: "Geo quiz, a web app by Nico Bodmer. Tap places on an unlabelled aerial map, scored by distance. With a live demo."
-# gelernt: ""
+gelernt: "Working with geodata means handling sources and licences carefully. And automatic deployment via GitHub Actions saves time with every change."
 ---
 
 ## Starting point

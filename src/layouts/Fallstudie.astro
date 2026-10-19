@@ -77,6 +77,7 @@ const kapitel = [
   ...(hatMesswerte ? [{ id: 'messwerte', text: t('fall.messwerte') }] : []),
   ...(galerie.length > 0 ? [{ id: 'bilder', text: t('fall.bilder') }] : []),
   ...(d.technik.length ? [{ id: 'technik', text: t('fall.technik') }] : []),
+  ...(d.gelernt ? [{ id: 'gelernt', text: lang === 'de' ? 'Was ich gelernt habe' : 'What I learned' }] : []),
 ];
 
 const site = 'https://nico-bodmer.ch';

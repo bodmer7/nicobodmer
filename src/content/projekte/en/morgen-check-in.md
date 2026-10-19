@@ -24,7 +24,7 @@ featured: true
 status: live
 position: 50% 0%
 seo: "Morning check-in, a private tool by Nico Bodmer. Sports watch data as a morning page, local and read-only. Shown with sample data."
-# gelernt: ""
+gelernt: "With personal data, I set the permissions first: read only, stay local. Only then do I build."
 ---
 
 ## Starting point

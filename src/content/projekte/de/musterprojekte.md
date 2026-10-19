@@ -49,7 +49,7 @@ featured: true
 status: live
 position: 50% 0%
 seo: "Zwei Musterprojekte von ODERA Design, Schreinerei Doppelmeter und Firstlicht Solartechnik, beide frei erfunden. Ziele, Gestaltung und Messwerte."
-# gelernt: ""
+gelernt: "Zwei Betriebe mit verschiedenen Zielen brauchen zwei verschiedene Auftritte, nicht eine Vorlage in anderen Farben. Schnelle Seiten entstehen vor allem durch Verzicht: wenig JavaScript, optimierte Bilder, keine fremden Dienste."
 ---
 
 Damit Betriebe sehen, wie eine ODERA-Seite funktioniert, habe ich zwei frei erfundene Betriebe mit vollständigen Websites gebaut.

@@ -22,7 +22,7 @@ featured: true
 status: live
 position: 0% 0%
 seo: "Geo-Quiz, eine Web-App von Nico Bodmer. Orte auf einer unbeschrifteten Luftbildkarte antippen, gewertet nach Distanz. Mit Live-Demo."
-# gelernt: ""
+gelernt: "Mit Geodaten zu arbeiten heisst, sauber mit Quellen und Lizenzen umzugehen. Und ein automatisches Deployment über GitHub Actions spart bei jeder Änderung Zeit."
 ---
 
 ## Ausgangslage

@@ -40,7 +40,7 @@ featured: true
 status: live
 position: 50% 0%
 seo: "ODERA Design, mein Angebot für Websites kleiner Betriebe in der Schweiz: Entwurf vor der Zahlung, Fixpreis ohne Abo. Ziel, Vorgehen und Ergebnis."
-# gelernt: ""
+gelernt: "Ein klares Ziel pro Seite macht jede Gestaltungsentscheidung einfacher. Und ein Angebot wird verständlicher, wenn Preis und Ablauf schon auf der Startseite stehen."
 ---
 
 ## Ausgangslage

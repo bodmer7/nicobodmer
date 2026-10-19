@@ -40,7 +40,7 @@ featured: true
 status: live
 position: 50% 0%
 seo: "ODERA Design, my website offering for small businesses in Switzerland: draft before payment, fixed price, no subscription. Goal, approach, result."
-# gelernt: ""
+gelernt: "One clear goal per page makes every design decision easier. And an offer becomes easier to understand when price and process are on the home page."
 ---
 
 ## Starting point
