@@ -24,7 +24,20 @@ export type NachweisRef = (
   zusatz?: Text;
 };
 
+/**
+ * Ehrliche Einstufung, immer als Text (nie Balken, Prozent oder Punkte):
+ * sicher = setze ich selbständig im Alltag ein, erfahrung = im Beruf oder in
+ * Projekten eingesetzt, grundlagen = kenne ich und arbeite mich ein.
+ */
+export type Niveau = 'sicher' | 'erfahrung' | 'grundlagen';
+
+export const niveaus: Niveau[] = ['sicher', 'erfahrung', 'grundlagen'];
+
 export interface Begriff extends Text {
+  /** Fehlt bei Arbeitsweise und Studium */
+  niveau?: Niveau;
+  /** Nur «Im Studium»: laufendes Semester statt Niveau */
+  semester?: number;
   /** Eigene Nachweise; sonst gelten die der Gruppe */
   nachweise?: NachweisRef[];
 }
@@ -63,8 +76,18 @@ export interface EigenesProjekt {
 export interface KoennenGruppe {
   id: string;
   titel: Text;
+  /** Zeile unter dem Gruppennamen */
+  unterzeile?: Text;
+  /** Satz unter der Tabelle */
+  fusszeile?: Text;
   begriffe: Begriff[];
+  /** Rückfall für Begriffe ohne eigene Nachweise */
   nachweise: NachweisRef[];
+}
+
+export interface Sprache {
+  sprache: Text;
+  niveau: Text;
 }
 
 export const person = {
@@ -81,10 +104,10 @@ export const person = {
     en: 'Computer Scientist, platform development (Swiss federal VET diploma). Technical sales for data & AI. Websites with ODERA Design.',
   } satisfies Text,
   sprachen: [
-    { de: 'Deutsch (Muttersprache)', en: 'German (native)' },
-    { de: 'Englisch (fliessend)', en: 'English (fluent)' },
-    { de: 'Französisch (gut)', en: 'French (good)' },
-  ] satisfies Text[],
+    { sprache: { de: 'Deutsch', en: 'German' }, niveau: { de: 'Muttersprache', en: 'native' } },
+    { sprache: { de: 'Englisch', en: 'English' }, niveau: { de: 'fliessend', en: 'fluent' } },
+    { sprache: { de: 'Französisch', en: 'French' }, niveau: { de: 'gut', en: 'good' } },
+  ] satisfies Sprache[],
 };
 
 /** Stand der Inhalte. Beim Aktualisieren auch «gerade» prüfen. */
@@ -142,7 +165,10 @@ export const stationen: Station[] = [
         de: 'Deployment interner Anwendungen mit Red Hat OpenShift und IBM Cloud',
         en: 'Deploying internal applications on Red Hat OpenShift and IBM Cloud',
       },
-      { de: 'Web-Entwicklung mit HTML, CSS, JavaScript und React', en: 'Web development with HTML, CSS, JavaScript and React' },
+      {
+        de: 'Mitarbeit an der Web-Entwicklung mit HTML, CSS, JavaScript und React',
+        en: 'Contributing to web development with HTML, CSS, JavaScript and React',
+      },
       {
         de: 'Optimierung bestehender interner Anwendungen für bessere Bedienbarkeit',
         en: 'Improving existing internal applications for better usability',
@@ -235,82 +261,132 @@ export const eigeneProjekte: EigenesProjekt[] = [
   { id: 'website', titel: { de: 'Diese Website', en: 'This website' }, jahr: 2026 },
 ];
 
+const station = (id: string, zusatz?: Text): NachweisRef => ({ art: 'station', id, zusatz });
+const projekt = (id: ProjektId, zusatz?: Text): NachweisRef => ({ art: 'projekt', id, zusatz });
+const website = (zusatz?: Text): NachweisRef => ({ art: 'website', zusatz });
+
 export const koennen: KoennenGruppe[] = [
   {
     id: 'web',
-    titel: { de: 'Web-Entwicklung', en: 'Web development' },
-    begriffe: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Vite', 'Astro', 'Leaflet'].map((b) => ({ de: b, en: b })),
-    nachweise: [
-      { art: 'station', id: 'web-dev' },
-      { art: 'projekt', id: 'odera' },
-      { art: 'projekt', id: 'musterprojekte' },
-      { art: 'projekt', id: 'geo-quiz' },
-      { art: 'website' },
+    titel: { de: 'Web und Umsetzung', en: 'Web and implementation' },
+    begriffe: [
+      {
+        de: 'HTML und CSS',
+        en: 'HTML and CSS',
+        niveau: 'grundlagen',
+        nachweise: [station('web-dev'), projekt('odera'), projekt('musterprojekte'), website()],
+      },
+      {
+        de: 'KI-gestützte Entwicklung',
+        en: 'AI-assisted development',
+        niveau: 'erfahrung',
+        nachweise: [projekt('odera'), projekt('musterprojekte'), projekt('geo-quiz'), website()],
+      },
+      { de: 'JavaScript', en: 'JavaScript', niveau: 'grundlagen', nachweise: [station('web-dev'), projekt('odera'), projekt('musterprojekte')] },
+      { de: 'React', en: 'React', niveau: 'grundlagen', nachweise: [station('web-dev')] },
+      { de: 'TypeScript', en: 'TypeScript', niveau: 'grundlagen', nachweise: [projekt('geo-quiz'), website()] },
     ],
+    nachweise: [],
   },
   {
     id: 'betrieb',
     titel: { de: 'Betrieb und Cloud', en: 'Operations and cloud' },
-    begriffe: ['Red Hat OpenShift', 'IBM Cloud', 'Docker', 'GitHub Actions', 'GitHub Pages'].map((b) => ({ de: b, en: b })),
-    nachweise: [
-      { art: 'station', id: 'web-dev' },
-      { art: 'projekt', id: 'geo-quiz' },
-      { art: 'projekt', id: 'odera' },
+    begriffe: [
+      { de: 'Red Hat OpenShift', en: 'Red Hat OpenShift', niveau: 'erfahrung', nachweise: [station('web-dev')] },
+      { de: 'IBM Cloud', en: 'IBM Cloud', niveau: 'erfahrung', nachweise: [station('web-dev')] },
+      {
+        de: 'GitHub, GitHub Actions und Pages',
+        en: 'GitHub, GitHub Actions and Pages',
+        niveau: 'erfahrung',
+        nachweise: [projekt('geo-quiz'), projekt('odera'), website()],
+      },
+      { de: 'Docker', en: 'Docker', niveau: 'grundlagen', nachweise: [station('web-dev')] },
     ],
+    nachweise: [],
   },
   {
     id: 'daten',
-    titel: { de: 'Daten und Automatisierung', en: 'Data and automation' },
+    titel: { de: 'Daten und KI', en: 'Data and AI' },
     begriffe: [
-      { de: 'Python', en: 'Python' },
-      { de: 'SQLite', en: 'SQLite' },
-      { de: 'MCP', en: 'MCP' },
-      { de: 'Playwright', en: 'Playwright' },
-      { de: 'KI-Werkzeuge', en: 'AI tools' },
+      {
+        de: 'KI-Werkzeuge im Arbeitsalltag',
+        en: 'AI tools in everyday work',
+        niveau: 'erfahrung',
+        nachweise: [projekt('morgen-check-in'), website()],
+      },
+      {
+        de: 'Data & AI-Lösungen erklären und einordnen',
+        en: 'Explaining and positioning data & AI solutions',
+        niveau: 'erfahrung',
+        nachweise: [station('tech-seller')],
+      },
+      { de: 'MCP-Server einrichten', en: 'Setting up MCP servers', niveau: 'grundlagen', nachweise: [projekt('morgen-check-in')] },
+      { de: 'Python', en: 'Python', niveau: 'grundlagen', nachweise: [projekt('morgen-check-in')] },
+      { de: 'SQL und SQLite', en: 'SQL and SQLite', niveau: 'grundlagen', nachweise: [projekt('morgen-check-in')] },
     ],
-    nachweise: [
-      { art: 'projekt', id: 'morgen-check-in' },
-      { art: 'website', zusatz: { de: 'Screenshots und Messungen per Playwright', en: 'screenshots and measurements with Playwright' } },
-    ],
+    nachweise: [],
   },
   {
     id: 'vertrieb',
     titel: { de: 'Vertrieb und Beratung', en: 'Sales and consulting' },
     begriffe: [
-      { de: 'Anforderungsanalyse', en: 'Requirements analysis' },
-      { de: 'RFPs und Angebote', en: 'RFPs and proposals' },
-      { de: 'Technische Konzepte', en: 'Technical concepts' },
-      { de: 'Kundenanlässe', en: 'Customer events' },
+      {
+        de: 'Präsentieren',
+        en: 'Presenting',
+        niveau: 'sicher',
+        nachweise: [
+          station('help-desk', { de: 'wöchentliche Kurzpräsentationen', en: 'weekly short presentations' }),
+          station('tech-seller', { de: 'Kundenanlässe', en: 'customer events' }),
+        ],
+      },
+      {
+        de: 'Anforderungsanalyse',
+        en: 'Requirements analysis',
+        niveau: 'erfahrung',
+        nachweise: [station('tech-seller'), projekt('odera', { de: 'Projekt-Check', en: 'project check' })],
+      },
+      {
+        de: 'RFPs und Angebote',
+        en: 'RFPs and proposals',
+        niveau: 'erfahrung',
+        nachweise: [station('tech-seller'), projekt('odera', { de: 'Angebote', en: 'proposals' })],
+      },
+      { de: 'Technische Konzepte', en: 'Technical concepts', niveau: 'erfahrung', nachweise: [station('tech-seller')] },
+      {
+        de: 'Kundenanlässe',
+        en: 'Customer events',
+        niveau: 'erfahrung',
+        nachweise: [station('tech-seller', { de: 'u. a. TechXchange', en: 'including TechXchange' })],
+      },
     ],
-    nachweise: [
-      { art: 'station', id: 'tech-seller' },
-      { art: 'projekt', id: 'odera', zusatz: { de: 'Projekt-Check, Angebote', en: 'project check, proposals' } },
-    ],
+    nachweise: [],
   },
   {
     id: 'support',
     titel: { de: 'Support und Schulung', en: 'Support and training' },
     begriffe: [
-      { de: 'Level-1- und Level-2-Support', en: 'Level 1 and level 2 support' },
-      { de: 'Geräte-Management für Mac und Windows', en: 'Device management for Mac and Windows' },
-      { de: 'IT- und Security-Schulungen', en: 'IT and security training' },
-      { de: 'Ticketing-Systeme', en: 'Ticketing systems' },
+      { de: 'Level-1- und Level-2-Support', en: 'Level 1 and level 2 support', niveau: 'sicher', nachweise: [station('help-desk')] },
+      {
+        de: 'Geräte-Management für Mac und Windows',
+        en: 'Device management for Mac and Windows',
+        niveau: 'sicher',
+        nachweise: [station('help-desk')],
+      },
+      { de: 'Ticketing-Systeme', en: 'Ticketing systems', niveau: 'sicher', nachweise: [station('help-desk')] },
+      {
+        de: 'IT- und Security-Schulungen',
+        en: 'IT and security training',
+        niveau: 'erfahrung',
+        nachweise: [station('support-lenovo', { de: 'an Oberstufenschulen', en: 'at secondary schools' })],
+      },
       {
         de: 'Prozessoptimierung',
         en: 'Process optimisation',
-        nachweise: [
-          {
-            art: 'station',
-            id: 'web-dev',
-            zusatz: { de: 'Optimierung interner Anwendungen', en: 'optimising internal applications' },
-          },
-        ],
+        niveau: 'erfahrung',
+        nachweise: [station('web-dev', { de: 'Optimierung interner Anwendungen', en: 'optimising internal applications' })],
       },
     ],
-    nachweise: [
-      { art: 'station', id: 'help-desk' },
-      { art: 'station', id: 'support-lenovo' },
-    ],
+    nachweise: [],
   },
   {
     id: 'arbeitsweise',
@@ -320,21 +396,17 @@ export const koennen: KoennenGruppe[] = [
         de: 'Kommunikation',
         en: 'Communication',
         nachweise: [
-          { art: 'station', id: 'help-desk', zusatz: { de: 'wöchentliche Kurzpräsentationen', en: 'weekly short presentations' } },
-          {
-            art: 'station',
-            id: 'support-lenovo',
-            zusatz: { de: 'IT- und Security-Schulungen an Oberstufenschulen', en: 'IT and security training at secondary schools' },
-          },
-          { art: 'station', id: 'tech-seller', zusatz: { de: 'Kundenanlässe', en: 'customer events' } },
+          station('help-desk', { de: 'wöchentliche Kurzpräsentationen', en: 'weekly short presentations' }),
+          station('support-lenovo', { de: 'IT- und Security-Schulungen an Oberstufenschulen', en: 'IT and security training at secondary schools' }),
+          station('tech-seller', { de: 'Kundenanlässe', en: 'customer events' }),
         ],
       },
       {
         de: 'Teamarbeit',
         en: 'Teamwork',
         nachweise: [
-          { art: 'station', id: 'tech-seller', zusatz: { de: 'cross-funktionale Teams', en: 'cross-functional teams' } },
-          { art: 'station', id: 'web-dev', zusatz: { de: 'Zusammenarbeit mit verschiedenen Teams', en: 'collaboration with various teams' } },
+          station('tech-seller', { de: 'cross-funktionale Teams', en: 'cross-functional teams' }),
+          station('web-dev', { de: 'Zusammenarbeit mit verschiedenen Teams', en: 'collaboration with various teams' }),
         ],
       },
       {
@@ -362,14 +434,15 @@ export const koennen: KoennenGruppe[] = [
       {
         de: 'Kreativität',
         en: 'Creativity',
-        nachweise: [{ art: 'projekt', id: 'musterprojekte', zusatz: { de: 'zwei eigenständige Auftritte', en: 'two distinct identities' } }],
+        nachweise: [projekt('musterprojekte', { de: 'zwei eigenständige Auftritte', en: 'two distinct identities' })],
       },
     ],
     nachweise: [],
   },
 ];
 
-export const weitereWerkzeuge: string[] = ['Tailwind', 'Supabase'];
+/** Werkzeuge ohne Niveau: «In meinen Projekten eingesetzt», keine eigene Fähigkeit */
+export const inProjekten: string[] = ['Astro', 'Vite', 'Leaflet', 'Playwright', 'Tailwind', 'Supabase'];
 
 /** «Ausserhalb der Arbeit»: Der Block erscheint nur, wenn hier etwas steht. */
 export const hobbies: Text[] = [
@@ -415,6 +488,16 @@ export function ausbildungOrt(a: Ausbildung, lang: Lang): string {
 }
 
 /** Ausbildungen für das Laufbahn-Diagramm (ohne «nur Lebenslauf»). */
+/** Nachweise eines Begriffs: eigene, sonst die der Gruppe */
+export const nachweiseVon = (g: KoennenGruppe, b: Begriff): NachweisRef[] => b.nachweise ?? g.nachweise;
+
+/** Alle Nachweise einer Gruppe, auch die der einzelnen Begriffe */
+export const alleNachweise = (g: KoennenGruppe): NachweisRef[] => [...g.nachweise, ...g.begriffe.flatMap((b) => b.nachweise ?? [])];
+
+/** «Deutsch (Muttersprache), Englisch (fliessend), ...» */
+export const sprachenText = (lang: Lang): string =>
+  person.sprachen.map((s) => `${s.sprache[lang]} (${s.niveau[lang]})`).join(', ');
+
 export const ausbildungLaufbahn = ausbildung.filter((a) => !a.nurLebenslauf);
 
 export function ausbildungZeitraum(a: Ausbildung, lang: Lang): string {

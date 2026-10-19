@@ -52,7 +52,7 @@ seo: "Zwei Musterprojekte von ODERA Design, Schreinerei Doppelmeter und Firstlic
 gelernt: "Zwei Betriebe mit verschiedenen Zielen brauchen zwei verschiedene Auftritte, nicht eine Vorlage in anderen Farben. Schnelle Seiten entstehen vor allem durch Verzicht: wenig JavaScript, optimierte Bilder, keine fremden Dienste."
 ---
 
-Damit Betriebe sehen, wie eine ODERA-Seite funktioniert, habe ich zwei frei erfundene Betriebe mit vollständigen Websites gebaut.
+Damit Betriebe sehen, wie eine ODERA-Seite funktioniert, habe ich für zwei frei erfundene Betriebe vollständige Websites umgesetzt, mit KI-gestützter Entwicklung.
 
 ## Ausgangslage
 

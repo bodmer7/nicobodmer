@@ -5,7 +5,7 @@ slug: sample-projects
 kurz: A joinery and a solar installer, both fictitious. Two goals, two distinct identities.
 typ: Websites
 jahr: 2026
-rolle: Concept, design, build and copy
+rolle: Concept, design, implementation and copy
 technik: [HTML, CSS, JavaScript, Lighthouse, Playwright]
 links:
   - label: View Schreinerei Doppelmeter
@@ -52,7 +52,7 @@ seo: "Two ODERA Design sample projects, the joinery Doppelmeter and Firstlicht S
 gelernt: "Two businesses with different goals need two different sites, not one template in different colours. Fast pages come mostly from leaving things out: little JavaScript, optimised images, no third-party services."
 ---
 
-So that businesses can see how an ODERA site works, I built two fictitious businesses with complete websites.
+So that businesses can see how an ODERA site works, I implemented complete websites for two fictitious businesses, using AI-assisted development.
 
 ## Starting point
 

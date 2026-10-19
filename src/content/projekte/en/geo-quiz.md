@@ -5,7 +5,7 @@ slug: geo-quiz
 kurz: Find places on an unlabelled aerial map. Scored by distance.
 typ: Web app
 jahr: 2026
-rolle: Idea, design and build
+rolle: Idea, design and implementation
 technik: [Vite, TypeScript, Leaflet, OpenStreetMap data, swisstopo aerial imagery, GitHub Actions, GitHub Pages]
 links:
   - label: Try the geo quiz

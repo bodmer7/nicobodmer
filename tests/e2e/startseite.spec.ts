@@ -140,19 +140,18 @@ test('Laufbahn startet mobil als Liste', async ({ page }) => {
 test('Können: Nachweis öffnet, markiert und schliesst', async ({ page }) => {
   await beobachten(page);
   await page.goto('/');
-  const begriff = page.locator('[data-begriff="support"]').first();
+  const begriff = page.locator('[data-begriff="support"]').nth(3);
   await begriff.click();
   await expect(begriff).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('#nachweis-support')).toBeVisible();
-  await expect(page.locator('[data-balken="help-desk"]')).toHaveClass(/ist-markiert/);
+  await expect(page.locator('#nachweis-support-3')).toBeVisible();
   await expect(page.locator('[data-balken="support-lenovo"]')).toHaveClass(/ist-markiert/);
   await page.keyboard.press('Escape');
-  await expect(page.locator('#nachweis-support')).toBeHidden();
+  await expect(page.locator('#nachweis-support-3')).toBeHidden();
   await expect(begriff).toBeFocused();
   await expect(page.locator('.ist-markiert')).toHaveCount(0);
   await begriff.click();
   await page.mouse.click(5, 5);
-  await expect(page.locator('#nachweis-support')).toBeHidden();
+  await expect(page.locator('#nachweis-support-3')).toBeHidden();
 });
 
 test('Composer: mailto korrekt kodiert, Website zeigt Projekt-Check', async ({ page }) => {

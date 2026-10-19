@@ -5,7 +5,7 @@ slug: odera
 kurz: My website offering for small businesses. Draft before payment, fixed price, the client owns the source code.
 typ: Website and offering
 jahr: 2026
-rolle: Concept, design, build, copy and operation
+rolle: Concept, design, implementation, copy and operation
 technik: [HTML, CSS, JavaScript, Playwright, Lighthouse, GitHub Actions]
 links:
   - label: Visit odera.ch

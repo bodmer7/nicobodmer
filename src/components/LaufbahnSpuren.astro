@@ -13,6 +13,7 @@ import {
   ausbildungOrt,
   eigeneProjekte,
   koennen,
+  alleNachweise,
   stand,
   zeitraumKurz,
   zeitraumLang,
@@ -36,8 +37,8 @@ const idx = (m: Monat) => {
 const HEUTE = idx(stand.monat) + 0.6;
 
 /** Können-Gruppen, die eine Station oder ein Projekt als Nachweis nennen */
-const gruppenFuer = (art: 'station' | 'projekt' | 'website', id?: string) =>
-  koennen.filter((g) => g.nachweise.some((n) => n.art === art && (art === 'website' || ('id' in n && n.id === id))));
+const gruppenFuer = (art: 'station' | 'ausbildung' | 'projekt' | 'website', id?: string) =>
+  koennen.filter((g) => alleNachweise(g).some((n) => n.art === art && (art === 'website' || ('id' in n && n.id === id))));
 
 const kurz: Record<string, { de: string; en: string }> = {
   'tech-seller': { de: 'Tech Seller', en: 'Tech Seller' },

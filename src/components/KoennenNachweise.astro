@@ -7,7 +7,7 @@
  */
 import { useT, type Lang } from '../i18n/ui';
 import { anker, projektPfad } from '../i18n/routes';
-import { koennen, stationen, ausbildung, person, weitereWerkzeuge, type NachweisRef, type Begriff } from '../data/profil';
+import { koennen, stationen, ausbildung, sprachenText, inProjekten, type NachweisRef, type Begriff } from '../data/profil';
 import { getEntry } from 'astro:content';
 import { farbe } from '../data/farben';
 
@@ -109,12 +109,12 @@ const gruppen = await Promise.all(
   }
   <div class="koennen__gruppe" data-farbe="neutral">
     <h3>{t('koennen.sprachen')}</h3>
-    <p>{person.sprachen.map((s) => s[lang]).join(', ')}</p>
+    <p>{sprachenText(lang)}</p>
   </div>
 </div>
 <p class="koennen__weitere klein">
-  <span class="label">{t('koennen.weitere')}:</span>
-  {weitereWerkzeuge.join(', ')}
+  <span class="label">{t('koennen.inProjekten')}:</span>
+  {inProjekten.join(', ')}
 </p>
 
 <script>

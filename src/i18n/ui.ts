@@ -37,11 +37,11 @@ const de = {
   'hero.option.stelle': 'Eine offene Stelle',
   'hero.option.website': 'Eine Website für meinen Betrieb',
   'hero.intro.neutral':
-    'Ich habe als Informatiker mit Fachrichtung Plattformentwicklung gelernt, wie Systeme laufen. Heute arbeite ich im technischen Vertrieb für Data & AI und studiere berufsbegleitend Digital Business & AI an der HWZ. Daneben baue ich mit ODERA Design Websites für kleine Unternehmen.',
+    'Ich habe als Informatiker mit Fachrichtung Plattformentwicklung gelernt, wie Systeme laufen. Heute arbeite ich im technischen Vertrieb für Data & AI und studiere berufsbegleitend Digital Business & AI an der HWZ. Daneben gestalte ich mit ODERA Design Websites für kleine Unternehmen und setze sie um.',
   'hero.intro.stelle':
-    'Technisch ausgebildet, im Vertrieb zuhause. Ich kläre Anforderungen, entwickle Lösungen bis zum technischen Konzept und arbeite an Angeboten mit. Wenn etwas gebaut werden muss, baue ich es selbst.',
+    'Technisch ausgebildet, im Vertrieb zuhause. Ich kläre Anforderungen, entwickle Lösungen bis zum technischen Konzept und arbeite an Angeboten mit. Wenn etwas gebaut werden muss, setze ich es mit KI-gestützter Entwicklung selbst um.',
   'hero.intro.website':
-    'Sie brauchen eine Website, die Anfragen bringt? Mit ODERA Design gestalte und baue ich Websites für Betriebe in der Schweiz. Sie sehen den fertigen Entwurf, bevor Sie bezahlen.',
+    'Sie brauchen eine Website, die Anfragen bringt? Mit ODERA Design gestalte ich Websites für Betriebe in der Schweiz und setze sie um. Sie sehen den fertigen Entwurf, bevor Sie bezahlen.',
   'hero.btn.arbeiten': 'Arbeiten ansehen',
   'hero.btn.lebenslauf': 'Lebenslauf',
   'hero.btn.lebenslaufAnsehen': 'Lebenslauf ansehen',
@@ -52,7 +52,7 @@ const de = {
   'hero.fotoAlt': 'Nico Bodmer im dunklen Anzug vor grauem Hintergrund, die Arme verschränkt',
 
   'arbeiten.titel': 'Ausgewählte Arbeiten',
-  'arbeiten.intro': 'Websites, Apps und Werkzeuge, die ich konzipiert und gebaut habe. Jede mit Ziel, Vorgehen und Ergebnis.',
+  'arbeiten.intro': 'Websites, Apps und Werkzeuge, die ich konzipiert und umgesetzt habe. Jede mit Ziel, Vorgehen und Ergebnis.',
   'arbeiten.inArbeit': 'in Arbeit',
   'arbeiten.vorschau': 'Vorschau',
 
@@ -92,9 +92,10 @@ const de = {
   'laufbahn.arbeit': 'Berufserfahrung',
 
   'koennen.titel': 'Können, mit Nachweis',
-  'koennen.intro': 'Zu jeder Fähigkeit steht, wo ich sie eingesetzt habe. Wählen Sie einen Begriff.',
+  'koennen.intro':
+    'Zu jeder Fähigkeit steht, wie sicher ich darin bin und wo ich sie eingesetzt habe. Code schreibe ich meist mit KI-Unterstützung: Ich verstehe, was ich ausliefere, bin aber kein Software-Entwickler.',
   'koennen.eingesetzt': 'Eingesetzt in:',
-  'koennen.weitere': 'Weitere Werkzeuge',
+  'koennen.inProjekten': 'In meinen Projekten eingesetzt',
   'koennen.sprachen': 'Sprachen',
   'koennen.website': 'Diese Website',
 
@@ -102,9 +103,9 @@ const de = {
   'ueber.p1':
     '2021 habe ich als Lernender im IT-Support angefangen: Level 1 und 2, Geräte einrichten und migrieren, jede Woche eine Kurzpräsentation zu IT-Themen. Danach Technical Support direkt beim Kunden, Robotik-Projekte mit dem Roboter Pepper und IT- und Security-Schulungen an Oberstufenschulen.',
   'ueber.p2':
-    'Später habe ich interne Anwendungen mit Red Hat OpenShift und IBM Cloud betrieben und mit React weiterentwickelt. Heute arbeite ich im technischen Vertrieb für Data & AI: Anforderungen klären, Lösungen bis zum technischen Konzept entwickeln, an Angeboten und RFPs mitarbeiten.',
+    'Später habe ich interne Anwendungen mit Red Hat OpenShift und IBM Cloud betrieben und an ihrer Weiterentwicklung mit React mitgearbeitet. Heute arbeite ich im technischen Vertrieb für Data & AI: Anforderungen klären, Lösungen bis zum technischen Konzept entwickeln, an Angeboten und RFPs mitarbeiten.',
   'ueber.p3':
-    'Seit September 2026 studiere ich berufsbegleitend Digital Business & AI an der HWZ Zürich. Daneben baue ich mit ODERA Design Websites für kleine Unternehmen und eigene Anwendungen. Wer Support gemacht hat, baut Seiten, die man auch in zwei Jahren noch pflegen kann.',
+    'Seit September 2026 studiere ich berufsbegleitend Digital Business & AI an der HWZ Zürich. Daneben setze ich mit ODERA Design Websites für kleine Unternehmen und eigene Anwendungen um, mit KI-gestützter Entwicklung. Wer Support gemacht hat, baut Seiten, die man auch in zwei Jahren noch pflegen kann.',
   'ueber.hobbies': 'Ausserhalb der Arbeit',
   'ueber.fotoAlt': 'Nico Bodmer im Anzug draussen vor einem Gebäude',
 
@@ -166,7 +167,7 @@ const de = {
   'cv.pdf': 'Als PDF speichern',
   'cv.profil': 'Kurzprofil',
   'cv.profilText':
-    'Informatiker EFZ mit Fachrichtung Plattformentwicklung und Erfahrung in Support, Deployment und Web-Entwicklung. Heute im technischen Vertrieb für Data & AI: Anforderungen klären, Lösungen bis zum technischen Konzept entwickeln, an Angeboten mitarbeiten. Daneben baue ich mit ODERA Design Websites für kleine Unternehmen und studiere berufsbegleitend Digital Business & AI an der HWZ.',
+    'Informatiker EFZ mit Fachrichtung Plattformentwicklung und Erfahrung in Support und Deployment. Heute im technischen Vertrieb für Data & AI: Anforderungen klären, Lösungen bis zum technischen Konzept entwickeln, an Angeboten mitarbeiten. Daneben setze ich mit ODERA Design Websites für kleine Unternehmen mit KI-gestützter Entwicklung um und studiere berufsbegleitend Digital Business & AI an der HWZ.',
   'cv.erfahrung': 'Berufserfahrung',
   'cv.ausbildung': 'Ausbildung',
   'cv.projekte': 'Projekte',
@@ -217,11 +218,11 @@ const en: Record<UiKey, string> = {
   'hero.option.stelle': 'An open position',
   'hero.option.website': 'A website for my business',
   'hero.intro.neutral':
-    'I trained as a computer scientist specialising in platform development, so I know how systems run. Today I work in technical sales for data & AI and study Digital Business & AI part-time at HWZ. On the side, I build websites for small businesses with ODERA Design.',
+    'I trained as a computer scientist specialising in platform development, so I know how systems run. Today I work in technical sales for data & AI and study Digital Business & AI part-time at HWZ. On the side, I design and implement websites for small businesses with ODERA Design.',
   'hero.intro.stelle':
-    'Technically trained, at home in sales. I clarify requirements, develop solutions up to the technical concept and contribute to proposals. When something needs building, I build it myself.',
+    'Technically trained, at home in sales. I clarify requirements, develop solutions up to the technical concept and contribute to proposals. When something needs building, I implement it myself with AI-assisted development.',
   'hero.intro.website':
-    'Need a website that brings in enquiries? With ODERA Design I design and build websites for businesses in Switzerland. You see the finished draft before you pay.',
+    'Need a website that brings in enquiries? With ODERA Design I design websites for businesses in Switzerland and implement them. You see the finished draft before you pay.',
   'hero.btn.arbeiten': 'See my work',
   'hero.btn.lebenslauf': 'CV',
   'hero.btn.lebenslaufAnsehen': 'View my CV',
@@ -232,7 +233,7 @@ const en: Record<UiKey, string> = {
   'hero.fotoAlt': 'Nico Bodmer in a dark suit against a grey background, arms crossed',
 
   'arbeiten.titel': 'Selected work',
-  'arbeiten.intro': 'Websites, apps and tools I have designed and built. Each with its goal, approach and result.',
+  'arbeiten.intro': 'Websites, apps and tools I have designed and implemented. Each with its goal, approach and result.',
   'arbeiten.inArbeit': 'in progress',
   'arbeiten.vorschau': 'Preview',
 
@@ -272,9 +273,10 @@ const en: Record<UiKey, string> = {
   'laufbahn.arbeit': 'Work experience',
 
   'koennen.titel': 'Skills, with evidence',
-  'koennen.intro': 'Each skill shows where I have used it. Choose a term.',
+  'koennen.intro':
+    'Each skill shows how confident I am in it and where I have used it. I mostly write code with AI assistance: I understand what I ship, but I am not a software developer.',
   'koennen.eingesetzt': 'Used in:',
-  'koennen.weitere': 'Other tools',
+  'koennen.inProjekten': 'Used in my projects',
   'koennen.sprachen': 'Languages',
   'koennen.website': 'This website',
 
@@ -282,9 +284,9 @@ const en: Record<UiKey, string> = {
   'ueber.p1':
     'I started in IT support as an apprentice in 2021: level 1 and 2, setting up and migrating devices, a short presentation on IT topics every week. After that came technical support directly at customer sites, robotics projects with the Pepper robot, and IT and security training at secondary schools.',
   'ueber.p2':
-    'Later I ran internal applications on Red Hat OpenShift and IBM Cloud and developed them further with React. Today I work in technical sales for data & AI: clarifying requirements, developing solutions up to the technical concept, contributing to proposals and RFPs.',
+    'Later I ran internal applications on Red Hat OpenShift and IBM Cloud and helped develop them further with React. Today I work in technical sales for data & AI: clarifying requirements, developing solutions up to the technical concept, contributing to proposals and RFPs.',
   'ueber.p3':
-    'Since September 2026 I have been studying Digital Business & AI part-time at HWZ in Zurich. Alongside that I build websites for small businesses with ODERA Design, and applications of my own. Someone who has done support builds pages that are still maintainable two years later.',
+    'Since September 2026 I have been studying Digital Business & AI part-time at HWZ in Zurich. Alongside that I implement websites for small businesses with ODERA Design, and applications of my own, using AI-assisted development. Someone who has done support builds pages that are still maintainable two years later.',
   'ueber.hobbies': 'Outside work',
   'ueber.fotoAlt': 'Nico Bodmer in a suit outdoors in front of a building',
 
@@ -346,7 +348,7 @@ const en: Record<UiKey, string> = {
   'cv.pdf': 'Save as PDF',
   'cv.profil': 'Profile',
   'cv.profilText':
-    'Computer scientist (Swiss federal VET diploma, platform development) with experience in support, deployment and web development. Now in technical sales for data & AI: clarifying requirements, developing solutions up to the technical concept, contributing to proposals. Alongside that I build websites for small businesses with ODERA Design and study Digital Business & AI part-time at HWZ.',
+    'Computer scientist (Swiss federal VET diploma, platform development) with experience in support and deployment. Now in technical sales for data & AI: clarifying requirements, developing solutions up to the technical concept, contributing to proposals. Alongside that I implement websites for small businesses with ODERA Design using AI-assisted development and study Digital Business & AI part-time at HWZ.',
   'cv.erfahrung': 'Work experience',
   'cv.ausbildung': 'Education',
   'cv.projekte': 'Projects',

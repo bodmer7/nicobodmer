@@ -5,7 +5,7 @@ slug: forecasting-app
 kurz: A daily guessing game for friends.
 typ: Web app
 jahr: in progress
-rolle: Idea and build
+rolle: Idea and implementation
 technik: []
 links: []
 messwerte: []
