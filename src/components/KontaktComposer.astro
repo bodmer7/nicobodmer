@@ -1,0 +1,92 @@
+---
+/**
+ * Kontakt: Composer «Nachricht vorbereiten» (öffnet nur das E-Mail-Programm),
+ * Adresse mit «Adresse kopieren», vCard, LinkedIn und GitHub.
+ * Ohne JavaScript schickt das Formular per GET an mailto: (Betreff und Text).
+ */
+import Icon from './Icon.astro';
+import { useT, type Lang } from '../i18n/ui';
+import { person } from '../data/profil';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const themen = [
+  { value: 'stelle', text: t('kontakt.thema.stelle') },
+  { value: 'projekt', text: t('kontakt.thema.projekt') },
+  { value: 'website', text: t('kontakt.thema.website') },
+  { value: 'anderes', text: t('kontakt.thema.anderes') },
+];
+---
+
+<div class="kontakt__raster raster">
+  <form
+    class="composer"
+    action={`mailto:${person.email}`}
+    method="get"
+    data-composer
+    data-email={person.email}
+    data-betreff={t('kontakt.betreff')}
+    data-betreff-ohne={t('kontakt.betreffOhne')}
+    data-gruss={t('kontakt.gruss')}
+  >
+    <h3>{t('kontakt.composer')}</h3>
+    <fieldset class="segment composer__thema">
+      <legend>{t('kontakt.thema')}</legend>
+      <div class="segment__optionen">
+        {
+          themen.map((th) => (
+            <label class="segment__option">
+              <input type="radio" name="thema" value={th.value} data-text={th.text} id={`thema-${th.value}`} />
+              <span>{th.text}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <div class="composer__odera">
+      <p>{t('kontakt.odera')}</p>
+      <p><a class="btn" href={person.projektCheck}>{t('kontakt.oderaBtn')}</a></p>
+    </div>
+
+    <div class="composer__felder">
+      <input type="hidden" name="subject" value={t('kontakt.betreffOhne')} />
+      <div class="feld">
+        <label for="composer-name">{t('kontakt.name')} <span class="composer__optional">({t('kontakt.optional')})</span></label>
+        <input id="composer-name" name="name" type="text" autocomplete="name" />
+      </div>
+      <div class="feld">
+        <label for="composer-nachricht">{t('kontakt.nachricht')}</label>
+        <textarea id="composer-nachricht" name="body" rows="6" required></textarea>
+      </div>
+      <p><button class="btn" type="submit">{t('kontakt.senden')}</button></p>
+      <p class="klein composer__hinweis">{t('kontakt.hinweis')}</p>
+    </div>
+  </form>
+
+  <div class="kontakt__direkt">
+    <p class="label">{t('kontakt.direkt')}</p>
+    <p><a class="kontakt__mail" href={`mailto:${person.email}`}>{person.email}</a></p>
+    <ul class="kontakt__aktionen">
+      <li>
+        <button class="textknopf" type="button" data-kopieren={person.email} data-ok={t('kontakt.kopiert')} data-fehler={t('kontakt.kopierFehler')} hidden>
+          <Icon name="kopieren" />
+          {t('kontakt.kopieren')}
+        </button>
+      </li>
+      <li>
+        <a class="textlink" href="/nico-bodmer.vcf" download type="text/vcard">
+          <Icon name="download" />
+          {t('kontakt.vcard')}
+        </a>
+      </li>
+      <li><a class="textlink" href={person.linkedin}>LinkedIn</a></li>
+      <li><a class="textlink" href={person.github}>GitHub</a></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  import '../scripts/composer';
+</script>

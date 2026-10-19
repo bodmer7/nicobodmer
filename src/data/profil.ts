@@ -63,8 +63,8 @@ export const person = {
   odera: 'https://odera.ch/',
   projektCheck: 'https://odera.ch/projekt-check/',
   rollenzeile: {
-    de: 'Platform Developer EFZ. Technischer Vertrieb für Data & AI. Websites mit ODERA Design.',
-    en: 'Platform Developer (Swiss federal VET diploma). Technical sales for data & AI. Websites with ODERA Design.',
+    de: 'Platform Developer EFZ. Technischer Vertrieb für Data & AI. Websites mit ODERA Design.',
+    en: 'Platform Developer (Swiss federal VET diploma). Technical sales for data & AI. Websites with ODERA Design.',
   } satisfies Text,
   sprachen: [
     { de: 'Deutsch (Muttersprache)', en: 'German (native)' },
@@ -88,14 +88,14 @@ export const gerade: Text[] = [
 export const stationen: Station[] = [
   {
     id: 'tech-seller',
-    rolle: 'Tech Seller Data & AI',
+    rolle: 'Tech Seller Data & AI',
     organisation: { de: 'IBM Schweiz AG', en: 'IBM Schweiz AG' },
     von: '2025-07',
     bis: null,
     punkte: [
       {
-        de: 'Mitarbeit an RFPs, Angeboten und Vertriebsaktivitäten im Bereich Data & AI',
-        en: 'Contributing to RFPs, proposals and sales activities in data & AI',
+        de: 'Mitarbeit an RFPs, Angeboten und Vertriebsaktivitäten im Bereich Data & AI',
+        en: 'Contributing to RFPs, proposals and sales activities in data & AI',
       },
       {
         de: 'Lösungsentwicklung von der Anforderungsanalyse bis zum technischen Konzept',
@@ -158,7 +158,7 @@ export const stationen: Station[] = [
 export const ausbildung: Ausbildung[] = [
   {
     id: 'bsc-hwz',
-    titel: { de: 'BSc Digital Business & AI', en: 'BSc Digital Business & AI' },
+    titel: { de: 'BSc Digital Business & AI', en: 'BSc Digital Business & AI' },
     schule: {
       de: 'HWZ Hochschule für Wirtschaft Zürich',
       en: 'HWZ University of Applied Sciences in Business Administration Zurich',

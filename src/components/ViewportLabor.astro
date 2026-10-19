@@ -1,0 +1,152 @@
+---
+/**
+ * Viewport-Labor: drei Websites, drei Bildschirmgrössen. Screenshots
+ * standardmässig; «Live laden» ersetzt sie erst nach Klick durch ein iframe.
+ */
+import Bild from './Bild.astro';
+import Messwerte from './Messwerte.astro';
+import { useT, type Lang } from '../i18n/ui';
+import { getEntry } from 'astro:content';
+import type { ImageMetadata } from 'astro';
+import oderaDesktop from '../assets/screens/odera-start-desktop.webp';
+import oderaTablet from '../assets/screens/odera-start-tablet.webp';
+import oderaHandy from '../assets/screens/odera-start-handy.webp';
+import dmDesktop from '../assets/screens/doppelmeter-desktop.webp';
+import dmTablet from '../assets/screens/doppelmeter-tablet.webp';
+import dmHandy from '../assets/screens/doppelmeter-handy.webp';
+import flDesktop from '../assets/screens/firstlicht-desktop.webp';
+import flTablet from '../assets/screens/firstlicht-tablet.webp';
+import flHandy from '../assets/screens/firstlicht-handy.webp';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+
+const muster = await getEntry('projekte', `${lang}/musterprojekte`);
+const messwerteFuer = (bezug: string) => (muster?.data.messwerte ?? []).filter((m) => m.bezug === bezug);
+const erfunden = lang === 'de' ? 'frei erfundener Betrieb' : 'fictitious business';
+
+type Geraet = 'desktop' | 'tablet' | 'handy';
+const geraete: Geraet[] = ['desktop', 'tablet', 'handy'];
+const geraetName: Record<Geraet, string> = { desktop: t('labor.desktop'), tablet: t('labor.tablet'), handy: t('labor.handy') };
+
+const seiten: { id: string; name: string; url: string; bilder: Record<Geraet, ImageMetadata>; erfunden: boolean }[] = [
+  { id: 'odera', name: 'odera.ch', url: 'https://odera.ch/', bilder: { desktop: oderaDesktop, tablet: oderaTablet, handy: oderaHandy }, erfunden: false },
+  {
+    id: 'doppelmeter',
+    name: 'Schreinerei Doppelmeter',
+    url: 'https://odera.ch/musterprojekte/doppelmeter/',
+    bilder: { desktop: dmDesktop, tablet: dmTablet, handy: dmHandy },
+    erfunden: true,
+  },
+  {
+    id: 'firstlicht',
+    name: 'Firstlicht Solartechnik',
+    url: 'https://odera.ch/musterprojekte/firstlicht/',
+    bilder: { desktop: flDesktop, tablet: flTablet, handy: flHandy },
+    erfunden: true,
+  },
+];
+
+// Gleiche Breiten wie in der Projektliste, damit Varianten wiederverwendet werden.
+const breiten: Record<Geraet, number[]> = { desktop: [720, 1080, 1600, 2200], tablet: [480, 720, 1080], handy: [480, 720, 1080] };
+const sizes: Record<Geraet, string> = {
+  desktop: '(min-width: 1400px) 1300px, 94vw',
+  tablet: '(min-width: 768px) 460px, 90vw',
+  handy: '(min-width: 768px) 300px, 80vw',
+};
+---
+
+<div class="labor" data-labor data-iframe-titel={t('labor.iframeTitel')} data-breite-label={t('labor.breite')}>
+  <div class="labor__tabs tabs" role="tablist" aria-label={t('labor.seiten')}>
+    {
+      seiten.map((s, i) => (
+        <button
+          class="tab"
+          type="button"
+          role="tab"
+          id={`labor-tab-${s.id}`}
+          aria-controls={`labor-panel-${s.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+          data-tab={s.id}
+        >
+          {s.name}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="labor__steuerung">
+    <fieldset class="segment labor__geraete">
+      <legend class="sr-only">{t('labor.geraete')}</legend>
+      <div class="segment__optionen">
+        {
+          geraete.map((g, i) => (
+            <label class="segment__option">
+              <input type="radio" name="labor-geraet" value={g} id={`labor-${g}`} checked={i === 0} />
+              <span>{geraetName[g]}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+    <div class="labor__live">
+      <button class="btn btn--sekundaer labor__live-btn" type="button" data-live-laden aria-describedby="labor-hinweis" hidden>
+        {t('labor.live')}
+      </button>
+      <button class="btn btn--sekundaer" type="button" data-live-aus hidden>{t('labor.liveAus')}</button>
+      <a class="btn btn--sekundaer labor__live-link" href={seiten[0].url} target="_blank" rel="noopener" data-live-link>
+        {t('labor.liveOeffnen')}<span class="sr-only"> {t('fall.extern')}</span>
+      </a>
+      <p class="klein neben labor__hinweis" id="labor-hinweis">{t('labor.hinweis')}</p>
+    </div>
+  </div>
+
+  {
+    seiten.map((s, i) => (
+      <div
+        class="labor__panel"
+        role="tabpanel"
+        id={`labor-panel-${s.id}`}
+        aria-labelledby={`labor-tab-${s.id}`}
+        hidden={i !== 0}
+        data-panel={s.id}
+        data-url={s.url}
+        data-name={s.name}
+      >
+        <div class="labor__buehne buehne" data-buehne>
+          <div class="labor__rahmen" data-rahmen>
+            {geraete.map((g) => (
+              <Bild
+                src={s.bilder[g]}
+                alt={`${s.name}${s.erfunden ? `, ${erfunden}` : ''}: ${geraetName[g]}`}
+                widths={breiten[g]}
+                sizes={sizes[g]}
+                class="labor__bild"
+                data-geraet={g}
+              />
+            ))}
+          </div>
+          <div
+            class="labor__griff" role="slider" tabindex="0" aria-label={t('labor.griff')} aria-valuemin="320" aria-valuemax="1280" aria-valuenow="1280" aria-valuetext="1280 px" data-griff hidden>
+            <span class="labor__griff-linie" aria-hidden="true" />
+          </div>
+          <p class="labor__breite klein" aria-hidden="true" data-breite hidden />
+        </div>
+        <div class="labor__messwerte">
+          <h4 class="label">{t('labor.messwerte')}: {s.name}</h4>
+          {messwerteFuer(s.id).length > 0 ? (
+            <Messwerte lang={lang} werte={messwerteFuer(s.id)} id={`labor-${s.id}`} kompakt />
+          ) : (
+            <p class="klein neben">{t('labor.keineMesswerte')}</p>
+          )}
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  import '../scripts/labor';
+</script>

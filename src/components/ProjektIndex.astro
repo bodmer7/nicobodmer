@@ -1,0 +1,83 @@
+---
+import Bild from './Bild.astro';
+import { useT, type Lang } from '../i18n/ui';
+import { projekte } from '../data/projekte';
+import { projektPfad } from '../i18n/routes';
+import type { ProjektId } from '../data/profil';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const liste = await projekte(lang);
+const mitBild = liste.filter((p) => p.data.status === 'live' && p.data.bilder.length > 0);
+const sizesVorschau = '(min-width: 1024px) 40vw, 100vw';
+---
+
+<div class="projekte" data-projekte>
+  <ol class="projekte__liste" data-projektliste>
+    {
+      liste.map((p) => {
+        const live = p.data.status === 'live';
+        const bild = p.data.bilder[p.data.vorschau] ?? p.data.bilder[0];
+        const id = p.data.projekt;
+        const inhalt = (
+          <>
+            {bild && (
+              <span class="projekt__bild-mobil" aria-hidden="true">
+                <Bild
+                  src={bild.datei}
+                  alt=""
+                  widths={[480, 720, 1080]}
+                  sizes="(min-width: 1024px) 1px, 100vw"
+                  style={`object-position:${p.data.position};view-transition-name:vt-bild-${id}`}
+                />
+              </span>
+            )}
+            <span class="projekt__kopf">
+              <span class="projekt__titel" style={live ? `view-transition-name:vt-titel-${id}` : undefined}>
+                {p.data.title}
+              </span>
+              <span class="projekt__jahr">{live ? p.data.jahr : t('arbeiten.inArbeit')}</span>
+            </span>
+            <span class="projekt__typ">{p.data.typ}</span>
+            <span class="projekt__kurz">{p.data.kurz}</span>
+          </>
+        );
+        return (
+          <li class="projekt" data-projekt={id} data-reihenfolge={p.data.reihenfolge}>
+            <h3 class="projekt__h">
+              {live ? (
+                <a class="projekt__link" href={projektPfad(id as ProjektId, lang)} data-vorschau-fuer={id}>
+                  {inhalt}
+                </a>
+              ) : (
+                <span class="projekt__link projekt__link--still">{inhalt}</span>
+              )}
+            </h3>
+          </li>
+        );
+      })
+    }
+  </ol>
+
+  <div class="projekte__vorschau" aria-hidden="true">
+    <div class="projekte__vorschau-innen buehne">
+      {
+        mitBild.map((p, i) => {
+          const bild = p.data.bilder[p.data.vorschau] ?? p.data.bilder[0];
+          return (
+            <Bild
+              src={bild.datei}
+              alt=""
+              widths={[480, 720, 1080]}
+              sizes={sizesVorschau}
+              class:list={['projekte__bild', { 'ist-aktiv': i === 0 }]}
+              data-vorschau={p.data.projekt}
+              style={`object-position:${p.data.position};view-transition-name:vt-bild-${p.data.projekt}`}
+            />
+          );
+        })
+      }
+    </div>
+  </div>
+</div>

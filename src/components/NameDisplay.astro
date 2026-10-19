@@ -1,0 +1,35 @@
+---
+/**
+ * «Nico Bodmer» in Gewicht 900 über die ganze Inhaltsbreite.
+ * Jeder Buchstabe steht in einer Zelle mit fester Breite, gemessen bei 900
+ * inklusive Unterschneidung (Laufweite -0.045em). Wird ein Buchstabe
+ * leichter, wird er nur schmaler, die Zeile verschiebt sich nicht.
+ * Breiten in em, gemessen am 19. Oktober 2026 in Chromium.
+ */
+const zellen: [string, number][] = [
+  ['N', 0.7528],
+  ['i', 0.2691],
+  ['c', 0.5614],
+  ['o', 0.5772],
+  [' ', 0.1308],
+  ['B', 0.663],
+  ['o', 0.583],
+  ['d', 0.6074],
+  ['m', 0.8998],
+  ['e', 0.5688],
+  ['r', 0.4575],
+];
+---
+
+<h1 class="name" data-name>
+  <span class="sr-only">Nico Bodmer</span>
+  <span class="name__zeile" aria-hidden="true">
+    {
+      zellen.map(([z, w], i) => (
+        <span class="name__z" style={`--w:${w};--i:${i}`}>
+          {z === ' ' ? '' : z}
+        </span>
+      ))
+    }
+  </span>
+</h1>

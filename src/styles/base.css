@@ -26,7 +26,6 @@ body {
   font-weight: 400;
   line-height: 1.6;
   font-kerning: normal;
-  font-variant-numeric: tabular-nums;
   overflow-wrap: break-word;
 }
 
@@ -137,6 +136,14 @@ a:hover {
 .neben { color: var(--ink-2); }
 
 .nowrap { white-space: nowrap; }
+
+/* Tabellarische Ziffern nur für Zahlen: die tnum-Funktion der Schrift
+   macht auch Punkt und Komma breit. */
+.ziffern { font-variant-numeric: tabular-nums; }
+
+/* Chrome setzt Listenmarker tabellarisch; mit dieser Schrift wird dann
+   der Punkt breit («1 .»). */
+::marker { font-variant-numeric: normal; }
 
 .prosa {
   max-width: 68ch;

@@ -34,6 +34,8 @@ const projekte = defineCollection({
             label: z.string(),
             quelle: z.string(),
             datum: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+            /** Zu welcher Seite der Wert gehört (Viewport-Labor), z. B. «firstlicht» */
+            bezug: z.string().optional(),
           }),
         )
         .default([]),
@@ -55,6 +57,8 @@ const projekte = defineCollection({
       /** Bildposition im Ausschnitt, z. B. «50% 0%» */
       position: z.string().default('50% 0%'),
       seo: z.string().max(155).optional(),
+      /** «Was ich gelernt habe»: erscheint nur, wenn gesetzt */
+      gelernt: z.string().optional(),
     }),
 });
 

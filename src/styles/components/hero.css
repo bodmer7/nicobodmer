@@ -1,0 +1,149 @@
+/* Hero: Name über die ganze Breite, Foto, Zielgruppen-Schalter. */
+
+.hero { padding-top: clamp(24px, 4vw, 56px); }
+
+.hero__name { container-type: inline-size; }
+
+/* Der Name füllt die Inhaltsbreite. Gemessen in Chromium bei Gewicht 900
+   und Laufweite -0.045em: Tintenbreite 6.04 em, linker Rand der Tinte
+   0.0625 em hinter dem Zellbeginn. Rückfall ohne Container-Einheiten. */
+.name {
+  --r: 6.04;
+  font-size: min(calc((100vw - 2 * var(--rand)) / var(--r)), calc(var(--max) / var(--r)));
+  font-size: calc(100cqi / var(--r));
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 0.85;
+  white-space: nowrap;
+  margin-left: -0.0625em;
+  margin-block: 0;
+}
+
+.name__zeile { display: flex; }
+
+.name__z {
+  display: inline-flex;
+  justify-content: center;
+  flex: none;
+  width: calc(var(--w) * 1em);
+  font-weight: 900;
+  font-variation-settings: normal;
+}
+
+.hero__rolle {
+  margin-top: var(--s5);
+  max-width: 46ch;
+}
+
+.hero__raster {
+  margin-top: var(--s7);
+  row-gap: var(--s6);
+}
+
+.hero__foto { grid-column: 1 / -1; }
+
+.hero__foto img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 15%;
+}
+
+.hero__text {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s6);
+}
+
+.hero__schalter .segment__optionen { flex-direction: column; width: 100%; }
+
+.hero__schalter .segment__option + .segment__option span { border-left: 0; border-top: 1px solid var(--ink); }
+
+.hero__schalter .segment__option span { width: 100%; }
+
+.hero__intro {
+  font-size: var(--lead);
+  font-weight: 450;
+  line-height: 1.45;
+  max-width: 40ch;
+}
+
+.hero__variante .btn-reihe { margin-top: var(--s5); }
+
+/* Varianten ohne JavaScript über :has(): neutral, bis eine Option gewählt ist. */
+.hero__variante[data-variante="stelle"],
+.hero__variante[data-variante="website"] { display: none; }
+
+.hero:has(#fuer-stelle:checked) .hero__variante[data-variante="neutral"],
+.hero:has(#fuer-website:checked) .hero__variante[data-variante="neutral"] { display: none; }
+
+.hero:has(#fuer-stelle:checked) .hero__variante[data-variante="stelle"],
+.hero:has(#fuer-website:checked) .hero__variante[data-variante="website"] { display: block; }
+
+.hero[data-gewechselt] .hero__variante { animation: hero-einblenden var(--t-ui) var(--ease); }
+
+@keyframes hero-einblenden {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hero__gerade {
+  margin-top: auto;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--line);
+}
+
+.hero__gerade ul {
+  margin-top: var(--s2);
+  padding: 0;
+  list-style: none;
+  color: var(--ink-2);
+}
+
+@media (min-width: 640px) {
+  .hero__foto { grid-column: 1 / 4; }
+  .hero__text { grid-column: 4 / -1; }
+  .hero__schalter .segment__optionen { flex-direction: row; width: fit-content; }
+  .hero__schalter .segment__option + .segment__option span { border-top: 0; border-left: 1px solid var(--ink); }
+  .hero__schalter .segment__option span { width: auto; }
+}
+
+@media (min-width: 640px) and (max-width: 1023.98px) {
+  .hero__schalter .segment__optionen { flex-direction: column; width: 100%; }
+  .hero__schalter .segment__option + .segment__option span { border-left: 0; border-top: 1px solid var(--ink); }
+  .hero__schalter .segment__option span { width: 100%; }
+}
+
+@media (min-width: 1024px) {
+  .hero__foto { grid-column: 1 / 6; }
+  .hero__text { grid-column: 7 / -1; }
+}
+
+/* Auftritt einmal pro Sitzung: Welle im Namen, Foto deckt sich auf,
+   Text folgt 300ms später. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-auftritt] .name__z {
+    animation: name-welle 600ms cubic-bezier(.4, 0, .2, 1) calc(var(--i) * 25ms) both;
+  }
+
+  [data-auftritt] .hero__foto img {
+    animation: foto-aufdecken 700ms cubic-bezier(.2, .7, .2, 1) both;
+  }
+
+  [data-auftritt] .hero__rolle,
+  [data-auftritt] .hero__text {
+    animation: hero-einblenden 600ms cubic-bezier(.2, .7, .2, 1) 300ms both;
+  }
+}
+
+@keyframes name-welle {
+  0% { font-weight: 900; }
+  45% { font-weight: 500; }
+  100% { font-weight: 900; }
+}
+
+@keyframes foto-aufdecken {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}

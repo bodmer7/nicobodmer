@@ -1,0 +1,41 @@
+---
+/**
+ * Bild über astro:assets: AVIF mit WebP als Rückfall, mehrere Breiten.
+ * `prioritaet` nur für das Bild ganz oben (fetchpriority high, nicht lazy).
+ */
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  widths: number[];
+  sizes: string;
+  class?: string;
+  prioritaet?: boolean;
+  quality?: number;
+  [key: string]: unknown;
+}
+
+const { src, alt, widths, sizes, class: klasse, prioritaet = false, quality = 62, ...rest } = Astro.props;
+// Breiten über der Originalgrösse ergeben keine Vergrösserung, sondern fallen weg.
+const breiten = widths.filter((w) => w <= src.width);
+if (breiten.length === 0) breiten.push(src.width);
+---
+
+<Picture
+  src={src}
+  alt={alt}
+  formats={['avif']}
+  fallbackFormat="webp"
+  widths={breiten}
+  width={Math.max(...breiten)}
+  height={Math.round((Math.max(...breiten) * src.height) / src.width)}
+  sizes={sizes}
+  quality={quality}
+  class={klasse}
+  loading={prioritaet ? 'eager' : 'lazy'}
+  decoding={prioritaet ? 'sync' : 'async'}
+  fetchpriority={prioritaet ? 'high' : undefined}
+  {...rest}
+/>

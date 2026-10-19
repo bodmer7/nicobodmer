@@ -1,0 +1,55 @@
+---
+/**
+ * Messwerte: grosse Zahl, Einheit, Label, Fussnote mit Quelle und Datum.
+ * Kein Icon. Die Fussnoten stehen direkt unter der Gruppe.
+ */
+import { useT, datum, type Lang } from '../i18n/ui';
+
+export interface Messwert {
+  wert: string;
+  einheit?: string;
+  label: string;
+  quelle: string;
+  datum: string;
+}
+
+interface Props {
+  lang: Lang;
+  werte: Messwert[];
+  /** Eindeutiger Präfix für die Fussnoten-IDs */
+  id: string;
+  kompakt?: boolean;
+}
+const { lang, werte, id, kompakt = false } = Astro.props;
+const t = useT(lang);
+---
+
+{
+  werte.length > 0 && (
+    <div class:list={['messwerte', { 'messwerte--kompakt': kompakt }]}>
+      <dl class="messwerte__liste">
+        {werte.map((w, i) => (
+          <div class="messwert">
+            <dt class="messwert__label">{w.label}</dt>
+            <dd class="messwert__zahl">
+              {w.wert}
+              {w.einheit && <span class="messwert__einheit"> {w.einheit}</span>}
+              <sup class="fn-ref">
+                <a href={`#${id}-fn-${i + 1}`} id={`${id}-ref-${i + 1}`} aria-label={`${t('fall.quelle')} ${i + 1}`}>
+                  {i + 1}
+                </a>
+              </sup>
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <ol class="messwerte__fussnoten klein neben">
+        {werte.map((w, i) => (
+          <li id={`${id}-fn-${i + 1}`}>
+            {w.quelle}, {datum(w.datum, lang)}.
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+}

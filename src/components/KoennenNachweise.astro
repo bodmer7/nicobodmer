@@ -1,0 +1,74 @@
+---
+/**
+ * Können mit Nachweis: Jeder Begriff ist ein Button und öffnet «Eingesetzt in:»
+ * mit Links zu den Stationen und Fallstudien. Ohne JavaScript stehen die
+ * Nachweise direkt unter den Begriffen.
+ */
+import { useT, type Lang } from '../i18n/ui';
+import { anker, projektPfad } from '../i18n/routes';
+import { koennen, stationen, person, weitereWerkzeuge, nachweisZusatz, type NachweisRef } from '../data/profil';
+import { getEntry } from 'astro:content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+
+const projektTitel = async (id: string) => (await getEntry('projekte', `${lang}/${id}`))?.data.title ?? id;
+
+const nachweis = async (gid: string, n: NachweisRef) => {
+  const zusatz = nachweisZusatz[`${gid}:${n.art === 'website' ? 'website' : n.id}`]?.[lang];
+  if (n.art === 'station') {
+    const s = stationen.find((x) => x.id === n.id)!;
+    return { ziel: `station:${n.id}`, text: s.rolle, unter: s.organisation[lang], href: `#lb-${n.id}`, zusatz };
+  }
+  if (n.art === 'projekt') {
+    return { ziel: `projekt:${n.id}`, text: await projektTitel(n.id), unter: undefined, href: projektPfad(n.id, lang), zusatz };
+  }
+  return { ziel: 'website', text: t('koennen.website'), unter: undefined, href: undefined, zusatz };
+};
+
+const gruppen = await Promise.all(
+  koennen.map(async (g) => ({ ...g, liste: await Promise.all(g.nachweise.map((n) => nachweis(g.id, n))) })),
+);
+---
+
+<div class="koennen" data-koennen>
+  {
+    gruppen.map((g) => (
+      <div class="koennen__gruppe" id={`${anker.koennen[lang]}-${g.id}`}>
+        <h3>{g.titel[lang]}</h3>
+        <ul class="begriffe">
+          {g.begriffe.map((b) => (
+            <li>
+              <button class="begriff" type="button" aria-expanded="false" aria-controls={`nachweis-${g.id}`} data-begriff={g.id}>
+                {b[lang]}
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div class="nachweis" id={`nachweis-${g.id}`} data-nachweis={g.id}>
+          <p class="label">{t('koennen.eingesetzt')}</p>
+          <ul>
+            {g.liste.map((n) => (
+              <li data-ziel={n.ziel}>
+                {n.href ? <a href={n.href}>{n.text}</a> : <span>{n.text}</span>}{n.unter && <span class="neben">, {n.unter}</span>}{n.zusatz && <span class="neben"> ({n.zusatz})</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ))
+  }
+  <div class="koennen__gruppe">
+    <h3>{t('koennen.sprachen')}</h3>
+    <p>{person.sprachen.map((s) => s[lang]).join(', ')}</p>
+  </div>
+</div>
+<p class="koennen__weitere klein">
+  <span class="label">{t('koennen.weitere')}:</span>
+  {weitereWerkzeuge.join(', ')}
+</p>
+
+<script>
+  import '../scripts/koennen';
+</script>

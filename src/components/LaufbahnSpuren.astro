@@ -1,0 +1,290 @@
+---
+/**
+ * Laufbahn als Spuren: Arbeit, Ausbildung, eigene Projekte auf einer
+ * Zeitachse 2021 bis 2030. Daten aus src/data/profil.ts (gleiche Quelle
+ * wie der Lebenslauf). Umschalter «Diagramm» und «Liste»; die Liste ist
+ * die vollständige Textfassung.
+ */
+import { useT, type Lang } from '../i18n/ui';
+import { ankerPfad, projektPfad } from '../i18n/routes';
+import {
+  stationen,
+  ausbildung,
+  eigeneProjekte,
+  koennen,
+  stand,
+  zeitraumKurz,
+  zeitraumLang,
+  ausbildungZeitraum,
+  type Monat,
+  type ProjektId,
+} from '../data/profil';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+
+const START = 2021;
+const JAHRE = 10; // 2021 bis 2030
+const MONATE = JAHRE * 12;
+const idx = (m: Monat) => {
+  const [j, mo] = m.split('-').map(Number);
+  return (j - START) * 12 + (mo - 1);
+};
+const HEUTE = idx(stand.monat) + 0.6;
+
+/** Können-Gruppen, die eine Station oder ein Projekt als Nachweis nennen */
+const gruppenFuer = (art: 'station' | 'projekt' | 'website', id?: string) =>
+  koennen.filter((g) => g.nachweise.some((n) => n.art === art && (art === 'website' || ('id' in n && n.id === id))));
+
+const kurz: Record<string, { de: string; en: string }> = {
+  'tech-seller': { de: 'Tech Seller', en: 'Tech Seller' },
+  'web-dev': { de: 'Web Dev & Deployment', en: 'Web Dev & Deployment' },
+  'support-lenovo': { de: 'Support Lenovo', en: 'Support Lenovo' },
+  'help-desk': { de: 'IT Help Desk', en: 'IT Help Desk' },
+  'bsc-hwz': { de: 'BSc HWZ', en: 'BSc HWZ' },
+  efz: { de: 'Platform Developer EFZ', en: 'Platform Developer EFZ' },
+  bm: { de: 'Berufsmaturität', en: 'Vocational baccalaureate' },
+};
+
+interface Balken {
+  id: string;
+  spur: 'arbeit' | 'ausbildung' | 'projekte';
+  zeile: number;
+  start: number;
+  ende: number;
+  /** ab hier geplant (gestrichelt) */
+  geplantAb?: number;
+  label: string;
+  voll: string;
+  titel: string;
+  unter: string;
+  zeit: string;
+  punkte: string[];
+  gruppen: typeof koennen;
+  link?: string;
+}
+
+const balken: Balken[] = [];
+
+[...stationen].reverse().forEach((s) => {
+  balken.push({
+    id: s.id,
+    spur: 'arbeit',
+    zeile: 2,
+    start: idx(s.von),
+    ende: s.bis ? idx(s.bis) : HEUTE,
+    label: kurz[s.id][lang],
+    voll: `${s.rolle}, ${s.organisation[lang]}, ${zeitraumLang(s.von, s.bis, lang)}`,
+    titel: s.rolle,
+    unter: s.organisation[lang],
+    zeit: zeitraumKurz(s.von, s.bis, lang),
+    punkte: s.punkte.map((p) => p[lang]),
+    gruppen: gruppenFuer('station', s.id),
+  });
+});
+
+const ausbildungZeile: Record<string, number> = { efz: 3, 'bsc-hwz': 3, bm: 4 };
+[...ausbildung].reverse().forEach((a) => {
+  const ende = a.bis ? idx(a.bis) : a.geplantBis ? idx(a.geplantBis) : HEUTE;
+  const zeit = ausbildungZeitraum(a, lang);
+  balken.push({
+    id: a.id,
+    spur: 'ausbildung',
+    zeile: ausbildungZeile[a.id],
+    start: idx(a.von),
+    ende,
+    geplantAb: a.bis === null && a.geplantBis ? HEUTE : undefined,
+    label: kurz[a.id][lang],
+    voll: `${a.titel[lang]}, ${a.schule[lang]}, ${zeit}${a.zusatz ? `, ${a.zusatz[lang]}` : ''}`,
+    titel: a.titel[lang],
+    unter: `${a.schule[lang]}${a.zusatz ? `, ${a.zusatz[lang]}` : ''}`,
+    zeit,
+    punkte: [],
+    gruppen: [],
+  });
+});
+
+eigeneProjekte.forEach((p, i) => {
+  const istWebsite = p.id === 'website';
+  balken.push({
+    id: `projekt-${p.id}`,
+    spur: 'projekte',
+    zeile: 5 + i,
+    start: (p.jahr - START) * 12,
+    // Jahresebene: ganzes Jahr, der Teil nach «Heute» gestrichelt
+    ende: (p.jahr + 1 - START) * 12,
+    geplantAb: HEUTE,
+    label: p.titel[lang],
+    voll: `${p.titel[lang]}, ${t('laufbahn.projekt')}, ${p.jahr}`,
+    titel: p.titel[lang],
+    unter: t('laufbahn.projekt'),
+    zeit: String(p.jahr),
+    punkte: [],
+    gruppen: istWebsite ? gruppenFuer('website') : gruppenFuer('projekt', p.id),
+    link: istWebsite ? undefined : projektPfad(p.id as ProjektId, lang),
+  });
+});
+
+const spuren = [
+  { id: 'arbeit', label: t('laufbahn.spur.arbeit'), von: 2, bis: 3 },
+  { id: 'ausbildung', label: t('laufbahn.spur.ausbildung'), von: 3, bis: 5 },
+  { id: 'projekte', label: t('laufbahn.spur.projekte'), von: 5, bis: 5 + eigeneProjekte.length },
+];
+
+const spalte = (m: number) => Math.round(m) + 2; // Spalte 1 ist die Beschriftung
+const pct = (m: number) => `${((m / MONATE) * 100).toFixed(3)}%`;
+const koennenAnker = (gid: string) => `${ankerPfad('koennen', lang)}-${gid}`;
+---
+
+<div class="laufbahn" data-laufbahn>
+  <fieldset class="segment laufbahn__ansicht">
+    <legend class="sr-only">{t('laufbahn.ansicht')}</legend>
+    <div class="segment__optionen">
+      <label class="segment__option">
+        <input type="radio" name="laufbahn-ansicht" value="diagramm" id="laufbahn-diagramm" checked />
+        <span>{t('laufbahn.diagramm')}</span>
+      </label>
+      <label class="segment__option">
+        <input type="radio" name="laufbahn-ansicht" value="liste" id="laufbahn-liste" />
+        <span>{t('laufbahn.liste')}</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <div class="laufbahn__diagramm-teil">
+    <p class="laufbahn__hinweis klein neben">{t('laufbahn.scrollHinweis')}</p>
+    <div class="laufbahn__scroll" data-laufbahn-scroll>
+      <div class="laufbahn__diagramm" role="group" aria-label={t('laufbahn.diagrammLabel')} style={`--heute:${pct(HEUTE)}`}>
+        {
+          Array.from({ length: JAHRE }, (_, j) => (
+            <span class="laufbahn__jahr" style={`grid-column:${j * 12 + 2} / span 12`} aria-hidden="true">
+              {START + j}
+            </span>
+          ))
+        }
+        {
+          spuren.map((s) => (
+            <span class="laufbahn__spur" style={`grid-row:${s.von} / ${s.bis}`} aria-hidden="true">
+              {s.label}
+            </span>
+          ))
+        }
+        <div class="laufbahn__heute" style={`grid-row:1 / -1`} aria-hidden="true">
+          <span>{t('laufbahn.heute')}</span>
+        </div>
+        {
+          balken.map((b, i) => {
+            const geplant = b.geplantAb !== undefined ? (b.ende - b.geplantAb) / (b.ende - b.start) : 0;
+            return (
+              <button
+                type="button"
+                class:list={['balken', `balken--${b.spur}`, { 'balken--geplant': geplant > 0 }]}
+                id={`lb-${b.id}`}
+                data-balken={b.id}
+                aria-expanded="false"
+                aria-controls="laufbahn-detail"
+                tabindex={i === 0 ? 0 : -1}
+                style={`grid-row:${b.zeile};grid-column:${spalte(b.start)} / ${spalte(b.ende)};--n:${i};--geplant:${(geplant * 100).toFixed(1)}%`}
+              >
+                <span class="balken__text" aria-hidden="true">{b.label}</span>
+                <span class="sr-only">{b.voll}</span>
+              </button>
+            );
+          })
+        }
+      </div>
+    </div>
+
+    <div class="laufbahn__detail" id="laufbahn-detail" aria-live="polite" data-detail>
+      <p class="neben">{t('laufbahn.detailLeer')}</p>
+    </div>
+
+    {
+      balken.map((b) => (
+        <template data-detail-fuer={b.id}>
+          <p class="laufbahn__detail-zeit">{b.zeit}</p>
+          <h3>{b.titel}</h3>
+          <p class="neben">{b.unter}</p>
+          {b.punkte.length > 0 && (
+            <ul>
+              {b.punkte.map((p) => (
+                <li>{p}</li>
+              ))}
+            </ul>
+          )}
+          {b.gruppen.length > 0 && (
+            <p class="laufbahn__detail-koennen">
+              <span class="label">{t('laufbahn.koennen')}:</span>{' '}
+              {b.gruppen.map((g, i) => (
+                <>{i > 0 && ', '}<a href={koennenAnker(g.id)}>{g.titel[lang]}</a></>
+              ))}
+            </p>
+          )}
+          {b.link && (
+            <p>
+              <a class="textlink" href={b.link}>
+                {t('laufbahn.fallstudie')}
+              </a>
+            </p>
+          )}
+        </template>
+      ))
+    }
+  </div>
+
+  <div class="laufbahn__liste" data-laufbahn-liste>
+    <h3 class="laufbahn__liste-titel">{t('laufbahn.spur.arbeit')}</h3>
+    <ol class="eintraege">
+      {
+        stationen.map((s) => (
+          <li class="eintrag" id={`lbl-${s.id}`} data-eintrag={s.id}>
+            <p class="eintrag__zeit">{zeitraumKurz(s.von, s.bis, lang)}</p>
+            <div class="eintrag__inhalt">
+              <h4>{s.rolle}</h4>
+              <p class="neben">{s.organisation[lang]}</p>
+              <ul>
+                {s.punkte.map((p) => (
+                  <li>{p[lang]}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+    <h3 class="laufbahn__liste-titel">{t('laufbahn.spur.ausbildung')}</h3>
+    <ol class="eintraege">
+      {
+        ausbildung.map((a) => (
+          <li class="eintrag" id={`lbl-${a.id}`} data-eintrag={a.id}>
+            <p class="eintrag__zeit">{ausbildungZeitraum(a, lang)}</p>
+            <div class="eintrag__inhalt">
+              <h4>{a.titel[lang]}</h4>
+              <p class="neben">{`${a.schule[lang]}${a.zusatz ? `, ${a.zusatz[lang]}` : ''}`}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+    <h3 class="laufbahn__liste-titel">{t('laufbahn.spur.projekte')}</h3>
+    <ol class="eintraege">
+      {
+        eigeneProjekte.map((p) => (
+          <li class="eintrag" id={`lbl-projekt-${p.id}`} data-eintrag={`projekt-${p.id}`}>
+            <p class="eintrag__zeit">{p.jahr}</p>
+            <div class="eintrag__inhalt">
+              <h4>
+                {p.id === 'website' ? p.titel[lang] : <a href={projektPfad(p.id as ProjektId, lang)}>{p.titel[lang]}</a>}
+              </h4>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</div>
+
+<script>
+  import '../scripts/laufbahn';
+</script>

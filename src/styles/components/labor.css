@@ -1,0 +1,151 @@
+/* Viewport-Labor */
+
+.labor { display: grid; gap: var(--s5); }
+
+.labor__steuerung {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s4) var(--s6);
+}
+
+.labor__live { display: grid; justify-items: start; gap: var(--s2); max-width: 46ch; }
+
+.js .labor__live:has([data-live-laden]:not([hidden]), [data-live-aus]:not([hidden])) .labor__live-link { display: none; }
+
+.labor__buehne {
+  container-type: inline-size;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(16px, 3vw, 40px);
+  overflow: hidden;
+}
+
+.labor__rahmen {
+  --breite: min(100cqi, 1100px);
+  width: var(--breite);
+  height: calc(var(--breite) * 0.625);
+  flex: none;
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  transition: width var(--t-panel) var(--ease), height var(--t-panel) var(--ease), border-radius var(--t-panel) var(--ease);
+}
+
+.labor:has(#labor-tablet:checked) .labor__rahmen {
+  --hoehe: min(620px, 100cqi * 1.439);
+  width: calc(var(--hoehe) * 0.6949);
+  height: var(--hoehe);
+}
+
+.labor:has(#labor-handy:checked) .labor__rahmen {
+  --hoehe: min(600px, 100cqi * 2.0);
+  width: calc(var(--hoehe) * 0.4621 + 20px);
+  height: calc(var(--hoehe) + 20px);
+  border: 10px solid var(--ink);
+  border-radius: 28px;
+}
+
+.labor__bild { display: none; }
+
+.labor__rahmen picture { display: contents; }
+
+.labor__bild,
+.labor__rahmen iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
+  border: 0;
+}
+
+.labor:has(#labor-desktop:checked) .labor__bild[data-geraet="desktop"],
+.labor:has(#labor-tablet:checked) .labor__bild[data-geraet="tablet"],
+.labor:has(#labor-handy:checked) .labor__bild[data-geraet="handy"] { display: block; }
+
+/* Live-Modus: feste Höhe, Breite per Ziehgriff in Pixeln */
+.labor__panel.ist-live .labor__buehne { justify-content: flex-start; }
+
+.labor__panel.ist-live .labor__rahmen {
+  width: var(--live-breite, 1280px);
+  height: 640px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+}
+
+.labor__panel.ist-live .labor__bild { display: none !important; }
+
+.labor__griff {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 640px;
+  margin-left: 4px;
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.labor__griff-linie {
+  width: 4px;
+  height: 64px;
+  background: var(--ink);
+  transition: background-color var(--t-klein) var(--ease);
+}
+
+.labor__griff:hover .labor__griff-linie,
+.labor__griff:focus-visible .labor__griff-linie { background: var(--signal); }
+
+.labor__breite {
+  position: absolute;
+  right: var(--s4);
+  bottom: var(--s2);
+  font-variant-numeric: tabular-nums;
+}
+
+.labor__panel.ist-live .labor__buehne { padding-bottom: 40px; }
+
+.labor__messwerte {
+  display: grid;
+  gap: var(--s3);
+  margin-top: var(--s5);
+}
+
+/* Messwerte */
+
+.messwerte { display: grid; gap: var(--s4); }
+
+.messwerte__liste {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: var(--s5) var(--gap);
+}
+
+.messwert {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--s2);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--line);
+}
+
+.messwert__zahl {
+  font-size: var(--zahl);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.messwert__einheit { font-size: 0.55em; font-weight: 600; letter-spacing: 0; }
+
+.messwert__label { font-size: var(--klein); color: var(--ink-2); line-height: 1.4; }
+
+.messwerte--kompakt .messwert__zahl { font-size: clamp(24px, 2.4vw, 34px); }
+
+.messwerte__fussnoten { padding-left: 1.4em; }
+
+.messwerte__fussnoten li + li { margin-top: var(--s1); }

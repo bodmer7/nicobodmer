@@ -1,0 +1,116 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from './Hero.astro';
+import ProjektIndex from './ProjektIndex.astro';
+import ViewportLabor from './ViewportLabor.astro';
+import LaufbahnSpuren from './LaufbahnSpuren.astro';
+import KoennenNachweise from './KoennenNachweise.astro';
+import KontaktComposer from './KontaktComposer.astro';
+import Bild from './Bild.astro';
+import aboutPortrait from '../assets/fotos/about-portrait.webp';
+import '../styles/components/hero.css';
+import '../styles/components/projekte.css';
+import '../styles/components/labor.css';
+import '../styles/components/laufbahn.css';
+import '../styles/components/koennen.css';
+import '../styles/components/kontakt.css';
+import { useT, type Lang } from '../i18n/ui';
+import { anker, seiten } from '../i18n/routes';
+import { person, hobbies } from '../data/profil';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+
+const titel = lang === 'de' ? 'Nico Bodmer | Websites, Apps und technischer Vertrieb' : 'Nico Bodmer | Websites, apps and technical sales';
+const beschreibung =
+  lang === 'de'
+    ? 'Nico Bodmer aus dem Raum Zürich: Platform Developer EFZ, technischer Vertrieb für Data & AI, Websites für kleine Unternehmen mit ODERA Design.'
+    : 'Nico Bodmer from the Zurich area: platform developer, technical sales for data & AI, websites for small businesses with ODERA Design.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': 'https://nico-bodmer.ch/#person',
+    name: person.name,
+    url: person.website,
+    image: 'https://nico-bodmer.ch/og.jpg',
+    email: `mailto:${person.email}`,
+    jobTitle: lang === 'de' ? 'Platform Developer EFZ' : 'Platform Developer',
+    sameAs: [person.linkedin, person.github],
+    knowsLanguage: ['de', 'en', 'fr'],
+  },
+];
+---
+
+<Base lang={lang} title={titel} description={beschreibung} alternate={seiten.start} auftritt jsonLd={jsonLd} messKey={lang === 'de' ? 'start' : 'start-en'}>
+  <Hero lang={lang} />
+
+  <section class="sektion wrap" id={anker.arbeiten[lang]} aria-labelledby="arbeiten-titel">
+    <div class="sektion__kopf">
+      <h2 id="arbeiten-titel">{t('arbeiten.titel')}</h2>
+      <p class="lead">{t('arbeiten.intro')}</p>
+    </div>
+    <ProjektIndex lang={lang} />
+
+    <div class="labor-kopf">
+      <h3 id="labor-titel">{t('labor.titel')}</h3>
+      <p>{t('labor.intro')}</p>
+    </div>
+    <ViewportLabor lang={lang} />
+  </section>
+
+  <section class="sektion wrap" id={anker.laufbahn[lang]} aria-labelledby="laufbahn-titel">
+    <div class="sektion__kopf">
+      <h2 id="laufbahn-titel">{t('laufbahn.titel')}</h2>
+      <p class="lead">{t('laufbahn.intro')}</p>
+    </div>
+    <LaufbahnSpuren lang={lang} />
+  </section>
+
+  <section class="sektion wrap" id={anker.koennen[lang]} aria-labelledby="koennen-titel">
+    <div class="sektion__kopf">
+      <h2 id="koennen-titel">{t('koennen.titel')}</h2>
+      <p class="lead">{t('koennen.intro')}</p>
+    </div>
+    <KoennenNachweise lang={lang} />
+  </section>
+
+  <section class="sektion wrap" id={anker.ueber[lang]} aria-labelledby="ueber-titel">
+    <div class="raster">
+      <figure class="ueber__foto">
+        <Bild src={aboutPortrait} alt={t('ueber.fotoAlt')} widths={[400, 640, 900]} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 30vw, 100vw" />
+      </figure>
+      <div class="ueber__text silben">
+        <h2 id="ueber-titel">{t('ueber.titel')}</h2>
+        <p>{t('ueber.p1')}</p>
+        <p>{t('ueber.p2')}</p>
+        <p>{t('ueber.p3')}</p>
+        {
+          hobbies.length > 0 && (
+            <div class="ueber__hobbies">
+              <h3>{t('ueber.hobbies')}</h3>
+              <ul>
+                {hobbies.map((h) => (
+                  <li>{h[lang]}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="kontakt" id={anker.kontakt[lang]} aria-labelledby="kontakt-titel">
+    <div class="wrap">
+      <h2 id="kontakt-titel">{t('kontakt.titel')}</h2>
+      <KontaktComposer lang={lang} />
+    </div>
+  </section>
+</Base>
+
+<script>
+  import '../scripts/projektliste';
+</script>

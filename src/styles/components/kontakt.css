@@ -1,0 +1,108 @@
+/* Kontakt: volle Breite in Signalrot, Text weiss. Die Tokens werden im
+   Bereich umgestellt, damit Buttons, Schalter und Links passen. */
+
+.kontakt {
+  --ink: #FFFFFF;
+  --ink-2: #FFFFFF;
+  --paper: #C8261C;
+  --line: #E8938C;
+  --signal-text: #FFFFFF;
+  margin-top: var(--sektion);
+  padding-block: clamp(64px, 9vw, 128px);
+  background: var(--signal);
+  color: var(--on-signal);
+  scroll-margin-top: var(--header-h);
+}
+
+main:has(> .kontakt:last-child) + .fuss { margin-top: 0; }
+
+.kontakt h2 { margin-bottom: var(--s7); }
+
+.kontakt a:hover { color: #fff; }
+
+.kontakt :focus-visible { outline-color: #fff; }
+
+.kontakt__raster { row-gap: var(--s8); }
+
+.composer {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--s5);
+  align-content: start;
+}
+
+.kontakt__direkt {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--s3);
+  align-content: start;
+}
+
+@media (min-width: 1024px) {
+  .composer { grid-column: 1 / 7; }
+  .kontakt__direkt { grid-column: 8 / -1; }
+}
+
+.composer__thema .segment__optionen { display: grid; grid-template-columns: 1fr; width: 100%; }
+
+.composer__thema .segment__option + .segment__option span { border-left: 0; border-top: 1px solid var(--ink); }
+
+@media (min-width: 640px) {
+  .composer__thema .segment__optionen { grid-template-columns: 1fr 1fr; }
+  .composer__thema .segment__option:nth-child(even) span { border-left: 1px solid var(--ink); }
+  .composer__thema .segment__option:nth-child(2) span { border-top: 0; }
+}
+
+.composer__thema .segment__option span { width: 100%; }
+
+.composer__thema .segment__option input:hover:not(:checked) + span { background: color-mix(in srgb, var(--signal) 85%, #000); }
+
+.composer__odera { display: none; gap: var(--s4); }
+
+.composer:has(#thema-website:checked) .composer__odera { display: grid; }
+.composer:has(#thema-website:checked) .composer__felder { display: none; }
+
+.composer__felder { display: grid; gap: var(--s4); }
+
+.feld { display: grid; gap: var(--s2); }
+
+.feld label { font-size: var(--label); font-weight: 600; }
+
+.composer__optional { font-weight: 400; }
+
+.feld input,
+.feld textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 0;
+  border-bottom: 2px solid #141619;
+  background: #FFFFFF;
+  color: #141619;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.feld textarea { resize: vertical; }
+
+.feld input:focus-visible,
+.feld textarea:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.composer__hinweis { max-width: 52ch; }
+
+.kontakt__mail {
+  display: inline-block;
+  font-size: clamp(24px, 3.1vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-decoration-thickness: 2px;
+  overflow-wrap: anywhere;
+}
+
+.kontakt__aktionen {
+  display: grid;
+  justify-items: start;
+  padding: 0;
+  list-style: none;
+}

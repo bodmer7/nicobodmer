@@ -1,0 +1,79 @@
+/* Können mit Nachweis */
+
+.koennen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: var(--s7) var(--gap);
+}
+
+.koennen__gruppe {
+  position: relative;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--line);
+  scroll-margin-top: calc(var(--header-h) + var(--s5));
+}
+
+.koennen__gruppe > p { margin-top: var(--s3); }
+
+.begriffe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s4);
+  margin-top: var(--s3);
+  padding: 0;
+  list-style: none;
+}
+
+.begriff {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--ink-2);
+  text-underline-offset: 0.22em;
+  cursor: pointer;
+  transition: color var(--t-klein) var(--ease), text-decoration-color var(--t-klein) var(--ease);
+}
+
+.begriff:hover { color: var(--signal-text); text-decoration-color: currentColor; text-decoration-thickness: 2px; }
+
+.begriff[aria-expanded="true"] {
+  color: var(--ink);
+  text-decoration-color: var(--signal);
+  text-decoration-thickness: 3px;
+}
+
+.nachweis {
+  margin-top: var(--s3);
+  padding: var(--s4);
+  background: var(--surface);
+  border-top: 3px solid var(--signal);
+}
+
+.nachweis ul { margin-top: var(--s2); padding-left: 1.2em; }
+
+.nachweis li + li { margin-top: var(--s1); }
+
+.js .nachweis:not(.ist-offen) { display: none; }
+
+@media (min-width: 900px) {
+  .js .nachweis.ist-offen {
+    position: absolute;
+    z-index: 5;
+    left: var(--x, 0px);
+    top: var(--y, 100%);
+    width: min(380px, 90vw);
+    margin-top: var(--s2);
+    border: 1px solid var(--ink);
+    border-top: 3px solid var(--signal);
+  }
+}
+
+.koennen__weitere { margin-top: var(--s6); }
+
+/* Markierungen aus dem Können in Projektliste und Laufbahn */
+.projekt.ist-markiert { box-shadow: inset 4px 0 0 var(--signal); }
