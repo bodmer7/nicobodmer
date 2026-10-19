@@ -1,0 +1,5 @@
+
+> nico-bodmer-portfolio@2.0.0 check:text
+> node scripts/check-text.mjs
+
+Textprüfung: keine verbotenen Zeichen.

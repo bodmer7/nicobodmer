@@ -1,0 +1,82 @@
+
+Running 78 tests using 4 workers
+
+[1A[2K[1/78] tests/e2e/axe.spec.ts:6:5 › axe light: /arbeiten/odera/
+[1A[2K[2/78] tests/e2e/axe.spec.ts:6:5 › axe light: /
+[1A[2K[3/78] tests/e2e/axe.spec.ts:6:5 › axe light: /arbeiten/musterprojekte/
+[1A[2K[4/78] tests/e2e/axe.spec.ts:6:5 › axe light: /arbeiten/geo-quiz/
+[1A[2K[5/78] tests/e2e/axe.spec.ts:6:5 › axe light: /arbeiten/morgen-check-in/
+[1A[2K[6/78] tests/e2e/axe.spec.ts:6:5 › axe light: /lebenslauf/
+[1A[2K[7/78] tests/e2e/axe.spec.ts:6:5 › axe light: /impressum-datenschutz/
+[1A[2K[8/78] tests/e2e/axe.spec.ts:6:5 › axe light: /links/
+[1A[2K[9/78] tests/e2e/axe.spec.ts:6:5 › axe light: /en/
+[1A[2K[10/78] tests/e2e/axe.spec.ts:6:5 › axe light: /en/work/odera/
+[1A[2K[11/78] tests/e2e/axe.spec.ts:6:5 › axe light: /en/work/sample-projects/
+[1A[2K[12/78] tests/e2e/axe.spec.ts:6:5 › axe light: /en/work/geo-quiz/
+[1A[2K[13/78] tests/e2e/axe.spec.ts:6:5 › axe light: /en/work/morning-check-in/
+[1A[2K[14/78] tests/e2e/axe.spec.ts:6:5 › axe light: /en/cv/
+[1A[2K[15/78] tests/e2e/axe.spec.ts:6:5 › axe light: /en/legal/
+[1A[2K[16/78] tests/e2e/axe.spec.ts:6:5 › axe light: /404.html
+[1A[2K[17/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /
+[1A[2K[18/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /arbeiten/odera/
+[1A[2K[19/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /arbeiten/musterprojekte/
+[1A[2K[20/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /arbeiten/geo-quiz/
+[1A[2K[21/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /arbeiten/morgen-check-in/
+[1A[2K[22/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /lebenslauf/
+[1A[2K[23/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /impressum-datenschutz/
+[1A[2K[24/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /links/
+[1A[2K[25/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /en/
+[1A[2K[26/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /en/work/odera/
+[1A[2K[27/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /en/work/sample-projects/
+[1A[2K[28/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /en/work/geo-quiz/
+[1A[2K[29/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /en/work/morning-check-in/
+[1A[2K[30/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /en/cv/
+[1A[2K[31/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /en/legal/
+[1A[2K[32/78] tests/e2e/axe.spec.ts:6:5 › axe dark: /404.html
+[1A[2K[33/78] tests/e2e/fallstudien.spec.ts:3:1 › Geo-Quiz: iframe erst nach Klick
+[1A[2K[34/78] tests/e2e/fallstudien.spec.ts:17:1 › Lightbox: öffnen, Pfeiltasten, Esc, Fokus zurück
+[1A[2K[35/78] tests/e2e/fallstudien.spec.ts:36:1 › Inhaltsverzeichnis, Messwerte mit Quelle, nächstes Projekt
+[1A[2K[36/78] tests/e2e/fallstudien.spec.ts:47:1 › Mini-Dashboard: Pfeiltasten zeigen Tag und Wert
+[1A[2K[37/78] tests/e2e/fallstudien.spec.ts:59:1 › Lebenslauf: Daten aus profil.ts, PDF-Knopf
+[1A[2K[38/78] tests/e2e/fallstudien.spec.ts:72:1 › Was ich gelernt habe erscheint auf allen Fallstudien
+[1A[2K[39/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /
+[1A[2K[40/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /arbeiten/odera/
+[1A[2K[41/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /arbeiten/musterprojekte/
+[1A[2K[42/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /arbeiten/geo-quiz/
+[1A[2K[43/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /arbeiten/morgen-check-in/
+[1A[2K[44/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /lebenslauf/
+[1A[2K[45/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /impressum-datenschutz/
+[1A[2K[46/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /links/
+[1A[2K[47/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /en/
+[1A[2K[48/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /en/work/odera/
+[1A[2K[49/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /en/work/sample-projects/
+[1A[2K[50/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /en/work/geo-quiz/
+[1A[2K[51/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /en/work/morning-check-in/
+[1A[2K[52/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /en/cv/
+[1A[2K[53/78] tests/e2e/seiten.spec.ts:4:3 › lädt ohne Fehler: /en/legal/
+[1A[2K[54/78] tests/e2e/seiten.spec.ts:21:1 › 404 liefert die eigene Seite
+[1A[2K[55/78] tests/e2e/seiten.spec.ts:31:3 › kein seitliches Scrollen: /
+[1A[2K[56/78] tests/e2e/seiten.spec.ts:31:3 › kein seitliches Scrollen: /en/
+[1A[2K[57/78] tests/e2e/seiten.spec.ts:31:3 › kein seitliches Scrollen: /arbeiten/musterprojekte/
+[1A[2K[58/78] tests/e2e/seiten.spec.ts:31:3 › kein seitliches Scrollen: /lebenslauf/
+[1A[2K[59/78] tests/e2e/seiten.spec.ts:45:1 › Metadaten: hreflang, canonical, Titel ohne Arbeitgeber
+[1A[2K[60/78] tests/e2e/startseite.spec.ts:4:3 › Zielgruppen-Schalter › ?fuer=website wählt vor, ordnet Projekte und Composer
+[1A[2K[61/78] tests/e2e/startseite.spec.ts:16:3 › Zielgruppen-Schalter › ?for=job auf Englisch, Lebenslauf als Signal-Button
+[1A[2K[62/78] tests/e2e/startseite.spec.ts:25:3 › Zielgruppen-Schalter › Klick und Pfeiltasten wechseln, Ansage für Screenreader
+[1A[2K[63/78] tests/e2e/startseite.spec.ts:42:1 › Hell/Dunkel bleibt nach dem Neuladen und wird vor dem Zeichnen gesetzt
+[1A[2K[64/78] tests/e2e/startseite.spec.ts:60:1 › Sprachumschalter führt auf die entsprechende Seite
+[1A[2K[65/78] tests/e2e/startseite.spec.ts:72:1 › Projektliste: Fokus wechselt die Vorschau
+[1A[2K[66/78] tests/e2e/startseite.spec.ts:82:1 › Viewport-Labor: Tabs, Geräte, Live erst nach Klick, Ziehgriff per Tastatur
+[1A[2K[67/78] tests/e2e/startseite.spec.ts:110:1 › Viewport-Labor mobil: Live öffnen als Link statt Ziehgriff
+[1A[2K[68/78] tests/e2e/startseite.spec.ts:123:1 › Laufbahn: Pfeiltasten, Detailfeld, vollständige Liste
+[1A[2K[69/78] tests/e2e/startseite.spec.ts:144:1 › Laufbahn startet mobil als Liste
+[1A[2K[70/78] tests/e2e/startseite.spec.ts:156:1 › Können: Nachweis öffnet, markiert und schliesst
+[1A[2K[71/78] tests/e2e/startseite.spec.ts:175:1 › Composer: mailto korrekt kodiert, Website zeigt Projekt-Check
+[1A[2K[72/78] tests/e2e/startseite.spec.ts:191:1 › Kopieren zeigt den Toast, vCard ist erreichbar
+[1A[2K[73/78] tests/e2e/startseite.spec.ts:208:1 › Mobiles Menü: Fokus ins Panel, Esc schliesst
+[1A[2K[74/78] tests/e2e/startseite.spec.ts:226:1 › Kopfzeile wird nach 80px kompakter
+[1A[2K[75/78] tests/e2e/startseite.spec.ts:235:1 › Reduzierte Bewegung: keine Animationen im Hero
+[1A[2K[76/78] tests/e2e/startseite.spec.ts:248:1 › Hero-Auftritt nur einmal pro Sitzung, ohne Layoutverschiebung
+[1A[2K[77/78] tests/e2e/startseite.spec.ts:269:1 › Können: Arbeitsweise mit eigenen Nachweisen, Zeitmanagement markiert parallele Spuren
+[1A[2K[78/78] tests/e2e/startseite.spec.ts:293:1 › Über mich zeigt die Hobbys, Hero die neue Rollenzeile
+[1A[2K  78 passed (31.7s)
