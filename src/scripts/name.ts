@@ -67,3 +67,5 @@ if (name && fein.matches && !ruhig.matches) {
   window.addEventListener('scroll', () => (mitten = []), { passive: true });
   window.addEventListener('resize', () => (mitten = []));
 }
+
+export {};

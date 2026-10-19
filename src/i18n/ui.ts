@@ -126,7 +126,7 @@ const de = {
   'kontakt.direkt': 'Oder direkt',
   'kontakt.kopieren': 'Adresse kopieren',
   'kontakt.kopiert': 'Adresse kopiert',
-  'kontakt.kopierFehler': 'Kopieren nicht möglich. Bitte die Adresse markieren.',
+  'kontakt.kopierFehler': 'Kopieren nicht möglich. Die Adresse ist jetzt markiert.',
   'kontakt.vcard': 'Kontakt speichern (vCard)',
 
   'fall.zurueck': 'Zurück zu Arbeiten',
@@ -303,7 +303,7 @@ const en: Record<UiKey, string> = {
   'kontakt.direkt': 'Or directly',
   'kontakt.kopieren': 'Copy address',
   'kontakt.kopiert': 'Address copied',
-  'kontakt.kopierFehler': 'Copying is not possible. Please select the address.',
+  'kontakt.kopierFehler': 'Copying is not possible. The address is now selected.',
   'kontakt.vcard': 'Save contact (vCard)',
 
   'fall.zurueck': 'Back to work',

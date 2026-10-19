@@ -31,6 +31,10 @@ body {
 
 :lang(de) .silben { hyphens: auto; }
 
+/* Lange deutsche Wörter in grossen Überschriften trennen statt brechen */
+:lang(de) h1,
+:lang(de) h2 { hyphens: auto; }
+
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote {
   margin: 0;
 }

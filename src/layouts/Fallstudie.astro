@@ -16,7 +16,7 @@ import '../styles/components/fallstudie.css';
 import { render } from 'astro:content';
 import { useT, type Lang } from '../i18n/ui';
 import { ankerPfad, projektPfad, seiten } from '../i18n/routes';
-import { fallstudien, istExtern, type Projekt } from '../data/projekte';
+import { fallstudien, istExtern, trennbar, type Projekt } from '../data/projekte';
 import type { ProjektId } from '../data/profil';
 
 interface Props {
@@ -77,7 +77,7 @@ const titel = `${d.title} | Nico Bodmer`;
   <article class="fall">
     <header class="fall__kopf wrap">
       <p class="fall__zurueck"><a class="textlink" href={ankerPfad('arbeiten', lang)}>{t('fall.zurueck')}</a></p>
-      <h1 class="fall__titel" style={`view-transition-name:vt-titel-${id}`}>{d.title}</h1>
+      <h1 class="fall__titel" style={`view-transition-name:vt-titel-${id}`}>{trennbar(d.title)}</h1>
       <p class="lead fall__kurz">{d.kurz}</p>
       <dl class="fall__eckdaten">
         <div>
@@ -203,7 +203,7 @@ const titel = `${d.title} | Nico Bodmer`;
                 style={`object-position:${naechstes.data.position}`}
               />
             )}
-            <span class="naechstes__titel">{naechstes.data.title}</span>
+            <span class="naechstes__titel">{trennbar(naechstes.data.title)}</span>
             <span class="naechstes__kurz">{naechstes.data.kurz}</span>
           </a>
         </nav>

@@ -14,3 +14,5 @@ if (box) {
     link.addEventListener('focus', () => zeigen(id));
   });
 }
+
+export {};

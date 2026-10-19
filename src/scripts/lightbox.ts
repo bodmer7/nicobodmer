@@ -21,7 +21,10 @@ const grossVon = (l: HTMLElement) =>
   l.dataset.gross ?? l.querySelector('img')?.currentSrc ?? l.querySelector('img')?.src ?? '';
 
 if (dialog && links.length) {
-  const bild = dialog.querySelector<HTMLImageElement>('[data-lightbox-bild]')!;
+  // Das Bild entsteht erst hier, damit das HTML kein <img> ohne src enthält.
+  const bild = document.createElement('img');
+  bild.alt = '';
+  dialog.querySelector('[data-lightbox-buehne]')?.append(bild);
   const unterschrift = dialog.querySelector<HTMLElement>('[data-lightbox-unterschrift]')!;
   const zaehler = dialog.querySelector<HTMLElement>('[data-lightbox-zaehler]')!;
   let index = 0;
@@ -95,3 +98,5 @@ if (dialog && links.length) {
     ausloeser?.focus();
   });
 }
+
+export {};

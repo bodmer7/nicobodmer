@@ -92,20 +92,15 @@ document.querySelectorAll<HTMLButtonElement>('[data-kopieren]').forEach((btn) =>
       await navigator.clipboard.writeText(wert);
       ok = true;
     } catch {
-      // Rückfall für ältere Browser oder fehlende Berechtigung
-      const feld = document.createElement('textarea');
-      feld.value = wert;
-      feld.setAttribute('readonly', '');
-      feld.style.position = 'fixed';
-      feld.style.opacity = '0';
-      document.body.append(feld);
-      feld.select();
-      try {
-        ok = document.execCommand('copy');
-      } catch {
-        ok = false;
+      // Rückfall ohne Zwischenablage: die Adresse auf der Seite markieren.
+      const ziel = document.querySelector(`a[href="mailto:${wert}"]`);
+      const auswahl = window.getSelection();
+      if (ziel && auswahl) {
+        const bereich = document.createRange();
+        bereich.selectNodeContents(ziel);
+        auswahl.removeAllRanges();
+        auswahl.addRange(bereich);
       }
-      feld.remove();
     }
     toast((ok ? btn.dataset.ok : btn.dataset.fehler) ?? '');
   });

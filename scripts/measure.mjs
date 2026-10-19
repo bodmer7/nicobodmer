@@ -4,6 +4,7 @@
  * (je Deutsch und Englisch) und schreibt src/data/messwerte.json.
  * Danach neu bauen, damit der Footer die Werte zeigt.
  *   npm run measure
+ *   node scripts/measure.mjs --ohne-build --pruefen   nur prüfen (für npm run qa)
  * Ohne installiertes Chrome nutzt Lighthouse das Chromium von Playwright.
  */
 import { spawn, execSync } from 'node:child_process';
@@ -27,7 +28,12 @@ const seiten = {
 
 if (!process.argv.includes('--ohne-build')) execSync('npx astro build', { cwd: root, stdio: 'inherit' });
 
-const server = spawn('npx', ['astro', 'preview', '--port', String(PORT)], { cwd: root, stdio: 'ignore' });
+// Astro 7 startet preview bei erkannten Agenten im Hintergrund; hier im Vordergrund.
+const server = spawn('npx', ['astro', 'preview', '--port', String(PORT), '--ignore-lock'], {
+  cwd: root,
+  stdio: 'ignore',
+  env: { ...process.env, ASTRO_PREVIEW_BACKGROUND: '0' },
+});
 const warten = async () => {
   for (let i = 0; i < 60; i++) {
     try {
@@ -42,6 +48,8 @@ const warten = async () => {
 };
 
 const chromePath = process.env.CHROME_PATH ?? chromium.executablePath();
+const nurPruefen = process.argv.includes('--pruefen');
+const verstoesse = [];
 const ergebnis = { datum: new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Zurich' }), seiten: {} };
 
 try {
@@ -61,13 +69,28 @@ try {
       };
       const a = r.lhr.audits;
       console.log(key, ergebnis.seiten[key], 'LCP', a['largest-contentful-paint'].displayValue, 'CLS', a['cumulative-layout-shift'].displayValue, 'TBT', a['total-blocking-time'].displayValue);
+      // Budgets aus dem Auftrag: Leistung mindestens 95, Rest 100, LCP 1,8 s, CLS 0,02, TBT 100 ms
+      const m = ergebnis.seiten[key];
+      if (m.leistung < 95) verstoesse.push(`${key}: Leistung ${m.leistung}`);
+      for (const k of ['barrierefreiheit', 'bestPractices', 'seo']) if (m[k] < 100) verstoesse.push(`${key}: ${k} ${m[k]}`);
+      if (a['largest-contentful-paint'].numericValue > 1800) verstoesse.push(`${key}: LCP ${a['largest-contentful-paint'].displayValue}`);
+      if (a['cumulative-layout-shift'].numericValue > 0.02) verstoesse.push(`${key}: CLS ${a['cumulative-layout-shift'].displayValue}`);
+      if (a['total-blocking-time'].numericValue > 100) verstoesse.push(`${key}: TBT ${a['total-blocking-time'].displayValue}`);
     }
   } finally {
-    await chrome.kill();
+    chrome.kill();
   }
 } finally {
   server.kill();
 }
 
-await writeFile(path.join(root, 'src/data/messwerte.json'), `${JSON.stringify(ergebnis, null, 2)}\n`);
-console.log('src/data/messwerte.json geschrieben. Jetzt neu bauen: npm run build');
+if (verstoesse.length) {
+  console.error(`Lighthouse-Budgets verfehlt:\n${verstoesse.join('\n')}`);
+  process.exitCode = 1;
+}
+if (nurPruefen) {
+  console.log(verstoesse.length ? 'Lighthouse: Budgets verfehlt.' : 'Lighthouse: alle Budgets eingehalten.');
+} else {
+  await writeFile(path.join(root, 'src/data/messwerte.json'), `${JSON.stringify(ergebnis, null, 2)}\n`);
+  console.log('src/data/messwerte.json geschrieben. Jetzt neu bauen: npm run build');
+}

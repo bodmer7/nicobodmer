@@ -47,7 +47,11 @@
   color: var(--ink-2);
 }
 
-.cv__kontakt a { color: var(--ink); }
+.cv__kontakt a { color: var(--ink); overflow-wrap: anywhere; }
+
+@media (max-width: 479.98px) {
+  .cv__person { grid-template-columns: minmax(0, 1fr); }
+}
 
 .cv__kontakt li { min-height: 44px; display: flex; align-items: center; }
 

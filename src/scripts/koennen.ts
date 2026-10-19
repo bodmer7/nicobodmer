@@ -75,3 +75,5 @@ if (box) {
     if (!offen.panel.contains(ziel) && !offen.btn.contains(ziel)) schliessen();
   });
 }
+
+export {};

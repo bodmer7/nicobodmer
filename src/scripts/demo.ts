@@ -14,3 +14,5 @@ if (demo) {
     iframe.focus();
   });
 }
+
+export {};

@@ -17,3 +17,8 @@ export async function fallstudien(lang: Lang): Promise<Projekt[]> {
 export function istExtern(url: string): boolean {
   return /^https?:\/\//.test(url) && !url.startsWith('https://nico-bodmer.ch');
 }
+
+/** Weiche Trennstellen für lange Wörter in grossen Titeln (nur Anzeige). */
+export function trennbar(text: string): string {
+  return text.replace('Musterprojekte', 'Muster\u00ADprojekte');
+}

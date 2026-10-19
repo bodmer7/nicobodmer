@@ -56,11 +56,20 @@
   gap: var(--s6);
 }
 
+/* Schalter: untereinander, nebeneinander erst wenn die Spalte breit genug ist */
+.hero__text { container-type: inline-size; }
+
 .hero__schalter .segment__optionen { flex-direction: column; width: 100%; }
 
 .hero__schalter .segment__option + .segment__option span { border-left: 0; border-top: 1px solid var(--ink); }
 
 .hero__schalter .segment__option span { width: 100%; }
+
+@container (min-width: 560px) {
+  .hero__schalter .segment__optionen { flex-direction: row; width: fit-content; }
+  .hero__schalter .segment__option + .segment__option span { border-top: 0; border-left: 1px solid var(--ink); }
+  .hero__schalter .segment__option span { width: auto; }
+}
 
 .hero__intro {
   font-size: var(--lead);
@@ -104,15 +113,6 @@
 @media (min-width: 640px) {
   .hero__foto { grid-column: 1 / 4; }
   .hero__text { grid-column: 4 / -1; }
-  .hero__schalter .segment__optionen { flex-direction: row; width: fit-content; }
-  .hero__schalter .segment__option + .segment__option span { border-top: 0; border-left: 1px solid var(--ink); }
-  .hero__schalter .segment__option span { width: auto; }
-}
-
-@media (min-width: 640px) and (max-width: 1023.98px) {
-  .hero__schalter .segment__optionen { flex-direction: column; width: 100%; }
-  .hero__schalter .segment__option + .segment__option span { border-left: 0; border-top: 1px solid var(--ink); }
-  .hero__schalter .segment__option span { width: 100%; }
 }
 
 @media (min-width: 1024px) {

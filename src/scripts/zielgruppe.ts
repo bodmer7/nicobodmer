@@ -77,3 +77,5 @@ if (hero && radios.length) {
     }),
   );
 }
+
+export {};

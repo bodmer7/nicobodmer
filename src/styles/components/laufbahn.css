@@ -19,8 +19,8 @@
   grid-template-columns: var(--spur-breite) repeat(120, minmax(0, 1fr));
   grid-auto-rows: 40px;
   row-gap: 8px;
-  min-width: 960px;
-  padding-top: var(--s2);
+  min-width: 1180px;
+  padding-top: 32px;
 }
 
 .laufbahn__jahr {
@@ -70,7 +70,8 @@
   color: var(--signal-text);
   font-size: var(--label);
   font-weight: 700;
-  line-height: 40px;
+  line-height: 24px;
+  top: -30px;
 }
 
 .balken {
@@ -84,7 +85,7 @@
   border: 1px solid var(--ink);
   background: var(--ink);
   color: var(--paper);
-  font-size: var(--label);
+  font-size: 13px;
   font-weight: 600;
   text-align: left;
   cursor: pointer;
@@ -195,9 +196,12 @@
   .eintrag { grid-template-columns: 180px minmax(0, 1fr); }
 }
 
-@media (max-width: 1023.98px) {
+@media (max-width: 1279.98px) {
   .laufbahn__hinweis { display: block; }
 }
+
+/* Projekte auf Jahresebene: Beschriftung darf über den schmalen Balken hinaus */
+.balken--projekte .balken__text { overflow: visible; text-overflow: clip; }
 
 @media (prefers-reduced-motion: no-preference) {
   .js .laufbahn__diagramm:not(.ist-sichtbar) .balken { transform: scaleX(0); }

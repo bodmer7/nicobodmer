@@ -25,7 +25,7 @@ const projekte = defineCollection({
       jahr: z.union([z.number(), z.string()]),
       rolle: z.string(),
       technik: z.array(z.string()).default([]),
-      links: z.array(z.object({ label: z.string(), url: z.string().url() })).default([]),
+      links: z.array(z.object({ label: z.string(), url: z.url() })).default([]),
       messwerte: z
         .array(
           z.object({
