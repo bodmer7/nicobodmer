@@ -99,7 +99,7 @@ const de = {
 
   'ueber.titel': 'Über mich',
   'ueber.p1':
-    '2021 habe ich als Lernender im IT-Support angefangen: Level 1 und 2, Geräte einrichten und migrieren, jede Woche eine Kurzpräsentation im Team. Danach Technical Support direkt beim Kunden, Robotik-Projekte mit dem Roboter Pepper und IT- und Security-Schulungen an Oberstufenschulen.',
+    '2021 habe ich als Lernender im IT-Support angefangen: Level 1 und 2, Geräte einrichten und migrieren, jede Woche eine Kurzpräsentation zu IT-Themen. Danach Technical Support direkt beim Kunden, Robotik-Projekte mit dem Roboter Pepper und IT- und Security-Schulungen an Oberstufenschulen.',
   'ueber.p2':
     'Später habe ich interne Anwendungen mit Red Hat OpenShift und IBM Cloud betrieben und mit React weiterentwickelt. Heute arbeite ich im technischen Vertrieb für Data & AI: Anforderungen klären, Lösungen bis zum technischen Konzept entwickeln, an Angeboten und RFPs mitarbeiten.',
   'ueber.p3':
@@ -278,7 +278,7 @@ const en: Record<UiKey, string> = {
 
   'ueber.titel': 'About me',
   'ueber.p1':
-    'I started in IT support as an apprentice in 2021: level 1 and 2, setting up and migrating devices, a short presentation to the team every week. After that came technical support directly at customer sites, robotics projects with the Pepper robot, and IT and security training at secondary schools.',
+    'I started in IT support as an apprentice in 2021: level 1 and 2, setting up and migrating devices, a short presentation on IT topics every week. After that came technical support directly at customer sites, robotics projects with the Pepper robot, and IT and security training at secondary schools.',
   'ueber.p2':
     'Later I ran internal applications on Red Hat OpenShift and IBM Cloud and developed them further with React. Today I work in technical sales for data & AI: clarifying requirements, developing solutions up to the technical concept, contributing to proposals and RFPs.',
   'ueber.p3':
