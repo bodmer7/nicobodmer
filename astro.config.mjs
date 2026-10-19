@@ -2,9 +2,15 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { satteri } from '@astrojs/markdown-satteri';
+import { seiten } from './src/i18n/routes.ts';
+
+const SITE = 'https://nico-bodmer.ch';
+
+/** Übersetzte Seiten in der Sitemap gegenseitig verknüpfen (hreflang). */
+const paare = Object.values(seiten).map((p) => ({ de: SITE + p.de, en: SITE + p.en }));
 
 export default defineConfig({
-  site: 'https://nico-bodmer.ch',
+  site: SITE,
   trailingSlash: 'always',
   build: { format: 'directory' },
   // Astro 7 entfernt Leerraum standardmässig nach JSX-Regeln. Für Fliesstext
@@ -30,9 +36,16 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/links/') && !page.endsWith('/404/'),
-      i18n: {
-        defaultLocale: 'de',
-        locales: { de: 'de-CH', en: 'en-GB' },
+      serialize(item) {
+        const paar = paare.find((p) => p.de === item.url || p.en === item.url);
+        if (paar) {
+          item.links = [
+            { url: paar.de, lang: 'de-CH' },
+            { url: paar.en, lang: 'en-GB' },
+            { url: paar.de, lang: 'x-default' },
+          ];
+        }
+        return item;
       },
     }),
   ],

@@ -1,4 +1,47 @@
 {
-  "datum": null,
-  "seiten": {}
+  "datum": "2026-10-19",
+  "seiten": {
+    "start": {
+      "leistung": 100,
+      "barrierefreiheit": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "kb": 148
+    },
+    "start-en": {
+      "leistung": 100,
+      "barrierefreiheit": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "kb": 148
+    },
+    "fall-odera": {
+      "leistung": 100,
+      "barrierefreiheit": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "kb": 79
+    },
+    "fall-odera-en": {
+      "leistung": 100,
+      "barrierefreiheit": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "kb": 79
+    },
+    "cv": {
+      "leistung": 100,
+      "barrierefreiheit": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "kb": 66
+    },
+    "cv-en": {
+      "leistung": 100,
+      "barrierefreiheit": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "kb": 66
+    }
+  }
 }
