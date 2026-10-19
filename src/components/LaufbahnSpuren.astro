@@ -20,6 +20,7 @@ import {
   type Monat,
   type ProjektId,
 } from '../data/profil';
+import { farbe } from '../data/farben';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -64,6 +65,7 @@ interface Balken {
   punkte: string[];
   gruppen: typeof koennen;
   link?: string;
+  farbe: string;
 }
 
 const balken: Balken[] = [];
@@ -82,6 +84,7 @@ const balken: Balken[] = [];
     zeit: zeitraumKurz(s.von, s.bis, lang),
     punkte: s.punkte.map((p) => p[lang]),
     gruppen: gruppenFuer('station', s.id),
+    farbe: farbe('arbeit'),
   });
 });
 
@@ -103,6 +106,7 @@ const ausbildungZeile: Record<string, number> = { efz: 3, 'bsc-hwz': 3, bm: 4 };
     zeit,
     punkte: [],
     gruppen: [],
+    farbe: farbe('ausbildung'),
   });
 });
 
@@ -124,6 +128,7 @@ eigeneProjekte.forEach((p, i) => {
     punkte: [],
     gruppen: istWebsite ? gruppenFuer('website') : gruppenFuer('projekt', p.id),
     link: istWebsite ? undefined : projektPfad(p.id as ProjektId, lang),
+    farbe: farbe(p.id),
   });
 });
 
@@ -166,7 +171,7 @@ const koennenAnker = (gid: string) => `${ankerPfad('koennen', lang)}-${gid}`;
         }
         {
           spuren.map((s) => (
-            <span class="laufbahn__spur" style={`grid-row:${s.von} / ${s.bis}`} aria-hidden="true">
+            <span class:list={['laufbahn__spur', { marke: s.id !== 'projekte' }]} data-farbe={farbe(s.id)} style={`grid-row:${s.von} / ${s.bis}`} aria-hidden="true">
               {s.label}
             </span>
           ))
@@ -183,6 +188,7 @@ const koennenAnker = (gid: string) => `${ankerPfad('koennen', lang)}-${gid}`;
                 class:list={['balken', `balken--${b.spur}`, { 'balken--geplant': geplant > 0 }]}
                 id={`lb-${b.id}`}
                 data-balken={b.id}
+                data-farbe={b.farbe}
                 aria-expanded="false"
                 aria-controls="laufbahn-detail"
                 tabindex={i === 0 ? 0 : -1}
@@ -235,7 +241,7 @@ const koennenAnker = (gid: string) => `${ankerPfad('koennen', lang)}-${gid}`;
   </div>
 
   <div class="laufbahn__liste" data-laufbahn-liste>
-    <h3 class="laufbahn__liste-titel">{t('laufbahn.spur.arbeit')}</h3>
+    <h3 class="laufbahn__liste-titel marke" data-farbe={farbe('arbeit')}>{t('laufbahn.spur.arbeit')}</h3>
     <ol class="eintraege">
       {
         stationen.map((s) => (
@@ -254,7 +260,7 @@ const koennenAnker = (gid: string) => `${ankerPfad('koennen', lang)}-${gid}`;
         ))
       }
     </ol>
-    <h3 class="laufbahn__liste-titel">{t('laufbahn.spur.ausbildung')}</h3>
+    <h3 class="laufbahn__liste-titel marke" data-farbe={farbe('ausbildung')}>{t('laufbahn.spur.ausbildung')}</h3>
     <ol class="eintraege">
       {
         ausbildung.map((a) => (
@@ -275,7 +281,7 @@ const koennenAnker = (gid: string) => `${ankerPfad('koennen', lang)}-${gid}`;
           <li class="eintrag" id={`lbl-projekt-${p.id}`} data-eintrag={`projekt-${p.id}`}>
             <p class="eintrag__zeit">{p.jahr}</p>
             <div class="eintrag__inhalt">
-              <h4>
+              <h4 class="marke" data-farbe={farbe(p.id)}>
                 {p.id === 'website' ? p.titel[lang] : <a href={projektPfad(p.id as ProjektId, lang)}>{p.titel[lang]}</a>}
               </h4>
             </div>

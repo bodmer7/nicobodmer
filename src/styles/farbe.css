@@ -1,0 +1,106 @@
+/* Farben mit Bedeutung: data-farbe setzt die Akzent-Variablen für alles
+   darunter. Zuordnung in src/data/farben.ts. Standard ist Signalrot. */
+
+:root {
+  --akzent: var(--signal);
+  --akzent-text: var(--signal-text);
+  --akzent-hell: var(--rot-hell);
+  --auf-akzent: #FFFFFF;
+}
+
+[data-farbe="blau"] {
+  --akzent: var(--blau);
+  --akzent-text: var(--blau-text);
+  --akzent-hell: var(--blau-hell);
+  --auf-akzent: #FFFFFF;
+}
+
+[data-farbe="gruen"] {
+  --akzent: var(--gruen);
+  --akzent-text: var(--gruen-text);
+  --akzent-hell: var(--gruen-hell);
+  --auf-akzent: #FFFFFF;
+}
+
+[data-farbe="orange"] {
+  --akzent: var(--orange);
+  --akzent-text: var(--orange-text);
+  --akzent-hell: var(--orange-hell);
+  --auf-akzent: #141619;
+}
+
+[data-farbe="rosa"] {
+  --akzent: var(--rosa);
+  --akzent-text: var(--rosa-text);
+  --akzent-hell: var(--rosa-hell);
+  --auf-akzent: #FFFFFF;
+}
+
+[data-farbe="gelb"] {
+  --akzent: var(--gelb);
+  --akzent-text: var(--gelb-text);
+  --akzent-hell: var(--gelb-hell);
+  --auf-akzent: #141619;
+}
+
+[data-farbe="rot"] {
+  --akzent: var(--signal);
+  --akzent-text: var(--signal-text);
+  --akzent-hell: var(--rot-hell);
+  --auf-akzent: #FFFFFF;
+}
+
+[data-farbe="neutral"] {
+  --akzent: var(--ink);
+  --akzent-text: var(--ink);
+  --akzent-hell: var(--surface);
+  --auf-akzent: var(--paper);
+}
+
+/* Farbmarke: kleines Quadrat vor Titeln und Beschriftungen */
+.marke::before {
+  content: "";
+  display: inline-block;
+  flex: none;
+  width: 0.62em;
+  height: 0.62em;
+  margin-right: 0.45em;
+  background: var(--akzent);
+  vertical-align: 0.02em;
+}
+
+/* Bänder über die volle Breite */
+
+.band {
+  padding-block: clamp(64px, 9vw, 128px);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* Helles Band in der Tönung der Farbe (Über mich, Fallstudien) */
+.band--hell {
+  background: var(--akzent-hell);
+}
+
+/* Kräftiges Band: Die Tokens werden im Band umgestellt, damit Buttons,
+   Schalter, Linien und Links ohne eigene Regeln passen. */
+.band--blau {
+  --paper: #2B45D4;
+  --surface: #3D56DE;
+  --ink: #FFFFFF;
+  --ink-2: #DDE3FF;
+  --line: #7A8CEB;
+  --signal-text: #FFFFFF;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.band--blau ::selection {
+  background: var(--gelb);
+  color: #141619;
+}
+
+::selection {
+  background: var(--gelb);
+  color: #141619;
+}

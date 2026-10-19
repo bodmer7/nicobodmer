@@ -61,7 +61,7 @@
   font-size: clamp(26px, 3vw, 40px);
   margin-bottom: var(--s4);
   padding-bottom: var(--s3);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 3px solid var(--akzent);
 }
 
 .cv__profil { max-width: 68ch; font-size: var(--lead); line-height: 1.45; }
@@ -90,9 +90,11 @@
   .cv__foto { width: 140px; }
 }
 
-.cv__projekte { padding-left: 1.2em; list-style: disc; max-width: 80ch; }
+.cv__projekte { padding-left: 0; list-style: none; max-width: 80ch; }
 
 .cv__projekte li + li { margin-top: var(--s2); }
+
+.cv__projekte .marke { padding-left: 1.07em; text-indent: -1.07em; }
 
 .cv__koennen {
   display: grid;

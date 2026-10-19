@@ -37,6 +37,8 @@
 .laufbahn__spur {
   grid-column: 1;
   align-self: start;
+  display: flex;
+  align-items: center;
   padding-top: 10px;
   font-size: var(--label);
   font-weight: 600;
@@ -99,13 +101,21 @@
   text-overflow: ellipsis;
 }
 
-.balken--ausbildung {
-  background: var(--surface);
-  color: var(--ink);
+/* Arbeit: volle Fläche in Blau. Ausbildung und Projekte: Tönung mit
+   kräftiger Kante links, damit die Beschriftung auch über dem geplanten
+   (gestrichelten) Teil lesbar bleibt. */
+.balken--arbeit {
+  background: var(--akzent);
+  border-color: var(--akzent);
+  border-right: 2px solid var(--paper);
+  color: var(--auf-akzent);
 }
 
+.balken--ausbildung,
 .balken--projekte {
-  background: var(--paper);
+  background: var(--akzent-hell);
+  border-color: var(--akzent);
+  border-left-width: 4px;
   color: var(--ink);
 }
 
@@ -119,7 +129,7 @@
   bottom: -1px;
   right: 0;
   width: var(--geplant);
-  border: 1px dashed var(--ink-2);
+  border: 1px dashed var(--akzent-text);
   border-left: 0;
   background: var(--paper);
 }
@@ -127,6 +137,20 @@
 .balken__text { position: relative; z-index: 1; }
 
 .balken:hover { background: var(--ink-2); border-color: var(--ink-2); color: var(--paper); }
+
+.balken--arbeit:hover {
+  background: color-mix(in srgb, var(--akzent) 80%, #000);
+  border-color: color-mix(in srgb, var(--akzent) 80%, #000);
+  border-right-color: var(--paper);
+  color: var(--auf-akzent);
+}
+
+.balken--ausbildung:hover,
+.balken--projekte:hover {
+  background: color-mix(in srgb, var(--akzent) 28%, var(--akzent-hell));
+  border-color: var(--akzent);
+  color: var(--ink);
+}
 
 .balken[aria-expanded="true"] {
   outline: 2px solid var(--ink);
@@ -162,6 +186,8 @@
 .laufbahn:has(#laufbahn-liste:checked) .laufbahn__diagramm-teil { display: none; }
 
 .laufbahn__liste-titel {
+  display: flex;
+  align-items: center;
   margin-top: var(--s7);
   margin-bottom: var(--s3);
 }

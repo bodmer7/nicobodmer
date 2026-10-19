@@ -16,6 +16,9 @@
 
 .labor__buehne {
   container-type: inline-size;
+  background: var(--akzent-hell);
+  border-color: transparent;
+  transition: background-color var(--t-ui) var(--ease);
   position: relative;
   display: flex;
   justify-content: center;
@@ -97,7 +100,7 @@
 }
 
 .labor__griff:hover .labor__griff-linie,
-.labor__griff:focus-visible .labor__griff-linie { background: var(--signal); }
+.labor__griff:focus-visible .labor__griff-linie { background: var(--akzent); }
 
 .labor__breite {
   position: absolute;

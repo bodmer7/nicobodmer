@@ -27,4 +27,6 @@
   .sektion { margin-top: 24pt; }
 
   img { break-inside: avoid; }
+
+  .band { background: #fff !important; color: #000 !important; padding-block: 0; }
 }

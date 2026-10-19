@@ -19,11 +19,21 @@
 .projekt__link {
   display: grid;
   gap: var(--s2);
-  padding-block: var(--s5) var(--s6);
+  padding: var(--s5) var(--s4) var(--s6);
+  margin-inline: calc(-1 * var(--s4));
   text-decoration: none;
+  transition: background-color var(--t-ui) var(--ease);
 }
 
 .projekt__link:hover { color: inherit; }
+
+/* Zeile in der Tönung der Projektfarbe, solange sie gewählt ist */
+a.projekt__link:hover,
+a.projekt__link:focus-visible { background: var(--akzent-hell); }
+
+@media (min-width: 1024px) {
+  .projekt.ist-aktiv a.projekt__link { background: var(--akzent-hell); }
+}
 
 .projekt__kopf {
   display: flex;
@@ -46,7 +56,7 @@
 
 a.projekt__link:hover .projekt__titel,
 a.projekt__link:focus-visible .projekt__titel {
-  color: var(--signal-text);
+  color: var(--akzent-text);
   text-decoration-color: currentColor;
   text-decoration-thickness: 2px;
 }
@@ -63,13 +73,23 @@ a.projekt__link:focus-visible .projekt__titel {
 
 .projekt__link--still .projekt__titel { color: var(--ink-2); }
 
+/* Noch ohne Farbe: leeres Quadrat */
+.projekt__link--still .marke::before {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--ink-2);
+}
+
 .projekt__bild-mobil { display: block; margin-bottom: var(--s3); }
+
+.projekt__bild-mobil {
+  padding: var(--s4);
+  background: var(--akzent-hell);
+}
 
 .projekt__bild-mobil img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border: 1px solid var(--line);
   background: var(--surface);
 }
 
@@ -94,7 +114,18 @@ a.projekt__link:focus-visible .projekt__titel {
     position: relative;
     aspect-ratio: 4 / 3;
     overflow: hidden;
+    padding: clamp(16px, 2.2vw, 32px);
+    border: 0;
+    background: var(--akzent-hell);
+    transition: background-color var(--t-ui) var(--ease);
   }
+
+  /* Die Bühne nimmt die Farbe des gezeigten Projekts an */
+  .projekte__vorschau-innen:has(.ist-aktiv[data-farbe="blau"]) { --akzent-hell: var(--blau-hell); }
+  .projekte__vorschau-innen:has(.ist-aktiv[data-farbe="gruen"]) { --akzent-hell: var(--gruen-hell); }
+  .projekte__vorschau-innen:has(.ist-aktiv[data-farbe="orange"]) { --akzent-hell: var(--orange-hell); }
+  .projekte__vorschau-innen:has(.ist-aktiv[data-farbe="rosa"]) { --akzent-hell: var(--rosa-hell); }
+  .projekte__vorschau-innen:has(.ist-aktiv[data-farbe="gelb"]) { --akzent-hell: var(--gelb-hell); }
 
   .projekte__bild {
     display: none;

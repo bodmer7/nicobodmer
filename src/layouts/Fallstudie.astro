@@ -20,6 +20,7 @@ import { fallstudien, istExtern, trennbar, type Projekt } from '../data/projekte
 import type { ProjektId } from '../data/profil';
 import { eigeneWerte } from '../data/messwerte';
 import type { ImageMetadata } from 'astro';
+import { farbe } from '../data/farben';
 
 interface Props {
   lang: Lang;
@@ -105,71 +106,73 @@ const titel = `${d.title} | Nico Bodmer`;
   ogBildAlt={hero?.alt}
   messKey={id === 'odera' ? (lang === 'de' ? 'fall-odera' : 'fall-odera-en') : undefined}
 >
-  <article class="fall">
-    <header class="fall__kopf wrap">
-      <p class="fall__zurueck"><a class="textlink" href={ankerPfad('arbeiten', lang)}>{t('fall.zurueck')}</a></p>
-      <h1 class="fall__titel" style={`view-transition-name:vt-titel-${id}`}>{trennbar(d.title)}</h1>
-      <p class="lead fall__kurz">{d.kurz}</p>
-      <dl class="fall__eckdaten">
-        <div>
-          <dt>{t('fall.jahr')}</dt>
-          <dd class="ziffern">{d.jahr}</dd>
-        </div>
-        <div>
-          <dt>{t('fall.rolle')}</dt>
-          <dd>{d.rolle}</dd>
-        </div>
-        <div>
-          <dt>{t('fall.typ')}</dt>
-          <dd>{d.typ}</dd>
-        </div>
-        {
-          d.technik.length > 0 && (
-            <div>
-              <dt>{t('fall.technik')}</dt>
-              <dd>{d.technik.join(', ')}</dd>
-            </div>
-          )
-        }
-        {
-          d.links.length > 0 && (
-            <div>
-              <dt>{t('fall.links')}</dt>
-              <dd>
-                <ul class="fall__links">
-                  {d.links.map((l) => (
-                    <li>
-                      <a href={l.url}>
-                        {l.label}
-                        {istExtern(l.url) && <span class="sr-only"> {t('fall.extern')}</span>}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
-          )
-        }
-      </dl>
-    </header>
-
-    {
-      hero && (
-        <figure class="fall__hero wrap">
-          <div class="buehne fall__hero-buehne">
-            <Bild
-              src={hero.datei}
-              alt={hero.alt}
-              widths={[720, 1080, 1600, 2200]}
-              sizes="(min-width: 1400px) 1360px, 96vw"
-              prioritaet
-              style={`view-transition-name:vt-bild-${id};object-position:${d.position}`}
-            />
+  <article class="fall" data-farbe={farbe(id)}>
+    <div class="fall__band band band--hell">
+      <header class="fall__kopf wrap">
+        <p class="fall__zurueck"><a class="textlink" href={ankerPfad('arbeiten', lang)}>{t('fall.zurueck')}</a></p>
+        <h1 class="fall__titel" style={`view-transition-name:vt-titel-${id}`}>{trennbar(d.title)}</h1>
+        <p class="lead fall__kurz">{d.kurz}</p>
+        <dl class="fall__eckdaten">
+          <div>
+            <dt>{t('fall.jahr')}</dt>
+            <dd class="ziffern">{d.jahr}</dd>
           </div>
-          <figcaption class="bildunterschrift">{hero.unterschrift}</figcaption>
-        </figure>
-      )
-    }
+          <div>
+            <dt>{t('fall.rolle')}</dt>
+            <dd>{d.rolle}</dd>
+          </div>
+          <div>
+            <dt>{t('fall.typ')}</dt>
+            <dd>{d.typ}</dd>
+          </div>
+          {
+            d.technik.length > 0 && (
+              <div>
+                <dt>{t('fall.technik')}</dt>
+                <dd>{d.technik.join(', ')}</dd>
+              </div>
+            )
+          }
+          {
+            d.links.length > 0 && (
+              <div>
+                <dt>{t('fall.links')}</dt>
+                <dd>
+                  <ul class="fall__links">
+                    {d.links.map((l) => (
+                      <li>
+                        <a href={l.url}>
+                          {l.label}
+                          {istExtern(l.url) && <span class="sr-only"> {t('fall.extern')}</span>}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            )
+          }
+        </dl>
+      </header>
+
+      {
+        hero && (
+          <figure class="fall__hero wrap">
+            <div class="buehne fall__hero-buehne">
+              <Bild
+                src={hero.datei}
+                alt={hero.alt}
+                widths={[720, 1080, 1600, 2200]}
+                sizes="(min-width: 1400px) 1360px, 96vw"
+                prioritaet
+                style={`view-transition-name:vt-bild-${id};object-position:${d.position}`}
+              />
+            </div>
+            <figcaption class="bildunterschrift">{hero.unterschrift}</figcaption>
+          </figure>
+        )
+      }
+    </div>
 
     <div class="fall__raster wrap raster">
       <Inhaltsverzeichnis lang={lang} kapitel={kapitel} />
@@ -231,7 +234,7 @@ const titel = `${d.title} | Nico Bodmer`;
       naechstes && naechstes.id !== projekt.id && (
         <nav class="fall__naechstes wrap" aria-labelledby="naechstes-titel">
           <p class="label" id="naechstes-titel">{t('fall.naechstes')}</p>
-          <a class="naechstes" href={projektPfad(naechstes.data.projekt as ProjektId, lang)}>
+          <a class="naechstes" href={projektPfad(naechstes.data.projekt as ProjektId, lang)} data-farbe={farbe(naechstes.data.projekt)}>
             {naechstes.data.bilder[naechstes.data.vorschau] && (
               <Bild
                 src={(naechstes.data.bilder[naechstes.data.vorschau] ?? naechstes.data.bilder[0]).datei}
