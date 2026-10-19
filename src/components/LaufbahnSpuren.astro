@@ -9,7 +9,8 @@ import { useT, type Lang } from '../i18n/ui';
 import { ankerPfad, projektPfad } from '../i18n/routes';
 import {
   stationen,
-  ausbildung,
+  ausbildungLaufbahn as ausbildung,
+  ausbildungOrt,
   eigeneProjekte,
   koennen,
   stand,
@@ -43,7 +44,7 @@ const kurz: Record<string, { de: string; en: string }> = {
   'support-lenovo': { de: 'Support Lenovo', en: 'Support Lenovo' },
   'help-desk': { de: 'IT Help Desk', en: 'IT Help Desk' },
   'bsc-hwz': { de: 'BSc HWZ', en: 'BSc HWZ' },
-  efz: { de: 'Platform Developer EFZ', en: 'Platform Developer EFZ' },
+  efz: { de: 'Informatiker EFZ', en: 'Computer Scientist (VET)' },
   bm: { de: 'Berufsmaturität', en: 'Vocational baccalaureate' },
 };
 
@@ -96,9 +97,9 @@ const ausbildungZeile: Record<string, number> = { efz: 3, 'bsc-hwz': 3, bm: 4 };
     ende,
     geplantAb: a.bis === null && a.geplantBis ? HEUTE : undefined,
     label: kurz[a.id][lang],
-    voll: `${a.titel[lang]}, ${a.schule[lang]}, ${zeit}${a.zusatz ? `, ${a.zusatz[lang]}` : ''}`,
+    voll: `${a.titel[lang]}, ${ausbildungOrt(a, lang)}, ${zeit}`,
     titel: a.titel[lang],
-    unter: `${a.schule[lang]}${a.zusatz ? `, ${a.zusatz[lang]}` : ''}`,
+    unter: ausbildungOrt(a, lang),
     zeit,
     punkte: [],
     gruppen: [],
@@ -261,7 +262,7 @@ const koennenAnker = (gid: string) => `${ankerPfad('koennen', lang)}-${gid}`;
             <p class="eintrag__zeit">{ausbildungZeitraum(a, lang)}</p>
             <div class="eintrag__inhalt">
               <h4>{a.titel[lang]}</h4>
-              <p class="neben">{`${a.schule[lang]}${a.zusatz ? `, ${a.zusatz[lang]}` : ''}`}</p>
+              <p class="neben">{ausbildungOrt(a, lang)}</p>
             </div>
           </li>
         ))

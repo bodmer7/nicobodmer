@@ -4,7 +4,7 @@ import Bild from './Bild.astro';
 import portrait from '../assets/fotos/contact-portrait.webp';
 import { useT, type Lang } from '../i18n/ui';
 import { ankerPfad, pfad, projektPfad } from '../i18n/routes';
-import { person, gerade } from '../data/profil';
+import { person, gerade, ziel } from '../data/profil';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -22,7 +22,7 @@ const varianten = [
   },
   {
     id: 'stelle',
-    text: t('hero.intro.stelle'),
+    text: `${t('hero.intro.stelle')} ${ziel[lang]}`,
     buttons: [
       { href: pfad('lebenslauf', lang), text: t('hero.btn.lebenslaufAnsehen'), art: 'signal' },
       { href: ankerPfad('laufbahn', lang), text: t('hero.btn.laufbahn'), art: 'sekundaer' },

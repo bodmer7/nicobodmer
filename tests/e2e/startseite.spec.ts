@@ -241,3 +241,31 @@ test('Hero-Auftritt nur einmal pro Sitzung, ohne Layoutverschiebung', async ({ p
   await page.goto('/');
   await expect(page.locator('html')).not.toHaveAttribute('data-auftritt', '');
 });
+
+test('Können: Arbeitsweise mit eigenen Nachweisen, Zeitmanagement markiert parallele Spuren', async ({ page }) => {
+  await beobachten(page);
+  await page.goto('/');
+  const zeit = page.locator('.begriff', { hasText: 'Zeitmanagement' });
+  await zeit.click();
+  const panel = page.locator(`#${await zeit.getAttribute('aria-controls')}`);
+  await expect(panel).toBeVisible();
+  await expect(panel).toContainText('Lehre und Berufsmaturität parallel');
+  for (const id of ['efz', 'bm', 'tech-seller', 'bsc-hwz', 'projekt-odera']) {
+    await expect(page.locator(`[data-balken="${id}"]`)).toHaveClass(/ist-markiert/);
+  }
+  await page.keyboard.press('Escape');
+  const prozess = page.locator('.begriff', { hasText: 'Prozessoptimierung' });
+  await prozess.click();
+  await expect(page.locator(`#${await prozess.getAttribute('aria-controls')}`)).toContainText('Web Development & Deployment');
+  await expect(page.locator('[data-balken="web-dev"]')).toHaveClass(/ist-markiert/);
+  await expect(page.locator('[data-balken="help-desk"]')).not.toHaveClass(/ist-markiert/);
+});
+
+test('Über mich zeigt die Hobbys, Hero die neue Rollenzeile', async ({ page }) => {
+  await beobachten(page);
+  await page.goto('/');
+  await expect(page.locator('.ueber__hobbies')).toContainText('Eishockey (als Fan)');
+  await expect(page.locator('.hero__rolle')).toContainText('Informatiker EFZ (Plattformentwicklung)');
+  await page.locator('label:has(#fuer-stelle)').click();
+  await expect(page.locator('[data-variante="stelle"] .hero__intro')).toContainText('Mein Ziel:');
+});

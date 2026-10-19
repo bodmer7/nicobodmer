@@ -25,8 +25,8 @@ const t = useT(lang);
 const titel = lang === 'de' ? 'Nico Bodmer | Websites, Apps und technischer Vertrieb' : 'Nico Bodmer | Websites, apps and technical sales';
 const beschreibung =
   lang === 'de'
-    ? 'Nico Bodmer aus dem Raum Zürich: Platform Developer EFZ, technischer Vertrieb für Data & AI, Websites für kleine Unternehmen mit ODERA Design.'
-    : 'Nico Bodmer from the Zurich area: platform developer, technical sales for data & AI, websites for small businesses with ODERA Design.';
+    ? 'Nico Bodmer, Raum Zürich: Informatiker EFZ (Plattformentwicklung), technischer Vertrieb für Data & AI, Websites für kleine Unternehmen mit ODERA Design.'
+    : 'Nico Bodmer, Zurich area: computer scientist (platform development), technical sales for data & AI, websites for small businesses with ODERA Design.';
 
 const jsonLd = [
   {
@@ -37,7 +37,7 @@ const jsonLd = [
     url: person.website,
     image: 'https://nico-bodmer.ch/og.jpg',
     email: `mailto:${person.email}`,
-    jobTitle: lang === 'de' ? 'Platform Developer EFZ' : 'Platform Developer',
+    jobTitle: lang === 'de' ? 'Informatiker EFZ, Fachrichtung Plattformentwicklung' : 'Computer Scientist (Swiss federal VET diploma), platform development',
     sameAs: [person.linkedin, person.github],
     knowsLanguage: ['de', 'en', 'fr'],
   },

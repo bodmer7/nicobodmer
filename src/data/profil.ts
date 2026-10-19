@@ -12,10 +12,22 @@ export type Monat = `${number}-${string}`;
 
 export type ProjektId = 'odera' | 'musterprojekte' | 'geo-quiz' | 'morgen-check-in';
 
-export type NachweisRef =
+export type NachweisRef = (
   | { art: 'station'; id: string }
+  | { art: 'ausbildung'; id: string }
   | { art: 'projekt'; id: ProjektId }
-  | { art: 'website' };
+  | { art: 'website' }
+  /** Verweis auf die Laufbahn als Ganzes, markiert mehrere Balken */
+  | { art: 'laufbahn'; ids: string[]; text: Text }
+) & {
+  /** Präzisierung, was genau den Nachweis liefert */
+  zusatz?: Text;
+};
+
+export interface Begriff extends Text {
+  /** Eigene Nachweise; sonst gelten die der Gruppe */
+  nachweise?: NachweisRef[];
+}
 
 export interface Station {
   id: string;
@@ -30,10 +42,12 @@ export interface Station {
 export interface Ausbildung {
   id: string;
   titel: Text;
-  schule: Text;
+  schule?: Text;
   zusatz?: Text;
   von: Monat;
   bis: Monat | null;
+  /** Nur im Lebenslauf, nicht im Laufbahn-Diagramm */
+  nurLebenslauf?: boolean;
   /** Anzeige des Zeitraums, wenn er von der Monatsangabe abweicht */
   zeitraum?: Text;
   /** Geplantes Ende für das Diagramm (gestrichelt nach «Heute») */
@@ -49,7 +63,7 @@ export interface EigenesProjekt {
 export interface KoennenGruppe {
   id: string;
   titel: Text;
-  begriffe: Text[];
+  begriffe: Begriff[];
   nachweise: NachweisRef[];
 }
 
@@ -63,8 +77,8 @@ export const person = {
   odera: 'https://odera.ch/',
   projektCheck: 'https://odera.ch/projekt-check/',
   rollenzeile: {
-    de: 'Platform Developer EFZ. Technischer Vertrieb für Data & AI. Websites mit ODERA Design.',
-    en: 'Platform Developer (Swiss federal VET diploma). Technical sales for data & AI. Websites with ODERA Design.',
+    de: 'Informatiker EFZ (Plattformentwicklung). Technischer Vertrieb für Data & AI. Websites mit ODERA Design.',
+    en: 'Computer Scientist, platform development (Swiss federal VET diploma). Technical sales for data & AI. Websites with ODERA Design.',
   } satisfies Text,
   sprachen: [
     { de: 'Deutsch (Muttersprache)', en: 'German (native)' },
@@ -77,6 +91,12 @@ export const person = {
 export const stand = {
   monat: '2026-10' as Monat,
   text: { de: 'Oktober 2026', en: 'October 2026' } satisfies Text,
+};
+
+/** Berufliches Ziel: Lebenslauf (Kurzprofil) und Hero-Option «Eine offene Stelle» */
+export const ziel: Text = {
+  de: 'Mein Ziel: mich in Richtung Business, IT und projektorientierte Rollen weiterzuentwickeln.',
+  en: 'My goal is to grow further into business, IT and project-oriented roles.',
 };
 
 export const gerade: Text[] = [
@@ -101,7 +121,10 @@ export const stationen: Station[] = [
         de: 'Lösungsentwicklung von der Anforderungsanalyse bis zum technischen Konzept',
         en: 'Solution design from requirements analysis to the technical concept',
       },
-      { de: 'Zusammenarbeit mit cross-funktionalen Teams', en: 'Working with cross-functional teams' },
+      {
+        de: 'Zusammenarbeit mit cross-funktionalen Teams bei Kundenprojekten',
+        en: 'Working with cross-functional teams on customer projects',
+      },
       {
         de: 'Mitwirkung an Events und Kundenanlässen (u. a. TechXchange)',
         en: 'Supporting events and customer sessions (including TechXchange)',
@@ -123,6 +146,10 @@ export const stationen: Station[] = [
       {
         de: 'Optimierung bestehender interner Anwendungen für bessere Bedienbarkeit',
         en: 'Improving existing internal applications for better usability',
+      },
+      {
+        de: 'Enge Zusammenarbeit mit verschiedenen Teams bei der Umsetzung von Projekten',
+        en: 'Close collaboration with various teams on implementing projects',
       },
     ],
   },
@@ -147,10 +174,13 @@ export const stationen: Station[] = [
     punkte: [
       { de: 'Level-1- und Level-2-Support für interne Mitarbeitende', en: 'Level 1 and level 2 support for internal staff' },
       {
-        de: 'Geräte-Management: Setup, Migration und Datenlöschung von Mac- und Windows-Notebooks',
-        en: 'Device management: setup, migration and data wiping of Mac and Windows laptops',
+        de: 'Geräte-Management: Setup, Migration und Datenlöschung von Mac- und Windows-Notebooks für neue und austretende Mitarbeitende',
+        en: 'Device management: setup, migration and data wiping of Mac and Windows laptops for new and departing staff',
       },
-      { de: 'Wöchentliche Kurzpräsentationen im Team', en: 'Weekly short presentations for the team' },
+      {
+        de: 'Wöchentliche Kurzpräsentationen von 5 bis 10 Minuten zu IT-Themen im Austausch mit meinem Berufsbildner',
+        en: 'Weekly 5 to 10 minute presentations on IT topics, in exchange with my vocational trainer',
+      },
     ],
   },
 ];
@@ -170,7 +200,10 @@ export const ausbildung: Ausbildung[] = [
   },
   {
     id: 'efz',
-    titel: { de: 'Platform Developer EFZ', en: 'Platform Developer (Swiss federal VET diploma)' },
+    titel: {
+      de: 'Informatiker EFZ, Fachrichtung Plattformentwicklung',
+      en: 'Computer Scientist (Swiss federal VET diploma), platform development',
+    },
     schule: { de: 'Technische Berufsschule Zürich', en: 'Technical Vocational School Zurich' },
     von: '2021-08',
     bis: '2025-07',
@@ -183,6 +216,14 @@ export const ausbildung: Ausbildung[] = [
     von: '2021-08',
     bis: '2025-07',
     zeitraum: { de: '2021 bis 2025', en: '2021 to 2025' },
+  },
+  {
+    id: 'bezirksschule',
+    titel: { de: 'Bezirksschule Mutschellen', en: 'Bezirksschule Mutschellen (lower secondary school)' },
+    von: '2018-08',
+    bis: '2021-07',
+    zeitraum: { de: '2018 bis 2021', en: '2018 to 2021' },
+    nurLebenslauf: true,
   },
 ];
 
@@ -229,7 +270,7 @@ export const koennen: KoennenGruppe[] = [
     ],
     nachweise: [
       { art: 'projekt', id: 'morgen-check-in' },
-      { art: 'website' },
+      { art: 'website', zusatz: { de: 'Screenshots und Messungen per Playwright', en: 'screenshots and measurements with Playwright' } },
     ],
   },
   {
@@ -243,7 +284,7 @@ export const koennen: KoennenGruppe[] = [
     ],
     nachweise: [
       { art: 'station', id: 'tech-seller' },
-      { art: 'projekt', id: 'odera' },
+      { art: 'projekt', id: 'odera', zusatz: { de: 'Projekt-Check, Angebote', en: 'project check, proposals' } },
     ],
   },
   {
@@ -253,24 +294,89 @@ export const koennen: KoennenGruppe[] = [
       { de: 'Level-1- und Level-2-Support', en: 'Level 1 and level 2 support' },
       { de: 'Geräte-Management für Mac und Windows', en: 'Device management for Mac and Windows' },
       { de: 'IT- und Security-Schulungen', en: 'IT and security training' },
+      { de: 'Ticketing-Systeme', en: 'Ticketing systems' },
+      {
+        de: 'Prozessoptimierung',
+        en: 'Process optimisation',
+        nachweise: [
+          {
+            art: 'station',
+            id: 'web-dev',
+            zusatz: { de: 'Optimierung interner Anwendungen', en: 'optimising internal applications' },
+          },
+        ],
+      },
     ],
     nachweise: [
       { art: 'station', id: 'help-desk' },
       { art: 'station', id: 'support-lenovo' },
     ],
   },
+  {
+    id: 'arbeitsweise',
+    titel: { de: 'Arbeitsweise', en: 'Way of working' },
+    begriffe: [
+      {
+        de: 'Kommunikation',
+        en: 'Communication',
+        nachweise: [
+          { art: 'station', id: 'help-desk', zusatz: { de: 'wöchentliche Kurzpräsentationen', en: 'weekly short presentations' } },
+          {
+            art: 'station',
+            id: 'support-lenovo',
+            zusatz: { de: 'IT- und Security-Schulungen an Oberstufenschulen', en: 'IT and security training at secondary schools' },
+          },
+          { art: 'station', id: 'tech-seller', zusatz: { de: 'Kundenanlässe', en: 'customer events' } },
+        ],
+      },
+      {
+        de: 'Teamarbeit',
+        en: 'Teamwork',
+        nachweise: [
+          { art: 'station', id: 'tech-seller', zusatz: { de: 'cross-funktionale Teams', en: 'cross-functional teams' } },
+          { art: 'station', id: 'web-dev', zusatz: { de: 'Zusammenarbeit mit verschiedenen Teams', en: 'collaboration with various teams' } },
+        ],
+      },
+      {
+        de: 'Zeitmanagement',
+        en: 'Time management',
+        nachweise: [
+          {
+            art: 'laufbahn',
+            ids: ['efz', 'bm', 'tech-seller', 'bsc-hwz', 'projekt-odera'],
+            text: {
+              de: 'Laufbahn: Lehre und Berufsmaturität parallel 2021 bis 2025. Heute Arbeit, berufsbegleitendes Studium und ODERA Design parallel',
+              en: 'Career: apprenticeship and vocational baccalaureate in parallel from 2021 to 2025. Today work, part-time studies and ODERA Design in parallel',
+            },
+          },
+        ],
+      },
+      {
+        de: 'Lernbereitschaft',
+        en: 'Willingness to learn',
+        nachweise: [
+          { art: 'ausbildung', id: 'bm' },
+          { art: 'ausbildung', id: 'bsc-hwz', zusatz: { de: 'berufsbegleitend', en: 'part-time' } },
+        ],
+      },
+      {
+        de: 'Kreativität',
+        en: 'Creativity',
+        nachweise: [{ art: 'projekt', id: 'musterprojekte', zusatz: { de: 'zwei eigenständige Auftritte', en: 'two distinct identities' } }],
+      },
+    ],
+    nachweise: [],
+  },
 ];
-
-/** Präzisierung einzelner Nachweise (z. B. wofür diese Website steht). */
-export const nachweisZusatz: Partial<Record<string, Text>> = {
-  'daten:website': { de: 'Screenshots und Messungen per Playwright', en: 'screenshots and measurements with Playwright' },
-  'vertrieb:odera': { de: 'Projekt-Check, Angebote', en: 'project check, proposals' },
-};
 
 export const weitereWerkzeuge: string[] = ['Tailwind', 'Supabase'];
 
 /** «Ausserhalb der Arbeit»: Der Block erscheint nur, wenn hier etwas steht. */
-export const hobbies: Text[] = [];
+export const hobbies: Text[] = [
+  { de: 'Krafttraining', en: 'Strength training' },
+  { de: 'Eishockey (als Fan)', en: 'Ice hockey (as a fan)' },
+  { de: 'Snowboarden', en: 'Snowboarding' },
+];
 
 // Hilfsfunktionen ---------------------------------------------------------
 
@@ -302,6 +408,14 @@ export function zeitraumLang(von: Monat, bis: Monat | null, lang: Lang): string 
   if (bis === null) return `${lang === 'de' ? 'seit' : 'since'} ${langMonat(von, lang)}`;
   return `${langMonat(von, lang)} ${lang === 'de' ? 'bis' : 'to'} ${langMonat(bis, lang)}`;
 }
+
+/** Schule und Zusatz als eine Zeile, z. B. «HWZ ..., berufsbegleitend, 8 Semester». */
+export function ausbildungOrt(a: Ausbildung, lang: Lang): string {
+  return [a.schule?.[lang], a.zusatz?.[lang]].filter(Boolean).join(', ');
+}
+
+/** Ausbildungen für das Laufbahn-Diagramm (ohne «nur Lebenslauf»). */
+export const ausbildungLaufbahn = ausbildung.filter((a) => !a.nurLebenslauf);
 
 export function ausbildungZeitraum(a: Ausbildung, lang: Lang): string {
   return a.zeitraum ? a.zeitraum[lang] : zeitraumKurz(a.von, a.bis, lang);

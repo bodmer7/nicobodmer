@@ -15,9 +15,15 @@ if (box) {
     markierungenLoeschen();
     panel.querySelectorAll<HTMLElement>('[data-ziel]').forEach((li) => {
       const [art, id] = (li.dataset.ziel ?? '').split(':');
-      if (art === 'station') {
+      if (art === 'station' || art === 'ausbildung') {
         document.querySelector(`[data-balken="${id}"]`)?.classList.add('ist-markiert');
         document.querySelector(`[data-eintrag="${id}"]`)?.classList.add('ist-markiert');
+      } else if (art === 'laufbahn') {
+        // Mehrere Balken zugleich, z. B. parallele Spuren beim Zeitmanagement
+        id.split(',').forEach((b) => {
+          document.querySelector(`[data-balken="${b}"]`)?.classList.add('ist-markiert');
+          document.querySelector(`[data-eintrag="${b}"]`)?.classList.add('ist-markiert');
+        });
       } else if (art === 'projekt') {
         document.querySelector(`[data-projekt="${id}"]`)?.classList.add('ist-markiert');
         document.querySelector(`[data-balken="projekt-${id}"]`)?.classList.add('ist-markiert');

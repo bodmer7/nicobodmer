@@ -27,7 +27,7 @@ img{position:absolute;right:0;top:0;width:420px;height:630px;object-fit:cover;ob
 </style></head><body>
 <h1 class="name">Nico<br>Bodmer</h1>
 <div class="signal"></div>
-<p class="rolle">Platform Developer EFZ. Technischer Vertrieb für Data &amp; AI. Websites mit ODERA Design.</p>
+<p class="rolle">Informatiker EFZ (Plattformentwicklung). Technischer Vertrieb für Data&nbsp;&amp;&nbsp;AI. Websites mit ODERA Design.</p>
 <img src="${foto}" alt="">
 </body></html>`;
 

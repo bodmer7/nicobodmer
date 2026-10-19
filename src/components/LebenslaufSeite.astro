@@ -9,7 +9,7 @@ import '../styles/components/lebenslauf.css';
 import portrait from '../assets/fotos/contact-portrait.webp';
 import { useT, type Lang } from '../i18n/ui';
 import { seiten, projektPfad } from '../i18n/routes';
-import { person, stationen, ausbildung, koennen, weitereWerkzeuge, zeitraumKurz, ausbildungZeitraum } from '../data/profil';
+import { person, stationen, ausbildung, koennen, weitereWerkzeuge, hobbies, ziel, zeitraumKurz, ausbildungZeitraum, ausbildungOrt } from '../data/profil';
 import { projekte } from '../data/projekte';
 import type { ProjektId } from '../data/profil';
 
@@ -51,7 +51,7 @@ const beschreibung =
 
     <section class="cv__block" aria-labelledby="cv-profil">
       <h2 id="cv-profil">{t('cv.profil')}</h2>
-      <p class="cv__profil">{t('cv.profilText')}</p>
+      <p class="cv__profil">{t('cv.profilText')} {ziel[lang]}</p>
     </section>
 
     <section class="cv__block" aria-labelledby="cv-erfahrung">
@@ -85,7 +85,7 @@ const beschreibung =
               <p class="cv__zeit ziffern">{ausbildungZeitraum(a, lang)}</p>
               <div>
                 <h3>{a.titel[lang]}</h3>
-                <p class="neben">{`${a.schule[lang]}${a.zusatz ? `, ${a.zusatz[lang]}` : ''}`}</p>
+                {ausbildungOrt(a, lang) && <p class="neben">{ausbildungOrt(a, lang)}</p>}
               </div>
             </li>
           ))
@@ -127,7 +127,16 @@ const beschreibung =
           <dd>{person.sprachen.map((s) => s[lang]).join(', ')}</dd>
         </div>
       </dl>
+      {
+        hobbies.length > 0 && (
+          <p class="cv__zeile">
+            <span class="label">{t('ueber.hobbies')}:</span> {hobbies.map((h) => h[lang]).join(', ')}
+          </p>
+        )
+      }
     </section>
+
+    <p class="cv__referenzen">{t('cv.referenzen')}</p>
   </article>
 </Base>
 

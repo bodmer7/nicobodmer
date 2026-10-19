@@ -36,7 +36,7 @@ const de = {
   'hero.option.stelle': 'Eine offene Stelle',
   'hero.option.website': 'Eine Website für meinen Betrieb',
   'hero.intro.neutral':
-    'Ich habe als Platform Developer gelernt, wie Systeme laufen. Heute arbeite ich im technischen Vertrieb für Data & AI und studiere berufsbegleitend Digital Business & AI an der HWZ. Daneben baue ich mit ODERA Design Websites für kleine Unternehmen.',
+    'Ich habe als Informatiker mit Fachrichtung Plattformentwicklung gelernt, wie Systeme laufen. Heute arbeite ich im technischen Vertrieb für Data & AI und studiere berufsbegleitend Digital Business & AI an der HWZ. Daneben baue ich mit ODERA Design Websites für kleine Unternehmen.',
   'hero.intro.stelle':
     'Technisch ausgebildet, im Vertrieb zuhause. Ich kläre Anforderungen, entwickle Lösungen bis zum technischen Konzept und arbeite an Angeboten mit. Wenn etwas gebaut werden muss, baue ich es selbst.',
   'hero.intro.website':
@@ -165,7 +165,7 @@ const de = {
   'cv.pdf': 'Als PDF speichern',
   'cv.profil': 'Kurzprofil',
   'cv.profilText':
-    'Platform Developer EFZ mit Erfahrung in Support, Deployment und Web-Entwicklung. Heute im technischen Vertrieb für Data & AI: Anforderungen klären, Lösungen bis zum technischen Konzept entwickeln, an Angeboten mitarbeiten. Daneben baue ich mit ODERA Design Websites für kleine Unternehmen und studiere berufsbegleitend Digital Business & AI an der HWZ.',
+    'Informatiker EFZ mit Fachrichtung Plattformentwicklung und Erfahrung in Support, Deployment und Web-Entwicklung. Heute im technischen Vertrieb für Data & AI: Anforderungen klären, Lösungen bis zum technischen Konzept entwickeln, an Angeboten mitarbeiten. Daneben baue ich mit ODERA Design Websites für kleine Unternehmen und studiere berufsbegleitend Digital Business & AI an der HWZ.',
   'cv.erfahrung': 'Berufserfahrung',
   'cv.ausbildung': 'Ausbildung',
   'cv.projekte': 'Projekte',
@@ -173,6 +173,7 @@ const de = {
   'cv.sprachen': 'Sprachen',
   'cv.kontakt': 'Kontakt',
   'cv.fotoAlt': 'Nico Bodmer',
+  'cv.referenzen': 'Referenzen auf Anfrage.',
 
   'recht.titel': 'Impressum und Datenschutz',
 
@@ -214,7 +215,7 @@ const en: Record<UiKey, string> = {
   'hero.option.stelle': 'An open position',
   'hero.option.website': 'A website for my business',
   'hero.intro.neutral':
-    'I trained as a platform developer, so I know how systems run. Today I work in technical sales for data & AI and study Digital Business & AI part-time at HWZ. On the side, I build websites for small businesses with ODERA Design.',
+    'I trained as a computer scientist specialising in platform development, so I know how systems run. Today I work in technical sales for data & AI and study Digital Business & AI part-time at HWZ. On the side, I build websites for small businesses with ODERA Design.',
   'hero.intro.stelle':
     'Technically trained, at home in sales. I clarify requirements, develop solutions up to the technical concept and contribute to proposals. When something needs building, I build it myself.',
   'hero.intro.website':
@@ -343,7 +344,7 @@ const en: Record<UiKey, string> = {
   'cv.pdf': 'Save as PDF',
   'cv.profil': 'Profile',
   'cv.profilText':
-    'Platform developer (Swiss federal VET diploma) with experience in support, deployment and web development. Now in technical sales for data & AI: clarifying requirements, developing solutions up to the technical concept, contributing to proposals. Alongside that I build websites for small businesses with ODERA Design and study Digital Business & AI part-time at HWZ.',
+    'Computer scientist (Swiss federal VET diploma, platform development) with experience in support, deployment and web development. Now in technical sales for data & AI: clarifying requirements, developing solutions up to the technical concept, contributing to proposals. Alongside that I build websites for small businesses with ODERA Design and study Digital Business & AI part-time at HWZ.',
   'cv.erfahrung': 'Work experience',
   'cv.ausbildung': 'Education',
   'cv.projekte': 'Projects',
@@ -351,6 +352,7 @@ const en: Record<UiKey, string> = {
   'cv.sprachen': 'Languages',
   'cv.kontakt': 'Contact',
   'cv.fotoAlt': 'Nico Bodmer',
+  'cv.referenzen': 'References available on request.',
 
   'recht.titel': 'Legal notice and privacy',
 

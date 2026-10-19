@@ -52,6 +52,11 @@ test('Mini-Dashboard: Pfeiltasten zeigen Tag und Wert', async ({ page }) => {
 test('Lebenslauf: Daten aus profil.ts, PDF-Knopf', async ({ page }) => {
   await beobachten(page);
   await page.goto('/lebenslauf/');
-  await expect(page.locator('.cv__eintrag')).toHaveCount(7);
+  await expect(page.locator('.cv__eintrag')).toHaveCount(8);
   await expect(page.locator('[data-drucken]')).toBeVisible();
+  await expect(page.locator('main')).toContainText('Informatiker EFZ, Fachrichtung Plattformentwicklung');
+  await expect(page.locator('main')).toContainText('Bezirksschule Mutschellen');
+  await expect(page.locator('.cv__profil')).toContainText('Mein Ziel:');
+  await expect(page.locator('.cv__referenzen')).toHaveText('Referenzen auf Anfrage.');
+  await expect(page.locator('main')).not.toContainText(/Platform Developer/i);
 });

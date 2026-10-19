@@ -1,12 +1,13 @@
 ---
 /**
  * Können mit Nachweis: Jeder Begriff ist ein Button und öffnet «Eingesetzt in:»
- * mit Links zu den Stationen und Fallstudien. Ohne JavaScript stehen die
- * Nachweise direkt unter den Begriffen.
+ * mit Links zu Stationen, Ausbildung, Laufbahn und Fallstudien. Begriffe mit
+ * eigenen Nachweisen haben ein eigenes Feld, die übrigen teilen sich das Feld
+ * der Gruppe. Ohne JavaScript stehen die Nachweise direkt unter den Begriffen.
  */
 import { useT, type Lang } from '../i18n/ui';
 import { anker, projektPfad } from '../i18n/routes';
-import { koennen, stationen, person, weitereWerkzeuge, nachweisZusatz, type NachweisRef } from '../data/profil';
+import { koennen, stationen, ausbildung, person, weitereWerkzeuge, type NachweisRef, type Begriff } from '../data/profil';
 import { getEntry } from 'astro:content';
 
 interface Props { lang: Lang }
@@ -15,20 +16,48 @@ const t = useT(lang);
 
 const projektTitel = async (id: string) => (await getEntry('projekte', `${lang}/${id}`))?.data.title ?? id;
 
-const nachweis = async (gid: string, n: NachweisRef) => {
-  const zusatz = nachweisZusatz[`${gid}:${n.art === 'website' ? 'website' : n.id}`]?.[lang];
-  if (n.art === 'station') {
-    const s = stationen.find((x) => x.id === n.id)!;
-    return { ziel: `station:${n.id}`, text: s.rolle, unter: s.organisation[lang], href: `#lb-${n.id}`, zusatz };
+interface Eintrag {
+  ziel: string;
+  text: string;
+  unter?: string;
+  href?: string;
+  zusatz?: string;
+}
+
+const eintrag = async (n: NachweisRef): Promise<Eintrag> => {
+  const zusatz = n.zusatz?.[lang];
+  switch (n.art) {
+    case 'station': {
+      const s = stationen.find((x) => x.id === n.id)!;
+      return { ziel: `station:${n.id}`, text: s.rolle, unter: s.organisation[lang], href: `#lb-${n.id}`, zusatz };
+    }
+    case 'ausbildung': {
+      const a = ausbildung.find((x) => x.id === n.id)!;
+      return { ziel: `ausbildung:${n.id}`, text: a.titel[lang], href: `#lb-${n.id}`, zusatz };
+    }
+    case 'projekt':
+      return { ziel: `projekt:${n.id}`, text: await projektTitel(n.id), href: projektPfad(n.id, lang), zusatz };
+    case 'laufbahn':
+      return { ziel: `laufbahn:${n.ids.join(',')}`, text: n.text[lang], href: `#${anker.laufbahn[lang]}`, zusatz };
+    case 'website':
+      return { ziel: 'website', text: t('koennen.website'), zusatz };
   }
-  if (n.art === 'projekt') {
-    return { ziel: `projekt:${n.id}`, text: await projektTitel(n.id), unter: undefined, href: projektPfad(n.id, lang), zusatz };
-  }
-  return { ziel: 'website', text: t('koennen.website'), unter: undefined, href: undefined, zusatz };
 };
 
+const liste = (refs: NachweisRef[]) => Promise.all(refs.map(eintrag));
+
 const gruppen = await Promise.all(
-  koennen.map(async (g) => ({ ...g, liste: await Promise.all(g.nachweise.map((n) => nachweis(g.id, n))) })),
+  koennen.map(async (g) => ({
+    ...g,
+    liste: await liste(g.nachweise),
+    begriffe: await Promise.all(
+      g.begriffe.map(async (b: Begriff, i) => ({
+        ...b,
+        panel: b.nachweise ? `nachweis-${g.id}-${i}` : `nachweis-${g.id}`,
+        eigene: b.nachweise ? await liste(b.nachweise) : null,
+      })),
+    ),
+  })),
 );
 ---
 
@@ -40,22 +69,40 @@ const gruppen = await Promise.all(
         <ul class="begriffe">
           {g.begriffe.map((b) => (
             <li>
-              <button class="begriff" type="button" aria-expanded="false" aria-controls={`nachweis-${g.id}`} data-begriff={g.id}>
+              <button class="begriff" type="button" aria-expanded="false" aria-controls={b.panel} data-begriff={g.id}>
                 {b[lang]}
               </button>
             </li>
           ))}
         </ul>
-        <div class="nachweis" id={`nachweis-${g.id}`} data-nachweis={g.id}>
-          <p class="label">{t('koennen.eingesetzt')}</p>
-          <ul>
-            {g.liste.map((n) => (
-              <li data-ziel={n.ziel}>
-                {n.href ? <a href={n.href}>{n.text}</a> : <span>{n.text}</span>}{n.unter && <span class="neben">, {n.unter}</span>}{n.zusatz && <span class="neben"> ({n.zusatz})</span>}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {g.liste.length > 0 && (
+          <div class="nachweis" id={`nachweis-${g.id}`} data-nachweis={g.id}>
+            <p class="label">{t('koennen.eingesetzt')}</p>
+            <ul>
+              {g.liste.map((n) => (
+                <li data-ziel={n.ziel}>
+                  {n.href ? <a href={n.href}>{n.text}</a> : <span>{n.text}</span>}{n.unter && <span class="neben">, {n.unter}</span>}{n.zusatz && <span class="neben"> ({n.zusatz})</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {g.begriffe
+          .filter((b) => b.eigene)
+          .map((b) => (
+            <div class="nachweis" id={b.panel} data-nachweis={b.panel}>
+              <p class="label">
+                {b[lang]}. {t('koennen.eingesetzt')}
+              </p>
+              <ul>
+                {b.eigene!.map((n) => (
+                  <li data-ziel={n.ziel}>
+                    {n.href ? <a href={n.href}>{n.text}</a> : <span>{n.text}</span>}{n.unter && <span class="neben">, {n.unter}</span>}{n.zusatz && <span class="neben"> ({n.zusatz})</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
       </div>
     ))
   }

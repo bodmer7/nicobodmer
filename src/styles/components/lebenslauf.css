@@ -102,6 +102,10 @@
 
 .cv__koennen dt { font-weight: 600; }
 
+.cv__zeile { margin-top: var(--s4); }
+
+.cv__referenzen { margin-top: var(--s7); color: var(--ink-2); }
+
 @media print {
   .seite-cv .cv { padding: 0; max-width: none; }
 
@@ -142,6 +146,10 @@
   }
 
   .seite-cv .cv__koennen { grid-template-columns: 1fr 1fr; gap: 4pt 12pt; }
+
+  .seite-cv .cv__zeile { margin-top: 6pt; }
+
+  .seite-cv .cv__referenzen { margin-top: 10pt; color: #000; }
 }
 
 /* Textseiten (Impressum und Datenschutz, 404) */
