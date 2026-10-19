@@ -1,56 +1,74 @@
-# Portfolio — Nico Bodmer
+# nico-bodmer.ch
 
-Persönliche Portfolio-Website: Werdegang, Projekte, Websites, Skills und Kontakt.
-Statische Seite ohne Build-Schritt — reines HTML, CSS und Vanilla JavaScript.
+Persönliche Website von Nico Bodmer. Statische Seite ohne Build, ohne
+Abhängigkeiten und ohne externe Dienste: HTML, eine CSS-Datei, ein kleines
+Skript und eine selbst gehostete Schrift.
 
 ## Struktur
 
 ```
-index.html            Gesamte Seite (semantisches Markup, deutsche Texte)
-assets/css/style.css  Design-Tokens, Sektionen, Responsive-Regeln
-assets/js/i18n.js     Englische Übersetzungen (Deutsch steht im HTML)
-assets/js/main.js     Interaktion: Theme, Menü, Filter, Slider, Scroll-Effekte
-assets/img/           Bilder (WebP, optimiert)
+index.html                          Deutsche Seite (lang de-CH)
+en/index.html                       Englische Seite, gleicher Aufbau
+assets/css/style.css                Gestaltung: Farben, Schrift, Raster, Druck
+assets/js/kopieren.js               Knopf «Adresse kopieren» (einziges Skript)
+assets/fonts/                       Schibsted Grotesk, variabel, Subset latin (OFL)
+assets/img/                         Fotos, Screenshots, Favicon, og.jpg
+sitemap.xml, robots.txt             Für Suchmaschinen
 ```
 
-## Lokal starten
+Alle Pfade sind relativ, die Seite läuft unter jeder Adresse. Nur canonical,
+hreflang, Open Graph, JSON-LD und Sitemap verwenden die absolute Adresse
+https://nico-bodmer.ch/.
 
-Keine Abhängigkeiten, kein Build. Einfach einen kleinen Server starten:
+## Lokal starten
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Danach http://localhost:8000 öffnen. (Ein Doppelklick auf `index.html` funktioniert
-ebenfalls, nur werden dann je nach Browser die Schriften von Google Fonts blockiert.)
-
-## Funktionen
-
-- **Dark / Light** — Umschalter im Menü und im Footer, Taste `T`, oder vom rechten
-  Bildschirmrand wischen. Die Wahl wird im `localStorage` gemerkt.
-- **Deutsch / Englisch** — Umschalter im Menü und im Footer. Deutsch ist der
-  Ausgangszustand im HTML, Englisch kommt aus `assets/js/i18n.js`.
-- **Werdegang** — Zeilen öffnen per Klick, Tastatur (Enter / Space) oder Hover.
-- **Projektfilter** — Alle / Websites / Apps / Tools.
-- **Vorher-Nachher-Regler** — Maus, Touch und Pfeiltasten.
-- **Skills** — beim Hovern wird die zugehörige Station im Werdegang hervorgehoben.
-- Alle Animationen respektieren `prefers-reduced-motion`.
+Danach http://localhost:8000 öffnen. Die englische Seite liegt unter
+http://localhost:8000/en/.
 
 ## Inhalte pflegen
 
-- **Texte:** direkt in `index.html`. Für die englische Fassung den gleichen
-  `data-i18n`-Schlüssel in `assets/js/i18n.js` ergänzen.
-- **Bilder:** nach `assets/img/` legen. Konvertierung, die hier verwendet wurde:
-  ```bash
-  cwebp -q 82 -resize 1600 0 -metadata none input.png -o assets/img/output.webp
-  ```
-- **Offene Platzhalter** sind im HTML mit `TODO` markiert (Lebenslauf-PDF).
-- **Vorher-Nachher bei ODERA:** rechts der Screenshot von odera.ch, links ein
-  nachgebautes KMU-Layout im Stil der frühen 2010er — kein Kundenprojekt. Das alte
-  Layout ist bei 1280 x 800 gezeichnet (`.retro`) und wird per CSS-Variable `--k`
-  aus `main.js` auf die Breite der Box skaliert.
+- **Texte:** direkt in `index.html` und `en/index.html`. Beide Dateien haben
+  denselben Aufbau, Änderungen also immer in beiden machen.
+- **Projekte:** ein Projekt ist ein `<article class="project grid">` mit
+  Screenshot, Titel, einem Satz, einer Liste (`<dl>`) und dem Link.
+  Screenshots im Format 16:10 als WebP ablegen; sie werden oben ausgerichtet
+  zugeschnitten. Mit der Klasse `project__shot--left` wird links statt mittig
+  zugeschnitten.
+- **Bilder:** immer mit `width`, `height` und `alt`. Alle ausser dem Foto
+  oben bekommen `loading="lazy"`.
+- **Nach Änderungen an CSS oder JS:** die Zahl in `?v=10` in beiden HTML-Dateien
+  erhöhen, damit Browser die neue Fassung laden.
+- **Lebenslauf:** im Kontakt steht ein auskommentierter Link. PDF unter
+  `assets/Lebenslauf-Nico-Bodmer.pdf` ablegen und den Kommentar entfernen.
+- **Jahr in der Fusszeile:** steht fest im HTML und wird jährlich angepasst.
 
-## Deployment
+## Gestaltung
 
-Die Seite ist statisch und läuft auf jedem Webspace, GitHub Pages, Netlify oder
-Vercel — es muss lediglich der Repo-Inhalt ausgeliefert werden.
+- Farben: Hintergrund `#F3F4F1`, Text `#1A1D20`, Nebentext `#5A6066`,
+  Linien `#D3D6D1`, Akzent `#1F5A44` (nur für Hover und Fokus).
+- Schrift: nur Schibsted Grotesk, Gewichte 400, 600 und 650.
+- Raster: 12 Spalten, Inhalt höchstens 1280px, unter 720px gestapelt.
+- Der Name oben füllt immer genau die Inhaltsbreite. Die Schriftgrösse ergibt
+  sich aus der gemessenen Breite des Namens (5.805 em). Wer Schrift, Gewicht
+  oder Laufweite ändert, muss diesen Wert in `style.css` neu messen.
+
+## Textregeln
+
+Schweizer Rechtschreibung (ss), Anführungszeichen «so», Besucher werden
+gesiezt. Keine Gedankenstriche, Mittelpunkte oder Pfeile im Text. Prüfen:
+
+```bash
+perl -CSD -ne 'print "$ARGV:$.: $_" if /[\x{2014}\x{2013}\x{00B7}\x{2192}\x{2197}\x{2193}\x{00DF}]/; close ARGV if eof' \
+  index.html en/index.html README.md
+```
+
+Das Ergebnis muss leer sein.
+
+## Veröffentlichen
+
+Die Seite liegt bei Infomaniak. Ein Push auf GitHub aktualisiert sie nicht:
+geänderte Dateien per Web FTP hochladen.
