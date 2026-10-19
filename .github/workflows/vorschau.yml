@@ -1,0 +1,45 @@
+# Vorschau für Design-Änderungen: baut den Branch, macht Screenshots und
+# legt sie im Branch «vorschau-bilder» ab. Nur auf vorschau/**-Branches.
+name: Vorschau
+
+on:
+  push:
+    branches: ['vorschau/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vorschau
+  cancel-in-progress: true
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm ci
+      - run: npx astro build
+      - run: npx playwright install --with-deps chromium
+      - name: Preview starten und Screenshots machen
+        env:
+          ASTRO_PREVIEW_BACKGROUND: '0'
+        run: |
+          npx astro preview --port 4330 --ignore-lock > preview.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://localhost:4330/ >/dev/null && break; sleep 1; done
+          node scripts/vorschau-screenshots.mjs
+      - name: Bilder in Branch vorschau-bilder ablegen
+        run: |
+          cd vorschau-bilder
+          git init -q -b vorschau-bilder
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "Quelle: ${GITHUB_SHA}" > QUELLE.txt
+          git add -A
+          git commit -qm "Vorschau ${GITHUB_SHA::7}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:vorschau-bilder
