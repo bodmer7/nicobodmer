@@ -1,7 +1,7 @@
 # CLAUDE.md: nico-bodmer.ch
 
 Portfolio von Nico Bodmer. Astro 7, statisch, Deutsch (ohne Präfix) und
-Englisch (`/en/`). Gehostet bei Infomaniak, Upload von `dist/` per Web FTP.
+Englisch (`/en/`). Gehostet auf GitHub Pages, Domain bei Infomaniak.
 Inhalte und Befehle: README.md und CONTENT.md.
 
 ## Wahrheitsregel
@@ -82,4 +82,6 @@ Läuft: `astro check`, Build, Text- und Grössenprüfung, Playwright-Tests
 ## Repo
 
 - Branch `main`, kein Force-Push. Commit-Messages auf Deutsch.
-- Der Push aktualisiert die Live-Seite nicht (Upload per Web FTP).
+- Push auf main deployt über GitHub Actions auf GitHub Pages. Vor jedem Push `npm run qa`.
+- Netz nach aussen (Screenshots, Lighthouse live, Einbettung, externe Links)
+  nur in `.github/workflows/extern.yml`.

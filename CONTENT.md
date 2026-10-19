@@ -96,14 +96,19 @@ Die Seite `/lebenslauf/` hat den Knopf «Als PDF speichern». Im Druckdialog
 
 ## Screenshots neu machen
 
+Das Geo-Quiz (Desktop und Handy) macht der Workflow «Extern prüfen und
+messen» automatisch, siehe «Veröffentlichen». Von Hand auf dem eigenen
+Rechner:
+
 ```bash
-npm run screenshots
+npm run screenshots -- --nur geo-quiz
+npm run screenshots -- --nur doppelmeter firstlicht
+npm run screenshots -- --alle
 ```
 
-Das Skript öffnet odera.ch, die Musterprojekte und das Geo-Quiz in drei
-Bildschirmgrössen und legt WebP-Dateien in `src/assets/screens/` ab. Danach
-die Bilder anschauen und `npm run build`. Einzelne Seiten:
-`npm run screenshots -- doppelmeter firstlicht`.
+Das Skript legt WebP-Dateien in `src/assets/screens/` ab. Ohne `--nur` oder
+`--alle` macht es nichts und zeigt die Möglichkeiten. Danach die Bilder
+anschauen und `npm run build`.
 
 Die Screenshots vom 19. Oktober 2026 sind aus dem Quellcode von odera.ch
 (Repository odera-design) lokal gerendert, weil die Live-Seite aus der
@@ -113,14 +118,40 @@ direkt von den Live-Seiten.
 
 ## Messen
 
+Die Werte der Live-Seiten misst der Workflow «Extern prüfen und messen»
+(Lighthouse mobil, drei Läufe, Median). Er schreibt sie nach
+`src/data/messwerte.json`, getrennt nach «diese Website» und «Projekte»:
+
+- Der Footer zeigt die Live-Werte von nico-bodmer.ch mit Datum. Gibt es
+  noch keine, zeigt er die lokale Messung mit dem Zusatz «lokal gemessen».
+- Labor und Fallstudien zeigen für odera.ch und das Geo-Quiz die eigene
+  Messung mit Datum und Methode. Ohne Messung erscheint nichts.
+- Die veröffentlichten Werte der Musterprojekte bleiben mit ihrer Quelle
+  stehen; eigene Messungen erscheinen getrennt als «Eigene Messung».
+
+Lokal messen (Teil «lokal»):
+
 ```bash
 npm run measure
 npm run build
 ```
 
-`measure` schreibt die Lighthouse-Werte mit Datum in
-`src/data/messwerte.json`. Der Footer zeigt sie auf Startseite,
-ODERA-Fallstudie und Lebenslauf. Ohne Messung erscheint die Zeile nicht.
+## Veröffentlichen
+
+```bash
+git add -A
+git commit -m "Kurze Beschreibung"
+git push
+```
+
+Nach 1 bis 2 Minuten ist die Änderung auf https://nico-bodmer.ch online.
+Den Stand zeigt der Tab «Actions» im Repository auf GitHub: grüner Haken
+heisst online, rotes Kreuz heisst, ein Test ist gescheitert und die alte
+Version bleibt online. Vor dem Push lokal `npm run qa` laufen lassen.
+
+Screenshots, Messwerte und Linkprüfung der Live-Seite: Tab «Actions»,
+«Extern prüfen und messen», «Run workflow». Er läuft zusätzlich am ersten
+Montag im Monat von selbst.
 
 ## Links für Bewerbungen
 

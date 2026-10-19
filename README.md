@@ -18,9 +18,11 @@ Regeln für künftige Arbeiten mit Claude Code: [CLAUDE.md](CLAUDE.md).
 | `npm run check` | `astro check` (TypeScript und Vorlagen) |
 | `npm test` | Playwright-Tests in `tests/e2e/` |
 | `npm run qa` | Alles prüfen: check, Build, Text, Grösse, Tests, axe, html-validate, Links, Lighthouse, QA-Screenshots |
-| `npm run screenshots` | Screenshots von odera.ch, Musterprojekten und Geo-Quiz neu machen |
+| `npm run screenshots -- --nur geo-quiz` | Screenshots einzelner Projekte neu machen (`--alle` für alle) |
 | `npm run og` | OG-Bild und Apple-Touch-Icon neu rendern |
-| `npm run measure` | Lighthouse messen und `src/data/messwerte.json` schreiben |
+| `npm run measure` | Lighthouse lokal messen und den Teil «lokal» in `src/data/messwerte.json` schreiben |
+| `npm run measure:extern` | Lighthouse auf den Live-Seiten, je drei Läufe, Median (braucht Netz, läuft in GitHub Actions) |
+| `npm run einbettung` | Prüfen, ob odera.ch und Geo-Quiz im iframe laden; schreibt `src/data/einbettung.json` |
 | `npm run check:text` | Verbotene Zeichen suchen (Gedankenstriche, Mittelpunkte, Pfeile, Eszett) |
 
 ## Struktur
@@ -34,15 +36,17 @@ src/
   content/projekte/     Eine Markdown-Datei pro Projekt und Sprache
   content.config.ts     Schema der Projekte
   data/profil.ts        Einzige Quelle für Stationen, Ausbildung, Können, «Gerade»
-  data/messwerte.json   Lighthouse-Werte für den Footer (aus scripts/measure.mjs)
+  data/messwerte.json   Lighthouse-Werte: lokal, diese Website, Projekte (aus scripts/measure.mjs)
+  data/einbettung.json  Ergebnis des Einbettungstests (aus scripts/einbettung.mjs)
   i18n/ui.ts            Alle Oberflächentexte Deutsch und Englisch
   i18n/routes.ts        Pfade beider Sprachen, Sprachumschalter
   layouts/              Base (Kopf, Fuss, Metadaten), Fallstudie
   pages/                Startseite, Fallstudien, Lebenslauf, Recht, 404, Links, OG-Bilder
   scripts/              Kleine TypeScript-Module für die Interaktion
   styles/               tokens.css (Designsystem), base, layout, print, components/
-public/                 Schrift, Favicon, og.jpg, vCard, robots.txt, .htaccess
-scripts/                screenshots, og, measure, check-text, check-size, qa
+public/                 Schrift, Favicon, og.jpg, vCard, robots.txt, CNAME, .nojekyll
+scripts/                screenshots, og, measure, einbettung, check-text, check-size, qa
+.github/workflows/      deploy.yml (GitHub Pages), extern.yml (Messen und Prüfen mit Netz)
 tests/e2e/              Playwright-Tests
 ```
 
@@ -62,21 +66,34 @@ tests/e2e/              Playwright-Tests
 
 ## Deployment
 
-Das Repository ist privat, GitHub Pages ist dafür nicht verfügbar. Die Seite
-liegt bei Infomaniak (Starter, 10 MB) und wird per Web FTP hochgeladen:
+Jeder Push auf `main` startet `.github/workflows/deploy.yml`: `npm ci`,
+`astro check`, Build mit Grössenprüfung, Textprüfung, Playwright-Tests,
+danach Veröffentlichung auf GitHub Pages unter https://nico-bodmer.ch.
+Nach 1 bis 2 Minuten ist die neue Version online. Den Stand zeigt der Tab
+«Actions» im Repository. Scheitert ein Schritt, bleibt die alte Version
+online.
 
-1. `npm run build` ausführen. Am Ende steht «Grössenprüfung: dist/ ist … MB».
-2. In Infomaniak im Web FTP den Webordner der Domain öffnen.
-3. Alte Dateien der früheren Version löschen: `index.html`, `en/`,
-   `assets/`, `robots.txt`, `sitemap.xml`, `README.md` (falls vorhanden).
-4. Den **Inhalt** von `dist/` in die Wurzel hochladen (nicht den Ordner
-   `dist` selbst). Dazu gehört die versteckte Datei `.htaccess`.
-5. Prüfen: https://nico-bodmer.ch/, https://nico-bodmer.ch/en/,
-   https://nico-bodmer.ch/gibt-es-nicht/ (eigene 404-Seite),
-   https://nico-bodmer.ch/sitemap-index.xml.
+- Die Domain steht in `public/CNAME`, `public/.nojekyll` schaltet Jekyll ab.
+- `404.html` liegt in der Wurzel von `dist/`; GitHub Pages zeigt sie für
+  unbekannte Pfade.
+- Weiterleitungen und Header wie früher in `.htaccess` gibt es bei GitHub
+  Pages nicht. Die Datei ist entfernt. HTTPS erzwingt GitHub Pages selbst
+  («Enforce HTTPS» in den Einstellungen).
+- Von Hand starten: Tab «Actions», Workflow «Deploy», «Run workflow».
 
-**Variante GitHub Pages:** Mit einem öffentlichen Repository oder GitHub Pro
-(zum Beispiel über GitHub Education) kann GitHub Actions die Seite bei jedem
-Push bauen und veröffentlichen. Dafür braucht es einen Workflow nach der
-offiziellen Astro-Anleitung, `public/CNAME` mit `nico-bodmer.ch` und neue
-DNS-Einträge bei Infomaniak.
+**Extern prüfen und messen** (`.github/workflows/extern.yml`): läuft am
+ersten Montag im Monat und von Hand. Macht die Geo-Quiz-Screenshots,
+misst die Live-Seiten mit Lighthouse (Median aus drei Läufen), prüft die
+Einbettung und alle Links der Live-Seite inklusive externer. Geänderte
+Dateien schreibt der Workflow zurück auf `main` und startet danach den
+Deploy. Kaputte Links lassen den Lauf rot werden; die Liste steht im
+Schritt «Links der Live-Seite».
+
+Früher lag die Seite bei Infomaniak (Starter) und wurde per Web FTP
+hochgeladen. Die Domain bleibt bei Infomaniak, nur die DNS-Einträge zeigen
+auf GitHub Pages.
+
+## Rechte
+
+Code, Texte und Bilder: alle Rechte vorbehalten. Die Schrift Schibsted
+Grotesk steht unter der SIL Open Font License (siehe public/fonts/OFL.txt).
