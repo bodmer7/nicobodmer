@@ -1,0 +1,30 @@
+---
+/**
+ * Inhaltsverzeichnis einer Fallstudie: Desktop sticky links mit
+ * Markierung des aktuellen Abschnitts, mobil zusammenklappbar.
+ */
+import { useT, type Lang } from '../i18n/ui';
+interface Props {
+  lang: Lang;
+  kapitel: { id: string; text: string }[];
+}
+const { lang, kapitel } = Astro.props;
+const t = useT(lang);
+---
+
+<nav class="toc" aria-label={t('fall.inhalt')} data-toc>
+  <details class="toc__details" open data-toc-details>
+    <summary class="toc__summary">{t('fall.inhalt')}</summary>
+    <ol class="toc__liste">
+      {
+        kapitel.map((k) => (
+          <li>
+            <a href={`#${k.id}`} data-toc-link={k.id}>
+              {k.text}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </details>
+</nav>

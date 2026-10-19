@@ -20,7 +20,11 @@ export default defineConfig({
     locales: ['de', 'en'],
     routing: { prefixDefaultLocale: false },
   },
+  // Responsive Bilder auch im Markdown, mit wenigen Breiten (dist/ bleibt
+  // unter 9 MB). Komponenten setzen ihre Breiten selbst (src/components/Bild.astro).
   image: {
+    layout: 'constrained',
+    breakpoints: [480, 720, 1080, 1600],
     responsiveStyles: false,
   },
   integrations: [

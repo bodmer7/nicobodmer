@@ -1,0 +1,86 @@
+---
+/**
+ * Nachbildung des Morgen-Check-ins mit Beispieldaten: Readiness-Ring und
+ * vier Kacheln mit 7-Tage-Verlauf. HTML und SVG, ohne Bibliothek.
+ */
+import daten from '../data/dashboard-beispiel.json';
+import { useT, type Lang } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const tage = daten.tage[lang];
+const R = 52;
+const U = 2 * Math.PI * R;
+const B = 220;
+const H = 64;
+const punkte = (werte: number[]) => {
+  const min = Math.min(...werte);
+  const max = Math.max(...werte);
+  return werte.map((w, i) => ({
+    x: 8 + (i * (B - 16)) / (werte.length - 1),
+    y: 8 + (1 - (w - min) / Math.max(1, max - min)) * (H - 16),
+    w,
+  }));
+};
+---
+
+<section class="dash fall__abschnitt" aria-labelledby="beispiel" data-dashboard>
+  <h2 id="beispiel">{t('dashboard.titel')}</h2>
+  <div class="dash__flaeche">
+    <p class="dash__hinweis label">{t('dashboard.beispiel')}</p>
+    <div class="dash__raster">
+      <figure class="dash__ring">
+        <svg viewBox="0 0 128 128" role="img" aria-label={`${t('dashboard.readiness')}: ${daten.readiness} / 100 (${t('dashboard.beispiel')})`}>
+          <circle cx="64" cy="64" r={R} class="dash__ring-grund" />
+          <circle
+            cx="64"
+            cy="64"
+            r={R}
+            class="dash__ring-wert"
+            style={`--umfang:${U.toFixed(2)};--anteil:${daten.readiness / 100}`}
+            transform="rotate(-90 64 64)"
+            data-ring
+          />
+          <text x="64" y="66" text-anchor="middle" dominant-baseline="middle" class="dash__ring-zahl">{daten.readiness}</text>
+        </svg>
+        <figcaption class="label">{t('dashboard.readiness')}</figcaption>
+      </figure>
+
+      {
+        daten.kacheln.map((k) => {
+          const p = punkte(k.werte);
+          const heute = k.werte[k.werte.length - 1];
+          return (
+            <figure class="dash__kachel" data-kachel>
+              <figcaption>
+                <span class="label">{k.label[lang]}</span>
+                <span class="dash__wert">
+                  {heute} <span class="dash__einheit">{k.einheit}</span>
+                </span>
+              </figcaption>
+              <div
+                class="dash__verlauf"
+                tabindex="0"
+                role="group"
+                aria-label={`${k.label[lang]}, ${t('dashboard.verlauf')}`}
+                data-verlauf
+              >
+                <svg viewBox={`0 0 ${B} ${H}`} aria-hidden="true" preserveAspectRatio="none">
+                  <polyline points={p.map((q) => `${q.x.toFixed(1)},${q.y.toFixed(1)}`).join(' ')} class="dash__linie" />
+                  {p.map((q, i) => (
+                    <circle cx={q.x.toFixed(1)} cy={q.y.toFixed(1)} r="3.5" class="dash__punkt" data-punkt={i} data-tag={tage[i]} data-wert={q.w} />
+                  ))}
+                </svg>
+                <p class="dash__tooltip klein" role="status" aria-live="polite" data-tooltip />
+              </div>
+            </figure>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../scripts/dashboard';
+</script>

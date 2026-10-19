@@ -39,25 +39,9 @@ messwerte:
     bezug: firstlicht
     datum: "2026-10-05"
 bilder:
-  - datei: ../../../assets/screens/doppelmeter-desktop.webp
-    alt: Home page of the joinery Doppelmeter, a fictitious business, with a German headline about furniture your grandchildren will still use, a call button and a photo of a kitchen
-    unterschrift: odera.ch/musterprojekte/doppelmeter, desktop. Fictitious business.
-    geraet: desktop
-  - datei: ../../../assets/screens/doppelmeter-handy.webp
-    alt: Joinery Doppelmeter on a phone, a fictitious business, with a fixed call bar at the bottom
-    unterschrift: Doppelmeter on a phone. The number always stays visible at the bottom.
-    geraet: handy
   - datei: ../../../assets/screens/firstlicht-desktop.webp
     alt: Home page of Firstlicht Solartechnik, a fictitious business, in a dark design with a house with solar panels and a time-of-day slider
     unterschrift: odera.ch/musterprojekte/firstlicht, desktop. Fictitious business.
-    geraet: desktop
-  - datei: ../../../assets/screens/firstlicht-handy.webp
-    alt: Firstlicht Solartechnik on a phone, a fictitious business, with call and calculator buttons at the bottom
-    unterschrift: Firstlicht on a phone
-    geraet: handy
-  - datei: ../../../assets/screens/firstlicht-erklaert-desktop.webp
-    alt: Firstlicht Solartechnik in explanation mode, a fictitious business, with numbered markers on the page and a box explaining what is special
-    unterschrift: Firstlicht with explanations, seven numbered spots
     geraet: desktop
 vorschau: 0
 reihenfolge: 2
@@ -84,11 +68,15 @@ Standard package, 5 pages. The goal of the site is the phone call, so the number
 
 The design is calm and crafted: warm paper white, a serif typeface for the large headings, dark green for the buttons and a large photo of a kitchen with a caption. Small lines such as the founding year are set in a typewriter face.
 
+![Joinery Doppelmeter on desktop, a fictitious business: German headline about furniture your grandchildren will still use, a call button and a photo of a kitchen](../../../assets/screens/doppelmeter-desktop.webp) ![Joinery Doppelmeter on a phone, a fictitious business, with a fixed call bar at the bottom](../../../assets/screens/doppelmeter-handy.webp)
+
 ## Firstlicht Solartechnik
 
 Pro package, 6 pages. The goal is the prepared enquiry: a solar calculator works out the numbers, and the result goes straight into the form.
 
 The identity is dark with orange as the accent, with a switch for light and dark. The hero shows an illustrated house with solar panels. A slider moves the time of day, and production, consumption, storage and feed-in follow along, for summer or winter. On phones, «call» and «calculator» stay within reach at the bottom. The switch «Was ist hier besonders?» numbers seven spots on the page and explains them.
+
+![Firstlicht Solartechnik in explanation mode, a fictitious business, with numbered markers and a box explaining what is special](../../../assets/screens/firstlicht-erklaert-desktop.webp) ![Firstlicht Solartechnik on a phone, a fictitious business, with call and calculator buttons at the bottom](../../../assets/screens/firstlicht-handy.webp)
 
 ## Decisions
 

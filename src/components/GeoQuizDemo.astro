@@ -1,0 +1,31 @@
+---
+/**
+ * Geo-Quiz live: dunkle Bühne mit Screenshot. Das iframe von GitHub Pages
+ * entsteht erst nach dem Klick auf «Quiz hier spielen».
+ */
+import Bild from './Bild.astro';
+import screenshot from '../assets/screens/geo-quiz-desktop.webp';
+import { useT, type Lang } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const url = 'https://bodmer7.github.io/segberike/';
+---
+
+<section class="demo fall__abschnitt" aria-labelledby="live-demo" data-demo data-url={url} data-titel={t('demo.titel')}>
+  <h2 id="live-demo">{t('demo.titel')}</h2>
+  <div class="demo__buehne" data-demo-buehne>
+    <div class="demo__platzhalter" data-demo-platzhalter>
+      <Bild src={screenshot} alt="" widths={[720, 1080, 1600]} sizes="(min-width: 1024px) 60vw, 100vw" class="demo__bild" />
+      <div class="demo__start">
+        <button class="btn btn--signal" type="button" data-demo-start aria-describedby="demo-hinweis" hidden>{t('demo.spielen')}</button>
+        <p class="klein" id="demo-hinweis">{t('demo.hinweis')}</p>
+      </div>
+    </div>
+  </div>
+  <p><a class="textlink" href={url} target="_blank" rel="noopener">{t('demo.neuerTab')}<span class="sr-only"> {t('fall.extern')}</span></a></p>
+</section>
+
+<script>
+  import '../scripts/demo';
+</script>

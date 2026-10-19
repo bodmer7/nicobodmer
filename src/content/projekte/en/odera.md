@@ -18,10 +18,6 @@ bilder:
     alt: Home page of odera.ch on desktop with the German headline saying you see your new website before you pay
     unterschrift: odera.ch, home page on desktop
     geraet: desktop
-  - datei: ../../../assets/screens/odera-start-handy.webp
-    alt: Home page of odera.ch on a phone, asking what visitors should do on the new website, with four answers to choose from
-    unterschrift: odera.ch on a phone, with the page goal chosen in the hero
-    geraet: handy
   - datei: ../../../assets/screens/odera-projekt-check-desktop.webp
     alt: First question of the project check on odera.ch, asking for the name of the business, with a privacy note
     unterschrift: odera.ch/projekt-check, section 1 of 6
@@ -30,6 +26,10 @@ bilder:
     alt: Pricing page on odera.ch with the three prices CHF 890, CHF 1,900 and CHF 3,400
     unterschrift: odera.ch/angebot, one-off prices without a subscription
     geraet: desktop
+  - datei: ../../../assets/screens/odera-start-handy.webp
+    alt: Home page of odera.ch on a phone, asking what visitors should do on the new website, with four answers to choose from
+    unterschrift: odera.ch on a phone, with the page goal chosen in the hero
+    geraet: handy
   - datei: ../../../assets/screens/odera-projekt-check-handy.webp
     alt: Project check on a phone with one question per screen and a Next button at the bottom
     unterschrift: Project check on a phone

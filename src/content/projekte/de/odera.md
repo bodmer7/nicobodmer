@@ -18,10 +18,6 @@ bilder:
     alt: Startseite von odera.ch auf dem Desktop mit der Überschrift «Sie sehen Ihre neue Website, bevor Sie bezahlen.»
     unterschrift: odera.ch, Startseite auf dem Desktop
     geraet: desktop
-  - datei: ../../../assets/screens/odera-start-handy.webp
-    alt: Startseite von odera.ch auf dem Handy mit der Frage, was Besucher auf der neuen Website tun sollen, und vier Antworten zur Auswahl
-    unterschrift: odera.ch auf dem Handy, mit Auswahl des Seitenziels im Hero
-    geraet: handy
   - datei: ../../../assets/screens/odera-projekt-check-desktop.webp
     alt: Erste Frage des Projekt-Checks auf odera.ch, «Wie heisst Ihr Betrieb?», mit Hinweis zum Datenschutz
     unterschrift: odera.ch/projekt-check, Abschnitt 1 von 6
@@ -30,6 +26,10 @@ bilder:
     alt: Seite Angebot auf odera.ch mit den drei Preisen CHF 890, CHF 1'900 und CHF 3'400
     unterschrift: odera.ch/angebot, Preise einmalig und ohne Abo
     geraet: desktop
+  - datei: ../../../assets/screens/odera-start-handy.webp
+    alt: Startseite von odera.ch auf dem Handy mit der Frage, was Besucher auf der neuen Website tun sollen, und vier Antworten zur Auswahl
+    unterschrift: odera.ch auf dem Handy, mit Auswahl des Seitenziels im Hero
+    geraet: handy
   - datei: ../../../assets/screens/odera-projekt-check-handy.webp
     alt: Projekt-Check auf dem Handy mit einer Frage pro Bildschirm und dem Knopf «Weiter» unten
     unterschrift: Projekt-Check auf dem Handy

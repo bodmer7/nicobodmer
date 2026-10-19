@@ -1,0 +1,52 @@
+---
+/**
+ * Bildergalerie einer Fallstudie. Jedes Bild öffnet die Lightbox
+ * (<dialog>), ohne JavaScript führt der Link zur grossen Bilddatei.
+ */
+import Bild from './Bild.astro';
+import { getImage } from 'astro:assets';
+import { useT, type Lang } from '../i18n/ui';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  lang: Lang;
+  bilder: { datei: ImageMetadata; alt: string; unterschrift: string; geraet: 'desktop' | 'tablet' | 'handy' }[];
+}
+const { lang, bilder } = Astro.props;
+const t = useT(lang);
+const gross = await Promise.all(
+  bilder.map((b) => getImage({ src: b.datei, width: Math.min(b.datei.width, b.geraet === 'handy' ? 1080 : 2200), format: 'webp', quality: 70 })),
+);
+---
+
+<ul class="galerie" data-galerie>
+  {
+    bilder.map((b, i) => (
+      <li class:list={['galerie__eintrag', `galerie__eintrag--${b.geraet}`]}>
+        <figure>
+          <a
+            class="galerie__link"
+            href={gross[i].src}
+            data-lightbox={i}
+            data-gross={gross[i].src}
+            data-alt={b.alt}
+            data-unterschrift={b.unterschrift}
+            data-breite={gross[i].attributes.width}
+            data-hoehe={gross[i].attributes.height}
+          >
+            <span class:list={['galerie__rahmen', { 'galerie__rahmen--handy': b.geraet === 'handy' }]}>
+              <Bild
+                src={b.datei}
+                alt={b.alt}
+                widths={[480, 720, 1080]}
+                sizes={b.geraet === 'handy' ? '(min-width: 1024px) 220px, 45vw' : '(min-width: 1024px) 60vw, 100vw'}
+              />
+            </span>
+            <span class="sr-only">{t('lightbox.oeffnen')}</span>
+          </a>
+          <figcaption class="bildunterschrift">{b.unterschrift}</figcaption>
+        </figure>
+      </li>
+    ))
+  }
+</ul>

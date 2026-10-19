@@ -1,0 +1,218 @@
+---
+/**
+ * Vorlage für alle Fallstudien: Kopf mit Eckdaten, Hero-Bild, Inhalt mit
+ * Inhaltsverzeichnis, Messwerte, Bilder mit Lightbox, Technik und
+ * «Nächstes Projekt». Inhalte kommen aus src/content/projekte/.
+ */
+import Base from './Base.astro';
+import Bild from '../components/Bild.astro';
+import Messwerte from '../components/Messwerte.astro';
+import Galerie from '../components/Galerie.astro';
+import Lightbox from '../components/Lightbox.astro';
+import Inhaltsverzeichnis from '../components/Inhaltsverzeichnis.astro';
+import GeoQuizDemo from '../components/GeoQuizDemo.astro';
+import MiniDashboard from '../components/MiniDashboard.astro';
+import '../styles/components/fallstudie.css';
+import { render } from 'astro:content';
+import { useT, type Lang } from '../i18n/ui';
+import { ankerPfad, projektPfad, seiten } from '../i18n/routes';
+import { fallstudien, istExtern, type Projekt } from '../data/projekte';
+import type { ProjektId } from '../data/profil';
+
+interface Props {
+  lang: Lang;
+  projekt: Projekt;
+}
+
+const { lang, projekt } = Astro.props;
+const t = useT(lang);
+const d = projekt.data;
+const id = d.projekt as ProjektId;
+const { Content, headings } = await render(projekt);
+
+const alle = await fallstudien(lang);
+const index = alle.findIndex((p) => p.id === projekt.id);
+const naechstes = alle[(index + 1) % alle.length];
+
+const alternate = seiten[`projekt:${id}`];
+const hero = d.bilder[d.vorschau] ?? d.bilder[0];
+// Die Galerie zeigt alle Bilder ausser dem Hero-Bild.
+const galerie = d.bilder.filter((b) => b !== hero);
+const extra = id === 'geo-quiz' ? 'demo' : id === 'morgen-check-in' ? 'dashboard' : null;
+
+const kapitel = [
+  ...headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug, text: h.text })),
+  ...(extra === 'demo' ? [{ id: 'live-demo', text: t('demo.titel') }] : []),
+  ...(extra === 'dashboard' ? [{ id: 'beispiel', text: t('dashboard.titel') }] : []),
+  ...(d.messwerte.length ? [{ id: 'messwerte', text: t('fall.messwerte') }] : []),
+  ...(galerie.length > 0 ? [{ id: 'bilder', text: t('fall.bilder') }] : []),
+  ...(d.technik.length ? [{ id: 'technik', text: t('fall.technik') }] : []),
+];
+
+const site = 'https://nico-bodmer.ch';
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Nico Bodmer', item: `${site}${seiten.start[lang]}` },
+      { '@type': 'ListItem', position: 2, name: t('nav.arbeiten'), item: `${site}${ankerPfad('arbeiten', lang)}` },
+      { '@type': 'ListItem', position: 3, name: d.title, item: `${site}${projektPfad(id, lang)}` },
+    ],
+  },
+];
+const titel = `${d.title} | Nico Bodmer`;
+---
+
+<Base
+  lang={lang}
+  title={titel}
+  description={d.seo ?? d.kurz}
+  alternate={alternate}
+  jsonLd={jsonLd}
+  ogBild={`/og/${id}.jpg`}
+  ogBildAlt={hero?.alt}
+  messKey={id === 'odera' ? (lang === 'de' ? 'fall-odera' : 'fall-odera-en') : undefined}
+>
+  <article class="fall">
+    <header class="fall__kopf wrap">
+      <p class="fall__zurueck"><a class="textlink" href={ankerPfad('arbeiten', lang)}>{t('fall.zurueck')}</a></p>
+      <h1 class="fall__titel" style={`view-transition-name:vt-titel-${id}`}>{d.title}</h1>
+      <p class="lead fall__kurz">{d.kurz}</p>
+      <dl class="fall__eckdaten">
+        <div>
+          <dt>{t('fall.jahr')}</dt>
+          <dd class="ziffern">{d.jahr}</dd>
+        </div>
+        <div>
+          <dt>{t('fall.rolle')}</dt>
+          <dd>{d.rolle}</dd>
+        </div>
+        <div>
+          <dt>{t('fall.typ')}</dt>
+          <dd>{d.typ}</dd>
+        </div>
+        {
+          d.technik.length > 0 && (
+            <div>
+              <dt>{t('fall.technik')}</dt>
+              <dd>{d.technik.join(', ')}</dd>
+            </div>
+          )
+        }
+        {
+          d.links.length > 0 && (
+            <div>
+              <dt>{t('fall.links')}</dt>
+              <dd>
+                <ul class="fall__links">
+                  {d.links.map((l) => (
+                    <li>
+                      <a href={l.url}>
+                        {l.label}
+                        {istExtern(l.url) && <span class="sr-only"> {t('fall.extern')}</span>}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          )
+        }
+      </dl>
+    </header>
+
+    {
+      hero && (
+        <figure class="fall__hero wrap">
+          <div class="buehne fall__hero-buehne">
+            <Bild
+              src={hero.datei}
+              alt={hero.alt}
+              widths={[720, 1080, 1600, 2200]}
+              sizes="(min-width: 1400px) 1360px, 96vw"
+              prioritaet
+              style={`view-transition-name:vt-bild-${id};object-position:${d.position}`}
+            />
+          </div>
+          <figcaption class="bildunterschrift">{hero.unterschrift}</figcaption>
+        </figure>
+      )
+    }
+
+    <div class="fall__raster wrap raster">
+      <Inhaltsverzeichnis lang={lang} kapitel={kapitel} />
+      <div class="fall__inhalt">
+        <div class="prosa silben" data-prosa>
+          <Content />
+        </div>
+
+        {extra === 'demo' && <GeoQuizDemo lang={lang} />}
+        {extra === 'dashboard' && <MiniDashboard lang={lang} />}
+
+        {
+          d.messwerte.length > 0 && (
+            <section class="fall__abschnitt" aria-labelledby="messwerte">
+              <h2 id="messwerte">{t('fall.messwerte')}</h2>
+              <Messwerte lang={lang} werte={d.messwerte} id={`fall-${id}`} />
+            </section>
+          )
+        }
+
+        {
+          galerie.length > 0 && (
+            <section class="fall__abschnitt" aria-labelledby="bilder">
+              <h2 id="bilder">{t('fall.bilder')}</h2>
+              <Galerie lang={lang} bilder={galerie} />
+            </section>
+          )
+        }
+
+        {
+          d.technik.length > 0 && (
+            <section class="fall__abschnitt" aria-labelledby="technik">
+              <h2 id="technik">{t('fall.technik')}</h2>
+              <p>{d.technik.join(', ')}</p>
+            </section>
+          )
+        }
+
+        {
+          d.gelernt && (
+            <section class="fall__abschnitt" aria-labelledby="gelernt">
+              <h2 id="gelernt">{lang === 'de' ? 'Was ich gelernt habe' : 'What I learned'}</h2>
+              <p>{d.gelernt}</p>
+            </section>
+          )
+        }
+      </div>
+    </div>
+
+    {
+      naechstes && naechstes.id !== projekt.id && (
+        <nav class="fall__naechstes wrap" aria-labelledby="naechstes-titel">
+          <p class="label" id="naechstes-titel">{t('fall.naechstes')}</p>
+          <a class="naechstes" href={projektPfad(naechstes.data.projekt as ProjektId, lang)}>
+            {naechstes.data.bilder[naechstes.data.vorschau] && (
+              <Bild
+                src={(naechstes.data.bilder[naechstes.data.vorschau] ?? naechstes.data.bilder[0]).datei}
+                alt=""
+                widths={[480, 720, 1080]}
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                class="naechstes__bild"
+                style={`object-position:${naechstes.data.position}`}
+              />
+            )}
+            <span class="naechstes__titel">{naechstes.data.title}</span>
+            <span class="naechstes__kurz">{naechstes.data.kurz}</span>
+          </a>
+        </nav>
+      )
+    }
+  </article>
+  <Lightbox lang={lang} />
+</Base>
+
+<script>
+  import '../scripts/fallstudie';
+</script>

@@ -1,0 +1,37 @@
+---
+import Icon from './Icon.astro';
+import { useT, type Lang } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<dialog class="lightbox" data-lightbox-dialog aria-labelledby="lightbox-unterschrift" data-zaehler={t('lightbox.zaehler')}>
+  <div class="lightbox__innen">
+    <div class="lightbox__leiste">
+      <p class="lightbox__zaehler ziffern" data-lightbox-zaehler aria-live="polite"></p>
+      <button class="lightbox__knopf" type="button" data-lightbox-schliessen>
+        <Icon name="schliessen" />
+        <span class="sr-only">{t('lightbox.schliessen')}</span>
+      </button>
+    </div>
+    <div class="lightbox__buehne" data-lightbox-buehne>
+      <img data-lightbox-bild alt="" />
+    </div>
+    <div class="lightbox__fuss">
+      <button class="lightbox__knopf" type="button" data-lightbox-zurueck>
+        <Icon name="links" />
+        <span class="sr-only">{t('lightbox.zurueck')}</span>
+      </button>
+      <p class="lightbox__unterschrift" id="lightbox-unterschrift" data-lightbox-unterschrift></p>
+      <button class="lightbox__knopf" type="button" data-lightbox-weiter>
+        <Icon name="rechts" />
+        <span class="sr-only">{t('lightbox.weiter')}</span>
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  import '../scripts/lightbox';
+</script>

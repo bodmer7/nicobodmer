@@ -1,0 +1,14 @@
+{
+  "hinweis": "Frei erfundene Beispieldaten für die Nachbildung auf der Website. Keine echten Gesundheitswerte.",
+  "readiness": 82,
+  "tage": {
+    "de": ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
+    "en": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+  },
+  "kacheln": [
+    { "id": "schlaf", "label": { "de": "Schlaf", "en": "Sleep" }, "einheit": "/ 100", "werte": [71, 68, 74, 59, 66, 79, 64] },
+    { "id": "hrv", "label": { "de": "HRV", "en": "HRV" }, "einheit": "ms", "werte": [52, 55, 54, 49, 53, 58, 57] },
+    { "id": "body-battery", "label": { "de": "Body Battery", "en": "Body Battery" }, "einheit": "/ 100", "werte": [62, 48, 55, 31, 44, 70, 36] },
+    { "id": "stress", "label": { "de": "Stress", "en": "Stress" }, "einheit": "/ 100", "werte": [28, 34, 25, 41, 30, 18, 20] }
+  ]
+}

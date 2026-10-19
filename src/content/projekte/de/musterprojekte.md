@@ -39,25 +39,9 @@ messwerte:
     bezug: firstlicht
     datum: "2026-10-05"
 bilder:
-  - datei: ../../../assets/screens/doppelmeter-desktop.webp
-    alt: Startseite der Schreinerei Doppelmeter, frei erfundener Betrieb, mit der Überschrift «Möbel, die Ihre Enkel noch benutzen.», dem Knopf «Jetzt anrufen» und einem Foto einer Küche
-    unterschrift: odera.ch/musterprojekte/doppelmeter, Desktop. Frei erfundener Betrieb.
-    geraet: desktop
-  - datei: ../../../assets/screens/doppelmeter-handy.webp
-    alt: Schreinerei Doppelmeter auf dem Handy, frei erfundener Betrieb, mit fester Leiste «Anrufen» unten
-    unterschrift: Doppelmeter auf dem Handy. Die Nummer bleibt unten immer sichtbar.
-    geraet: handy
   - datei: ../../../assets/screens/firstlicht-desktop.webp
     alt: Startseite von Firstlicht Solartechnik, frei erfundener Betrieb, dunkel gestaltet, mit einem Haus mit Solaranlage und einem Regler für die Tageszeit
     unterschrift: odera.ch/musterprojekte/firstlicht, Desktop. Frei erfundener Betrieb.
-    geraet: desktop
-  - datei: ../../../assets/screens/firstlicht-handy.webp
-    alt: Firstlicht Solartechnik auf dem Handy, frei erfundener Betrieb, mit den Knöpfen «Anrufen» und «Rechner» unten
-    unterschrift: Firstlicht auf dem Handy
-    geraet: handy
-  - datei: ../../../assets/screens/firstlicht-erklaert-desktop.webp
-    alt: Firstlicht Solartechnik im Erklär-Modus, frei erfundener Betrieb, mit nummerierten Markierungen auf der Seite und einem Kasten «Was ist hier besonders?»
-    unterschrift: Firstlicht mit Erklärungen, sieben nummerierte Stellen
     geraet: desktop
 vorschau: 0
 reihenfolge: 2
@@ -84,11 +68,15 @@ Paket Standard, 5 Seiten. Ziel der Seite ist der Anruf, darum steht die Telefonn
 
 Die Gestaltung ist ruhig und handwerklich: warmes Papierweiss, eine Serifenschrift für die grossen Überschriften, Dunkelgrün für die Knöpfe und ein grosses Foto einer Küche mit Bildunterschrift. Kleine Zeilen wie «Schreinerei in Hobelwil, seit 1961» stehen in einer Schreibmaschinenschrift.
 
+![Schreinerei Doppelmeter auf dem Desktop, frei erfundener Betrieb: Überschrift «Möbel, die Ihre Enkel noch benutzen.», Knopf «Jetzt anrufen» und Foto einer Küche](../../../assets/screens/doppelmeter-desktop.webp) ![Schreinerei Doppelmeter auf dem Handy, frei erfundener Betrieb, mit fester Leiste «Anrufen» unten](../../../assets/screens/doppelmeter-handy.webp)
+
 ## Firstlicht Solartechnik
 
 Paket Pro, 6 Seiten. Ziel ist die vorbereitete Anfrage: Ein Solarrechner rechnet vor, das Ergebnis wandert direkt ins Formular.
 
 Der Auftritt ist dunkel mit Orange als Akzent und hat einen Umschalter für Hell und Dunkel. Im Hero steht ein Haus mit Solaranlage als Illustration. Mit einem Regler verschiebt man die Tageszeit und sieht Produktion, Verbrauch, Speicher und Einspeisung mitlaufen, wahlweise für Sommer oder Winter. Auf dem Handy bleiben «Anrufen» und «Rechner» unten erreichbar. Mit dem Schalter «Was ist hier besonders?» nummeriert die Seite sieben Stellen und erklärt sie.
+
+![Firstlicht Solartechnik im Erklär-Modus, frei erfundener Betrieb, mit nummerierten Markierungen und dem Kasten «Was ist hier besonders?»](../../../assets/screens/firstlicht-erklaert-desktop.webp) ![Firstlicht Solartechnik auf dem Handy, frei erfundener Betrieb, mit den Knöpfen «Anrufen» und «Rechner» unten](../../../assets/screens/firstlicht-handy.webp)
 
 ## Entscheidungen
 

@@ -164,3 +164,13 @@ a:hover {
 .prosa li + li { margin-top: var(--s2); }
 
 [hidden] { display: none !important; }
+
+/* Seitenwechsel mit nativen View Transitions (Progressive Enhancement) */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+
+::view-transition-group(*) {
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(.4, 0, .2, 1);
+}

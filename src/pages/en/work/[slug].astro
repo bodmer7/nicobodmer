@@ -1,0 +1,13 @@
+---
+import Fallstudie from '../../../layouts/Fallstudie.astro';
+import { fallstudien, type Projekt } from '../../../data/projekte';
+
+export async function getStaticPaths() {
+  const liste = await fallstudien('en');
+  return liste.map((projekt) => ({ params: { slug: projekt.data.slug }, props: { projekt } }));
+}
+
+const { projekt } = Astro.props as { projekt: Projekt };
+---
+
+<Fallstudie lang="en" projekt={projekt} />
